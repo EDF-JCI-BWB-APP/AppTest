@@ -116,12 +116,13 @@
     }
     .theme-toggle:hover { background: var(--color-primary-hl); }
 
-    /* ── INTRO STRIP ── */
+    /* ── INTRO STRIP : Hero + Contact ── */
     .intro-strip {
       flex: 0 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr; /* 50 / 50 sur grand écran */
-      gap: 1.5rem;
+      /* Hero ~60%, Contact ~40% sur grand écran */
+      grid-template-columns: minmax(0, 1.6fr) minmax(380px, 1.1fr);
+      gap: 1.75rem;
       padding: 2rem 2rem 1.5rem;
       background: linear-gradient(
         135deg,
@@ -188,12 +189,13 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 0.85rem;
-      padding: 1.5rem 2rem;
+      gap: 1rem;
+      padding: 2rem 2.25rem;
       background: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: 12px;
       box-shadow: var(--shadow-sm);
+      max-width: 520px;
     }
     .intro-right h2 { font-size: 1.1rem; margin: 0; }
     .intro-right p  { color: var(--color-text-muted); font-size: 0.9rem; margin: 0; }
@@ -250,11 +252,10 @@
       background: var(--color-surface-2);
     }
 
-    /* L'iframe remplit la largeur, le zoom est ajusté via JS
-       pour étirer le contenu Notion. */
+    /* Iframe large + haute pour limiter la scrollbar interne Notion */
     .form-frame {
       width: 100%;
-      height: 2400px; /* grande hauteur pour limiter la scrollbar interne */
+      height: 2400px;
       border: none;
       display: block;
       zoom: 1;
@@ -273,7 +274,9 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .intro-strip { grid-template-columns: 1fr minmax(280px, 1fr); }
+      .intro-strip {
+        grid-template-columns: minmax(0, 1.4fr) minmax(320px, 1fr);
+      }
       .form-frame { height: 2400px; }
     }
 
@@ -289,7 +292,7 @@
         padding-left: 1rem;
         padding-right: 1rem;
       }
-      .intro-right { padding: 1.25rem; }
+      .intro-right { padding: 1.5rem 1.25rem; max-width: 100%; }
       .form-frame { height: 2400px; }
       h1 { font-size: clamp(1.6rem, 5vw, 2.2rem); }
     }
@@ -305,6 +308,7 @@
       .intro-right { padding: 1rem; }
       .contact-link {
         width: 100%;
+        justify-content: center;
         text-align: center;
         word-break: break-all;
       }
@@ -390,7 +394,7 @@
   </div>
 
   <script>
-    // Zoom dynamique : étire le contenu Notion (max ~680px) à la largeur du conteneur
+    // Zoom dynamique : étire le contenu Notion (largeur interne ~680px) à la largeur du conteneur
     const NOTION_INNER_W = 680;
     function resizeFormFrame() {
       const wrapper = document.querySelector('.form-wrapper');
