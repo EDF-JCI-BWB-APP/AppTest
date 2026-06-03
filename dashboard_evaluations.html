@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Évaluations Formation</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --surface2: #f0ede6;
+    --border: rgba(0,0,0,0.10);
+    --border2: rgba(0,0,0,0.18);
+    --text: #1a1917;
+    --text2: #6b6a65;
+    --text3: #9e9d98;
+    --accent: #2d5be3;
+    --accent2: #1a3db0;
+    --accent-bg: #eef1fc;
+    --green: #2a7d4f;
+    --green-bg: #e8f5ee;
+    --amber: #b35d00;
+    --amber-bg: #fff3e0;
+    --red: #c0392b;
+    --red-bg: #fdf0ee;
+    --purple: #6b3fa0;
+    --purple-bg: #f3eefb;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1917;
+      --surface: #242320;
+      --surface2: #2e2c29;
+      --border: rgba(255,255,255,0.10);
+      --border2: rgba(255,255,255,0.18);
+      --text: #f0ede6;
+      --text2: #a09e99;
+      --text3: #6b6a65;
+      --accent: #6b8ff5;
+      --accent2: #8aa5f7;
+      --accent-bg: #1a2340;
+      --green: #4caf7a;
+      --green-bg: #122a1f;
+      --amber: #f0a742;
+      --amber-bg: #2a1f08;
+      --red: #e57373;
+      --red-bg: #2a1010;
+      --purple: #b084f5;
+      --purple-bg: #1e1230;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.5; }
+
+  /* Upload Zone */
+  #upload-zone {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .upload-card {
+    background: var(--surface);
+    border: 2px dashed var(--border2);
+    border-radius: 20px;
+    padding: 3rem 4rem;
+    text-align: center;
+    max-width: 520px; width: 100%;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .upload-card:hover, .upload-card.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-bg);
+  }
+  .upload-icon { font-size: 48px; margin-bottom: 1rem; }
+  .upload-title { font-size: 22px; font-weight: 600; margin-bottom: 0.5rem; }
+  .upload-sub { color: var(--text2); font-size: 14px; margin-bottom: 1.5rem; }
+  .upload-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 10px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+  }
+  .upload-btn:hover { background: var(--accent2); }
+  .upload-formats { margin-top: 1rem; font-size: 12px; color: var(--text3); }
+  #file-input { display: none; }
+
+  /* Dashboard */
+  #dashboard { display: none; }
+  .top-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .top-bar-left { display: flex; align-items: center; gap: 12px; }
+  .logo { font-size: 18px; font-weight: 700; color: var(--accent); }
+  .file-badge { font-size: 12px; background: var(--accent-bg); color: var(--accent); padding: 3px 10px; border-radius: 20px; }
+  .reset-btn { font-size: 13px; color: var(--text2); background: none; border: 1px solid var(--border2); border-radius: 6px; padding: 5px 12px; cursor: pointer; }
+  .reset-btn:hover { background: var(--surface2); }
+  .pdf-btn { font-size: 13px; color: white; background: var(--accent); border: none; border-radius: 6px; padding: 5px 14px; cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+  .pdf-btn:hover { background: var(--accent2); }
+  .pdf-btn:disabled { opacity: 0.6; cursor: wait; }
+
+  /* Filters */
+  .filters-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+  }
+  .filter-group { display: flex; align-items: center; gap: 6px; }
+  .filter-label { font-size: 12px; color: var(--text2); font-weight: 500; white-space: nowrap; }
+  select {
+    font-size: 13px;
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    max-width: 200px;
+  }
+  .filter-count { font-size: 12px; color: var(--text3); white-space: nowrap; }
+
+  /* Main content */
+  .main { padding: 1.5rem 2rem 3rem; max-width: 1400px; margin: 0 auto; }
+
+  /* KPI cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .kpi-card {
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+  }
+  .kpi-label { font-size: 12px; color: var(--text2); font-weight: 500; margin-bottom: 4px; }
+  .kpi-value { font-size: 28px; font-weight: 700; line-height: 1; }
+  .kpi-sub { font-size: 12px; color: var(--text3); margin-top: 4px; }
+  .kpi-accent { color: var(--accent); }
+  .kpi-green { color: var(--green); }
+  .kpi-amber { color: var(--amber); }
+  .kpi-purple { color: var(--purple); }
+
+  /* Charts grid */
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .charts-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .chart-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+  }
+  .chart-card.wide { grid-column: 1 / -1; }
+  .chart-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+  .chart-sub { font-size: 12px; color: var(--text2); margin-bottom: 1rem; }
+  .chart-wrap { position: relative; width: 100%; }
+
+  /* Stars display */
+  .stars-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+  .stars-label { font-size: 13px; color: var(--text2); flex: 1; }
+  .stars-bar { height: 8px; background: var(--surface2); border-radius: 4px; flex: 2; overflow: hidden; }
+  .stars-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+  .stars-val { font-size: 13px; font-weight: 600; min-width: 32px; text-align: right; }
+
+  /* Recommandation donut */
+  .donut-wrap { display: flex; align-items: center; gap: 16px; }
+  .donut-legend { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .donut-legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+  .donut-legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* Distribution bar */
+  .dist-row { display: flex; align-items: center; gap: 8px; margin: 5px 0; }
+  .dist-label { font-size: 13px; color: var(--text2); min-width: 80px; text-align: right; }
+  .dist-bar { height: 20px; background: var(--surface2); border-radius: 4px; flex: 1; overflow: hidden; display: flex; }
+  .dist-fill { height: 100%; transition: width 0.5s; display: flex; align-items: center; padding-left: 6px; font-size: 11px; font-weight: 600; color: white; border-radius: 4px; }
+  .dist-count { font-size: 12px; color: var(--text3); min-width: 30px; }
+
+  /* Top formations table */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 12px; color: var(--text2); font-weight: 500; border-bottom: 1px solid var(--border2); white-space: nowrap; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber); }
+  .badge-red { background: var(--red-bg); color: var(--red); }
+  .rank { font-weight: 700; color: var(--text3); }
+
+  /* Comment cards */
+  .comments-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+  .comment-card {
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--text2);
+    border-left: 3px solid var(--accent);
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .comment-meta { font-size: 11px; color: var(--text3); margin-top: 6px; font-style: normal; }
+
+  /* Timeline */
+  .timeline-chart-wrap { position: relative; width: 100%; }
+
+  /* Score pill */
+  .score-pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+  .score-high { background: var(--green-bg); color: var(--green); }
+  .score-mid { background: var(--amber-bg); color: var(--amber); }
+  .score-low { background: var(--red-bg); color: var(--red); }
+
+  /* Section title */
+  .section-title { font-size: 16px; font-weight: 600; margin: 1.5rem 0 0.75rem; color: var(--text); }
+
+  /* Loading */
+  #loading { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; }
+  .loading-box { background: var(--surface); border-radius: 16px; padding: 2rem 3rem; text-align: center; }
+  .spinner { width: 36px; height: 36px; border: 3px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 768px) {
+    .charts-grid, .charts-grid-3 { grid-template-columns: 1fr; }
+    .top-bar { padding: 0.75rem 1rem; }
+    .filters-bar { padding: 0.75rem 1rem; }
+    .main { padding: 1rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <div style="color:var(--text2);font-size:14px;">Analyse en cours...</div>
+  </div>
+</div>
+
+<!-- Upload Zone -->
+<div id="upload-zone">
+  <div class="upload-card" id="drop-zone">
+    <div class="upload-icon">📊</div>
+    <div class="upload-title">Dashboard Évaluations</div>
+    <div class="upload-sub">Chargez votre fichier pour visualiser les résultats des formations</div>
+    <button class="upload-btn" onclick="document.getElementById('file-input').click()">Choisir un fichier</button>
+    <input type="file" id="file-input" accept=".csv,.xlsx,.xls">
+    <div class="upload-formats">Formats acceptés : CSV, XLSX, XLS</div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <div class="logo">📊 Évaluations Formation</div>
+      <div class="file-badge" id="file-name-badge">—</div>
+    </div>
+    <button class="reset-btn" onclick="resetDashboard()">↩ Changer de fichier</button>
+    <button class="pdf-btn" id="pdf-btn" onclick="exportPDF()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Exporter PDF
+    </button>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <span class="filter-label">Formation</span>
+      <select id="filter-formation" onchange="applyFilters()"><option value="">Toutes</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Date</span>
+      <select id="filter-date" onchange="applyFilters()"><option value="">Toutes</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Lieu</span>
+      <select id="filter-lieu" onchange="applyFilters()"><option value="">Tous</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Présentiel</span>
+      <select id="filter-presentiel" onchange="applyFilters()">
+        <option value="">Tous</option>
+        <option value="Oui">Présentiel</option>
+        <option value="Non">À distance</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Animateur</span>
+      <select id="filter-animateur" onchange="applyFilters()"><option value="">Tous</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Co-animateur</span>
+      <select id="filter-coanim" onchange="applyFilters()"><option value="">Tous</option></select>
+    </div>
+    <div class="filter-count" id="filter-count"></div>
+  </div>
+
+  <div class="main">
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Réponses</div>
+        <div class="kpi-value kpi-accent" id="kpi-total">—</div>
+        <div class="kpi-sub" id="kpi-total-sub">évaluations</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Note globale</div>
+        <div class="kpi-value kpi-green" id="kpi-note">—</div>
+        <div class="kpi-sub">sur 5</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Recommandation</div>
+        <div class="kpi-value kpi-green" id="kpi-reco">—</div>
+        <div class="kpi-sub" id="kpi-reco-sub">% recommandent</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Formations</div>
+        <div class="kpi-value kpi-purple" id="kpi-formations">—</div>
+        <div class="kpi-sub">séminaires distincts</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Objectifs atteints</div>
+        <div class="kpi-value kpi-green" id="kpi-objectifs">—</div>
+        <div class="kpi-sub">sur 5</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Compétences développées</div>
+        <div class="kpi-value kpi-accent" id="kpi-competences">—</div>
+        <div class="kpi-sub">sur 5</div>
+      </div>
+    </div>
+
+    <!-- Row 1: Note par critère + Distribution recommandation -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Scores moyens par critère</div>
+        <div class="chart-sub">Note sur 5 pour chaque dimension évaluée</div>
+        <div id="criteria-bars"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Distribution des recommandations</div>
+        <div class="chart-sub">Notes de 1 à 5 attribuées par les participants</div>
+        <div class="chart-wrap" style="height:220px">
+          <canvas id="chart-reco" role="img" aria-label="Distribution des notes de recommandation"></canvas>
+        </div>
+        <div id="reco-legend" style="margin-top:12px;"></div>
+      </div>
+    </div>
+
+    <!-- Row 2: Évolution temporelle -->
+    <div class="chart-card" style="margin-bottom:16px;">
+      <div class="chart-title">Évolution de la satisfaction dans le temps</div>
+      <div class="chart-sub">Note globale moyenne par date de formation</div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="chart-timeline" role="img" aria-label="Évolution temporelle de la satisfaction"></canvas>
+      </div>
+    </div>
+
+    <!-- Row 3: Par formation + Animateurs -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Formations les mieux notées</div>
+        <div class="chart-sub">Note globale moyenne (min. 3 réponses)</div>
+        <div class="chart-wrap" id="chart-formations-wrap" style="height:300px">
+          <canvas id="chart-formations" role="img" aria-label="Classement des formations"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Évaluation des animateurs</div>
+        <div class="chart-sub">Scores moyens sur les critères animateur principal</div>
+        <div id="animateur-bars"></div>
+      </div>
+    </div>
+
+    <!-- Row 4: Tableau formations -->
+    <div class="chart-card" style="margin-bottom:16px;">
+      <div class="chart-title">Détail par formation</div>
+      <div class="chart-sub">Toutes les formations avec leurs indicateurs clés</div>
+      <div class="table-wrap">
+        <table id="formations-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Formation</th>
+              <th>Réponses</th>
+              <th>Note globale</th>
+              <th>Objectifs</th>
+              <th>Compétences</th>
+              <th>Recommande</th>
+              <th>Animateur</th>
+            </tr>
+          </thead>
+          <tbody id="formations-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Row 5: Commentaires -->
+    <div class="chart-card">
+      <div class="chart-title">Commentaires récents</div>
+      <div class="chart-sub">Suggestions et retours des participants (non vides)</div>
+      <div class="comments-grid" id="comments-grid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let allData = [];
+let filteredData = [];
+let charts = {};
+let fileName = '';
+
+const COL = {
+  horodateur: 'Horodateur',
+  titre: 'Titre du séminaire',
+  date: 'Date de la formation',
+  lieu: 'Lieu de la formation',
+  presentiel: 'La formation était-elle dispensée en présentiel ?',
+  comm: "La communication autour de l'événement était suffisante",
+  lieuNote: 'Le lieu de formation était adapté',
+  catering: 'Le catering (boissons, repas, etc.) était adapté',
+  avis: 'Quel est votre avis sur la formation ?',
+  objectifs: 'Les objectifs de la formation ont-ils été atteints ?',
+  competences: 'Cette formation vous a-t-elle permis de développer vos compétences ?',
+  difficulte: 'Le niveau de difficulté global de la formation était adapté',
+  rythme: 'Le rythme de la formation était adapté',
+  duree: 'Le durée de la formation était adaptée',
+  supports: 'Les supports de formation (photocopies, powerpoint, fiches, etc.) étaient de bonne qualité',
+  pratique: "L\u2019articulation entre les phases de pratique et de th\u00e9orie \u00e9tait adapt\u00e9",
+  attentes: 'La formation a répondu à mes attentes',
+  reco: 'Recommanderiez-vous cette formation ?',
+  animNom: "Quel est le prénom de l'animateur ?",
+  animMaitrise: "Le niveau de ma\u00eetrise de l'animateur.trice \u00e9tait ad\u00e9quat",
+  animExpli: 'Les explications fournies étaient adaptées',
+  animDyna: "L'animateur.trice \u00e9tait dynamique",
+  animMoti: "L'animateur.trice \u00e9tait motivant.e",
+  animContact: "Le contact avec l'animateur.trice \u00e9tait ais\u00e9",
+  animEcoute: "L'animateur.trice \u00e9tait \u00e0 l'\u00e9coute ",
+  suggestion: 'Si vous pouviez changer quelque chose à la formation, ce serait : ',
+  commentaire: 'Autres commentaires ?',
+};
+
+function normalize(col, row) {
+  for (const key of Object.keys(row)) {
+    if (key.trim() === col.trim() || key.includes(col.trim().substring(0, 15))) return row[key];
+  }
+  return row[col];
+}
+
+function avg(arr) {
+  const nums = arr.map(Number).filter(v => !isNaN(v) && v > 0);
+  if (!nums.length) return null;
+  return nums.reduce((a, b) => a + b, 0) / nums.length;
+}
+
+function pct(arr, fn) {
+  const valid = arr.filter(fn);
+  return arr.length ? Math.round(valid.length / arr.length * 100) : 0;
+}
+
+function score2badge(v) {
+  if (v === null) return '<span class="badge">—</span>';
+  const s = parseFloat(v).toFixed(2);
+  const cls = v >= 4.0 ? 'badge-green' : v >= 3.0 ? 'badge-amber' : 'badge-red';
+  return `<span class="badge ${cls}">${s}</span>`;
+}
+
+function scorePill(v) {
+  if (v === null || isNaN(v)) return '—';
+  const cls = v >= 4.0 ? 'score-high' : v >= 3.0 ? 'score-mid' : 'score-low';
+  return `<span class="score-pill ${cls}">${parseFloat(v).toFixed(2)}</span>`;
+}
+
+function getCol(row, colName) {
+  if (row[colName] !== undefined) return row[colName];
+  for (const key of Object.keys(row)) {
+    if (key.includes(colName.substring(0, 20))) return row[key];
+  }
+  return undefined;
+}
+
+// Normalize formation name (group similar ones)
+function normTitle(t) {
+  if (!t) return '';
+  let s = t.trim().toLowerCase();
+  if (s.includes('notion')) return 'Notion';
+  if (s.includes('insights') || s.includes('insigts') || s.includes('insight')) return 'Insights';
+  if (s.includes('neuro')) return 'Neuroatypique';
+  if (s.includes('r\u00e9seau') || s.includes('reseau') || s.includes('relationnel')) return 'Créer son réseau';
+  if (s.includes('r\u00e9silience') || s.includes('resilience')) return 'Résilience';
+  return t.trim();
+}
+
+// File input
+document.getElementById('file-input').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (file) loadFile(file);
+});
+
+// Drag & drop
+const dropZone = document.getElementById('drop-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) loadFile(file);
+});
+
+function loadFile(file) {
+  document.getElementById('loading').style.display = 'flex';
+  fileName = file.name;
+  const ext = file.name.split('.').pop().toLowerCase();
+  const reader = new FileReader();
+  if (ext === 'csv') {
+    reader.onload = e => {
+      const result = Papa.parse(e.target.result, { header: true, skipEmptyLines: true, encoding: 'UTF-8' });
+      processData(result.data);
+    };
+    reader.readAsText(file, 'UTF-8');
+  } else {
+    reader.onload = e => {
+      const wb = XLSX.read(e.target.result, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const data = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      processData(data);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+}
+
+function normName(n) {
+  if (!n) return '';
+  return n.trim().replace(/\s+/g, ' ');
+}
+
+function getAnimKey(row) {
+  return Object.keys(row).find(k => k.includes("pr\u00e9nom de l'animateur") || k.includes("prenom de l'animateur") || k === "Quel est le pr\u00e9nom de l'animateur ?") || "Quel est le pr\u00e9nom de l'animateur ?";
+}
+function getCoAnimKey(row) {
+  return Object.keys(row).find(k => k.includes('pr\u00e9nom du co-animateur') || k.includes('prenom du co-animateur') || k.includes('co-animateur ?')) || 'Quel est le pr\u00e9nom du co-animateur ?';
+}
+function getCoAnim2Key(row) {
+  return Object.keys(row).find(k => k.includes('co animateur 2') || k.includes('co-animateur 2') || k.includes('co-anim') && k.includes('2')) || '';
+}
+
+function processData(data) {
+  allData = data.map(row => {
+    const norm = {};
+    for (const [k, v] of Object.entries(row)) norm[k.trim()] = v;
+    norm._titre = normTitle(norm['Titre du séminaire'] || norm['Titre du s\u00e9minaire'] || '');
+    norm._note = parseFloat(norm['Quel est votre avis sur la formation ?']) || null;
+    norm._reco = parseFloat(norm['Recommanderiez-vous cette formation ?']) || null;
+    norm._obj = parseFloat(norm['Les objectifs de la formation ont-ils été atteints ?']) || null;
+    norm._comp = parseFloat(norm['Cette formation vous a-t-elle permis de développer vos compétences ?'] || norm['Cette formation vous a-t-elle permis de d\u00e9velopper vos comp\u00e9tences ?']) || null;
+    const animKey = getAnimKey(norm);
+    const coAnimKey = getCoAnimKey(norm);
+    const coAnim2Key = getCoAnim2Key(norm);
+    norm._animateur = normName(norm[animKey] || '');
+    norm._coanim = normName(norm[coAnimKey] || '');
+    norm._coanim2 = coAnim2Key ? normName(norm[coAnim2Key] || '') : '';
+    return norm;
+  });
+
+  // Populate filters
+  const formations = [...new Set(allData.map(r => r._titre).filter(Boolean))].sort();
+  const dates = [...new Set(allData.map(r => r['Date de la formation']).filter(Boolean))].sort((a, b) => {
+    const pa = a.split('/').reverse().join('-'), pb = b.split('/').reverse().join('-');
+    return pa.localeCompare(pb);
+  });
+  const lieux = [...new Set(allData.map(r => (r['Lieu de la formation'] || '').trim()).filter(Boolean))].sort();
+
+  // Animateurs (principal + co-animateurs 1 & 2 merged, deduplicated)
+  const animateurs = [...new Set(allData.map(r => r._animateur).filter(Boolean))].sort();
+  const coanims = [...new Set([
+    ...allData.map(r => r._coanim),
+    ...allData.map(r => r._coanim2)
+  ].filter(Boolean))].sort();
+
+  const fForm = document.getElementById('filter-formation');
+  const fDate = document.getElementById('filter-date');
+  const fLieu = document.getElementById('filter-lieu');
+  fForm.innerHTML = '<option value="">Toutes</option>' + formations.map(f => `<option>${f}</option>`).join('');
+  fDate.innerHTML = '<option value="">Toutes</option>' + dates.map(d => `<option>${d}</option>`).join('');
+  fLieu.innerHTML = '<option value="">Tous</option>' + lieux.map(l => `<option>${l}</option>`).join('');
+  document.getElementById('filter-animateur').innerHTML = '<option value="">Tous</option>' + animateurs.map(a => `<option>${a}</option>`).join('');
+  document.getElementById('filter-coanim').innerHTML = '<option value="">Tous</option>' + coanims.map(a => `<option>${a}</option>`).join('');
+
+  document.getElementById('file-name-badge').textContent = fileName;
+  document.getElementById('upload-zone').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('loading').style.display = 'none';
+
+  filteredData = allData;
+  renderDashboard();
+}
+
+function applyFilters() {
+  const fF = document.getElementById('filter-formation').value;
+  const fD = document.getElementById('filter-date').value;
+  const fL = document.getElementById('filter-lieu').value;
+  const fP = document.getElementById('filter-presentiel').value;
+  const fA = document.getElementById('filter-animateur').value;
+  const fCA = document.getElementById('filter-coanim').value;
+
+  filteredData = allData.filter(r => {
+    if (fF && r._titre !== fF) return false;
+    if (fD && r['Date de la formation'] !== fD) return false;
+    if (fL && (r['Lieu de la formation'] || '').trim() !== fL) return false;
+    if (fP && r['La formation était-elle dispensée en présentiel ?'] !== fP) return false;
+    if (fA && r._animateur !== fA) return false;
+    if (fCA && r._coanim !== fCA && r._coanim2 !== fCA) return false;
+    return true;
+  });
+  renderDashboard();
+}
+
+function resetDashboard() {
+  allData = []; filteredData = [];
+  Object.values(charts).forEach(c => c.destroy());
+  charts = {};
+  document.getElementById('upload-zone').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('file-input').value = '';
+}
+
+function renderDashboard() {
+  const d = filteredData;
+  if (!d.length) { document.getElementById('filter-count').textContent = 'Aucun résultat'; return; }
+  document.getElementById('filter-count').textContent = `${d.length} réponse${d.length > 1 ? 's' : ''}`;
+
+  // KPIs
+  const notes = d.map(r => r._note).filter(Boolean);
+  const recos = d.map(r => r._reco).filter(Boolean);
+  const objs = d.map(r => r._obj).filter(Boolean);
+  const comps = d.map(r => r._comp).filter(Boolean);
+  const formations = new Set(d.map(r => r._titre).filter(Boolean));
+
+  document.getElementById('kpi-total').textContent = d.length;
+  document.getElementById('kpi-note').textContent = avg(notes) ? avg(notes).toFixed(2) : '—';
+  const recoHigh = recos.filter(v => v >= 4).length;
+  document.getElementById('kpi-reco').textContent = recos.length ? Math.round(recoHigh / recos.length * 100) + '%' : '—';
+  document.getElementById('kpi-formations').textContent = formations.size;
+  document.getElementById('kpi-objectifs').textContent = avg(objs) ? avg(objs).toFixed(2) : '—';
+  document.getElementById('kpi-competences').textContent = avg(comps) ? avg(comps).toFixed(2) : '—';
+
+  // Criteria bars
+  const criteria = [
+    { label: 'Avis général', key: 'Quel est votre avis sur la formation ?' },
+    { label: 'Objectifs atteints', key: 'Les objectifs de la formation ont-ils été atteints ?' },
+    { label: 'Développement compétences', key: d[0] ? Object.keys(d[0]).find(k => k.includes('d\u00e9velopper') || k.includes('développer')) || '' : '' },
+    { label: 'Attentes satisfaites', key: 'La formation a répondu à mes attentes' },
+    { label: 'Supports qualité', key: 'Les supports de formation (photocopies, powerpoint, fiches, etc.) étaient de bonne qualité' },
+    { label: 'Rythme adapté', key: 'Le rythme de la formation était adapté' },
+    { label: 'Durée adaptée', key: 'Le durée de la formation était adaptée' },
+    { label: 'Difficulté adaptée', key: 'Le niveau de difficulté global de la formation était adapté' },
+    { label: 'Lieu adapté', key: 'Le lieu de formation était adapté' },
+    { label: 'Communication', key: "La communication autour de l'événement était suffisante" },
+  ];
+
+  const critBarsEl = document.getElementById('criteria-bars');
+  critBarsEl.innerHTML = '';
+  criteria.forEach(c => {
+    const vals = d.map(r => parseFloat(r[c.key])).filter(v => !isNaN(v) && v > 0);
+    if (!vals.length) return;
+    const a = avg(vals);
+    const pct = (a / 5) * 100;
+    const color = a >= 4 ? '#2a7d4f' : a >= 3 ? '#b35d00' : '#c0392b';
+    critBarsEl.innerHTML += `
+      <div class="stars-row">
+        <span class="stars-label">${c.label}</span>
+        <div class="stars-bar"><div class="stars-fill" style="width:${pct}%;background:${color}"></div></div>
+        <span class="stars-val" style="color:${color}">${a.toFixed(2)}</span>
+      </div>`;
+  });
+
+  // Recommandation chart
+  const recoDist = [1,2,3,4,5].map(v => recos.filter(r => r === v).length);
+  const recoColors = ['#e74c3c','#e67e22','#f1c40f','#27ae60','#2ecc71'];
+  if (charts['reco']) charts['reco'].destroy();
+  charts['reco'] = new Chart(document.getElementById('chart-reco'), {
+    type: 'bar',
+    data: {
+      labels: ['1 ⭐','2 ⭐⭐','3 ⭐⭐⭐','4 ⭐⭐⭐⭐','5 ⭐⭐⭐⭐⭐'],
+      datasets: [{ data: recoDist, backgroundColor: recoColors, borderRadius: 6 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+    }
+  });
+  const recoLegEl = document.getElementById('reco-legend');
+  recoLegEl.innerHTML = `<div style="display:flex;gap:8px;flex-wrap:wrap;">` +
+    [1,2,3,4,5].map((v, i) => `<span style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text2)"><span style="width:10px;height:10px;border-radius:2px;background:${recoColors[i]};display:inline-block"></span>${v} étoile${v>1?'s':''}: ${recoDist[i]}</span>`).join('') + '</div>';
+
+  // Timeline chart
+  const byDate = {};
+  d.forEach(r => {
+    const dt = r['Date de la formation'];
+    if (!dt) return;
+    if (!byDate[dt]) byDate[dt] = [];
+    if (r._note) byDate[dt].push(r._note);
+  });
+  const sortedDates = Object.keys(byDate).sort((a, b) => {
+    const pa = a.split('/').reverse().join('-'), pb = b.split('/').reverse().join('-');
+    return pa.localeCompare(pb);
+  });
+  const timelineData = sortedDates.map(dt => avg(byDate[dt]));
+  if (charts['timeline']) charts['timeline'].destroy();
+  charts['timeline'] = new Chart(document.getElementById('chart-timeline'), {
+    type: 'line',
+    data: {
+      labels: sortedDates,
+      datasets: [{
+        label: 'Note moyenne',
+        data: timelineData,
+        borderColor: '#2d5be3',
+        backgroundColor: 'rgba(45,91,227,0.10)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 5,
+        pointBackgroundColor: '#2d5be3',
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { min: 1, max: 5, ticks: { stepSize: 1 } } }
+    }
+  });
+
+  // Formations chart
+  const byForm = {};
+  d.forEach(r => {
+    const t = r._titre;
+    if (!t) return;
+    if (!byForm[t]) byForm[t] = [];
+    if (r._note) byForm[t].push(r._note);
+  });
+  const formStats = Object.entries(byForm)
+    .filter(([, v]) => v.length >= 2)
+    .map(([name, vals]) => ({ name, avg: avg(vals), count: vals.length }))
+    .sort((a, b) => b.avg - a.avg)
+    .slice(0, 12);
+  const formHeight = Math.max(300, formStats.length * 38 + 60);
+  document.getElementById('chart-formations-wrap').style.height = formHeight + 'px';
+  if (charts['formations']) charts['formations'].destroy();
+  charts['formations'] = new Chart(document.getElementById('chart-formations'), {
+    type: 'bar',
+    data: {
+      labels: formStats.map(f => f.name.length > 25 ? f.name.substring(0, 24) + '…' : f.name),
+      datasets: [{
+        data: formStats.map(f => f.avg),
+        backgroundColor: formStats.map(f => f.avg >= 4 ? 'rgba(42,125,79,0.75)' : f.avg >= 3 ? 'rgba(179,93,0,0.75)' : 'rgba(192,57,43,0.75)'),
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { min: 0, max: 5 } }
+    }
+  });
+
+  // Animateur bars
+  const animCriteria = [
+    { label: 'Maîtrise', key: "Le niveau de maîtrise de l'animateur.trice était adéquat" },
+    { label: 'Explications', key: 'Les explications fournies étaient adaptées' },
+    { label: 'Dynamisme', key: "L'animateur.trice était dynamique" },
+    { label: 'Motivation', key: "L'animateur.trice était motivant.e" },
+    { label: 'Contact', key: "Le contact avec l'animateur.trice était aisé" },
+    { label: 'Écoute', key: "L'animateur.trice était à l'écoute " },
+  ];
+  const animBarsEl = document.getElementById('animateur-bars');
+  animBarsEl.innerHTML = '';
+  animCriteria.forEach(c => {
+    const key = Object.keys(d[0] || {}).find(k => k.includes(c.key.substring(0, 15))) || c.key;
+    const vals = d.map(r => parseFloat(r[key])).filter(v => !isNaN(v) && v > 0);
+    if (!vals.length) return;
+    const a = avg(vals);
+    const pct = (a / 5) * 100;
+    const color = a >= 4 ? '#6b3fa0' : a >= 3 ? '#b35d00' : '#c0392b';
+    animBarsEl.innerHTML += `
+      <div class="stars-row">
+        <span class="stars-label">${c.label}</span>
+        <div class="stars-bar"><div class="stars-fill" style="width:${pct}%;background:${color}"></div></div>
+        <span class="stars-val" style="color:${color}">${a.toFixed(2)}</span>
+      </div>`;
+  });
+
+  // Table formations
+  const allFormStats = Object.entries(byForm)
+    .map(([name, vals]) => {
+      const rows = d.filter(r => r._titre === name);
+      const recoVals = rows.map(r => r._reco).filter(Boolean);
+      const objVals = rows.map(r => r._obj).filter(Boolean);
+      const compVals = rows.map(r => r._comp).filter(Boolean);
+      const animKey = Object.keys(rows[0] || {}).find(k => k.includes("niveau de ma\u00eetrise de l'animateur") || k.includes("niveau de ma")) || '';
+      const animVals = rows.map(r => parseFloat(r[animKey])).filter(v => !isNaN(v) && v > 0);
+      return {
+        name, count: vals.length,
+        note: avg(vals), obj: avg(objVals), comp: avg(compVals),
+        recoHigh: recoVals.length ? Math.round(recoVals.filter(v => v >= 4).length / recoVals.length * 100) : null,
+        anim: avg(animVals)
+      };
+    }).sort((a, b) => (b.note || 0) - (a.note || 0));
+
+  const tbody = document.getElementById('formations-tbody');
+  tbody.innerHTML = allFormStats.map((f, i) => `
+    <tr>
+      <td class="rank">${i + 1}</td>
+      <td style="font-weight:500">${f.name}</td>
+      <td>${f.count}</td>
+      <td>${scorePill(f.note)}</td>
+      <td>${f.obj ? f.obj.toFixed(2) : '—'}</td>
+      <td>${f.comp ? f.comp.toFixed(2) : '—'}</td>
+      <td>${f.recoHigh !== null ? f.recoHigh + '%' : '—'}</td>
+      <td>${f.anim ? f.anim.toFixed(2) : '—'}</td>
+    </tr>`).join('');
+
+  // Comments
+  const commentsEl = document.getElementById('comments-grid');
+  const comments = d
+    .map(r => ({ text: r['Si vous pouviez changer quelque chose à la formation, ce serait : '] || '', form: r._titre, date: r['Date de la formation'] }))
+    .filter(c => c.text && c.text.trim().length > 10)
+    .slice(-15);
+  commentsEl.innerHTML = comments.map(c => `
+    <div class="comment-card">
+      "${c.text.trim()}"
+      <div class="comment-meta">${c.form || ''}${c.date ? ' · ' + c.date : ''}</div>
+    </div>`).join('');
+  if (!comments.length) commentsEl.innerHTML = '<div style="color:var(--text3);font-size:13px;">Aucun commentaire dans la sélection actuelle.</div>';
+}
+
+async function exportPDF() {
+  const btn = document.getElementById('pdf-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Génération...';
+
+  try {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pageW = 210, pageH = 297, margin = 10;
+    const contentW = pageW - margin * 2;
+
+    // Build active filters label
+    const fF = document.getElementById('filter-formation').value;
+    const fD = document.getElementById('filter-date').value;
+    const fL = document.getElementById('filter-lieu').value;
+    const fP = document.getElementById('filter-presentiel').value;
+    const fA = document.getElementById('filter-animateur').value;
+    const fCA = document.getElementById('filter-coanim').value;
+    const filterParts = [];
+    if (fF) filterParts.push('Formation : ' + fF);
+    if (fD) filterParts.push('Date : ' + fD);
+    if (fL) filterParts.push('Lieu : ' + fL);
+    if (fP) filterParts.push(fP === 'Oui' ? 'Présentiel' : 'À distance');
+    if (fA) filterParts.push('Animateur : ' + fA);
+    if (fCA) filterParts.push('Co-animateur : ' + fCA);
+    const filterLabel = filterParts.length ? filterParts.join('  |  ') : 'Tous les filtres actifs';
+    const countLabel = document.getElementById('filter-count').textContent;
+
+    // Sections to capture: array of { id, title }
+    const sections = [
+      { id: 'kpi-section', title: null },
+      { id: 'section-criteres', title: 'Scores par critère & Recommandations' },
+      { id: 'section-timeline', title: 'Évolution temporelle' },
+      { id: 'section-formations-anim', title: 'Formations & Animateurs' },
+      { id: 'section-table', title: 'Détail par formation' },
+      { id: 'section-comments', title: 'Commentaires participants' },
+    ];
+
+    // --- Page 1: cover header ---
+    let y = margin;
+
+    // Header band
+    pdf.setFillColor(45, 91, 227);
+    pdf.rect(0, 0, pageW, 28, 'F');
+    pdf.setTextColor(255, 255, 255);
+    pdf.setFontSize(16);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Dashboard Évaluations Formation', margin, 12);
+    pdf.setFontSize(8);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(fileName || 'Export', margin, 19);
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+    pdf.text('Généré le ' + dateStr, pageW - margin, 19, { align: 'right' });
+
+    // Filter pill
+    pdf.setFillColor(238, 241, 252);
+    pdf.setDrawColor(180, 195, 240);
+    pdf.roundedRect(margin, 31, contentW, 8, 2, 2, 'FD');
+    pdf.setTextColor(45, 91, 227);
+    pdf.setFontSize(7.5);
+    pdf.setFont('helvetica', 'normal');
+    const shortFilter = pdf.splitTextToSize(filterLabel, contentW - 8);
+    pdf.text(shortFilter[0], margin + 4, 36.5);
+    pdf.setTextColor(100, 100, 100);
+    pdf.text(countLabel, pageW - margin - 2, 36.5, { align: 'right' });
+
+    y = 44;
+
+    // Helper: capture an element and add to PDF, paginating automatically
+    async function addSection(el, title, currentY) {
+      if (!el) return currentY;
+      // Add section title
+      if (title) {
+        if (currentY + 10 > pageH - margin) { pdf.addPage(); currentY = margin; }
+        pdf.setFontSize(10);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setTextColor(26, 25, 23);
+        pdf.text(title, margin, currentY + 5);
+        pdf.setDrawColor(45, 91, 227);
+        pdf.setLineWidth(0.5);
+        pdf.line(margin, currentY + 6.5, margin + contentW, currentY + 6.5);
+        currentY += 10;
+      }
+
+      const canvas = await html2canvas(el, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.92);
+      const imgW = contentW;
+      const imgH = (canvas.height / canvas.width) * imgW;
+
+      // If too tall, split across pages
+      if (imgH <= pageH - currentY - margin) {
+        pdf.addImage(imgData, 'JPEG', margin, currentY, imgW, imgH);
+        currentY += imgH + 6;
+      } else {
+        // Slice into page-height chunks
+        const ratio = canvas.width / imgW;
+        const sliceH_px = Math.floor((pageH - currentY - margin) * ratio);
+        let sliceTop = 0;
+        let firstSlice = true;
+
+        while (sliceTop < canvas.height) {
+          const remaining = canvas.height - sliceTop;
+          const thisSliceH_px = Math.min(sliceH_px, remaining);
+          const thisSliceH_mm = thisSliceH_px / ratio;
+
+          const sliceCanvas = document.createElement('canvas');
+          sliceCanvas.width = canvas.width;
+          sliceCanvas.height = thisSliceH_px;
+          const ctx = sliceCanvas.getContext('2d');
+          ctx.drawImage(canvas, 0, -sliceTop);
+          const sliceData = sliceCanvas.toDataURL('image/jpeg', 0.92);
+
+          pdf.addImage(sliceData, 'JPEG', margin, currentY, imgW, thisSliceH_mm);
+          sliceTop += thisSliceH_px;
+
+          if (sliceTop < canvas.height) {
+            pdf.addPage();
+            currentY = margin;
+            // Re-add thin header on continuation pages
+            pdf.setFillColor(45, 91, 227);
+            pdf.rect(0, 0, pageW, 6, 'F');
+            currentY = 10;
+          } else {
+            currentY += thisSliceH_mm + 6;
+          }
+        }
+      }
+      return currentY;
+    }
+
+    // Wrap sections in temporary visible containers for capture
+    const mainEl = document.querySelector('.main');
+
+    // KPI row
+    const kpiEl = document.querySelector('.kpi-grid');
+    y = await addSection(kpiEl, 'Indicateurs clés', y);
+
+    // Charts grid 1 (critères + reco)
+    const grid1 = mainEl.querySelectorAll('.charts-grid')[0];
+    y = await addSection(grid1, 'Scores par critère & Recommandations', y);
+
+    // Timeline
+    const timelineCard = mainEl.querySelectorAll('.chart-card')[2];
+    y = await addSection(timelineCard, 'Évolution temporelle', y);
+
+    // Formations + animateurs grid
+    const grid2 = mainEl.querySelectorAll('.charts-grid')[1];
+    y = await addSection(grid2, 'Classement formations & Évaluation animateurs', y);
+
+    // Table card
+    const tableCard = Array.from(mainEl.querySelectorAll('.chart-card')).find(c => c.querySelector('table'));
+    y = await addSection(tableCard, 'Détail par formation', y);
+
+    // Comments card
+    const commCard = Array.from(mainEl.querySelectorAll('.chart-card')).find(c => c.querySelector('.comments-grid'));
+    y = await addSection(commCard, 'Commentaires participants', y);
+
+    // Page numbers
+    const totalPages = pdf.internal.getNumberOfPages();
+    for (let p = 1; p <= totalPages; p++) {
+      pdf.setPage(p);
+      pdf.setFontSize(7);
+      pdf.setTextColor(160, 160, 160);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(`Page ${p} / ${totalPages}`, pageW - margin, pageH - 4, { align: 'right' });
+    }
+
+    // Build filename from active filters
+    const slug = [fF || 'toutes', fD || '', fA || ''].filter(Boolean).join('_').replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-_]/g, '').substring(0, 60);
+    pdf.save(`dashboard_evaluations_${slug || 'export'}.pdf`);
+
+  } catch (err) {
+    console.error('PDF export error:', err);
+    alert('Erreur lors de la génération du PDF. Vérifiez que les graphiques sont bien affichés.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Exporter PDF';
+  }
+}
+</script>
+</body>
+</html>
