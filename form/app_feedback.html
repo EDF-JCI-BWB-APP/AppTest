@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Formulaire de feedback de l'Ecole de la formation (EDF) de JCI BWB." />
   <title>Donne nous ton avis</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,8 +28,8 @@
       --space-16: 4rem;
 
       --color-bg:              #f7f6f2;
-      --color-surface:         #f9f8f5;
-      --color-surface-2:       #fbfbf9;
+      --color-surface:         #f2f1ed;
+      --color-surface-2:       #fafaf8;
       --color-border:          #d4d1ca;
       --color-divider:         #dcd9d5;
       --color-text:            #28251d;
@@ -38,261 +37,277 @@
       --color-text-inverse:    #f9f8f4;
       --color-primary:         #01696f;
       --color-primary-hover:   #0c4e54;
-      --color-primary-highlight: #cedcd8;
-
-      --radius-sm:   0.375rem;
-      --radius-md:   0.75rem;
-      --radius-lg:   1rem;
-      --radius-full: 9999px;
-
-      --shadow-sm: 0 1px 2px rgba(40,37,29,.08);
-      --shadow-md: 0 8px 28px rgba(40,37,29,.10);
-
-      --font-body:    'DM Sans', Arial, sans-serif;
-      --font-display: 'Playfair Display', Georgia, serif;
-
-      --transition-interactive: 180ms cubic-bezier(0.16,1,0.3,1);
-      --page-px: clamp(var(--space-4), 3vw, var(--space-12));
+      --color-primary-hl:      #cedcd8;
+      --shadow-sm: 0 1px 3px rgba(40,37,29,.10);
+      --shadow-md: 0 4px 20px rgba(40,37,29,.10);
     }
-
     [data-theme="dark"] {
-      --color-bg:            #171614;
-      --color-surface:       #1c1b19;
-      --color-surface-2:     #201f1d;
-      --color-border:        #393836;
-      --color-divider:       #262523;
+      --color-bg:            #111110;
+      --color-surface:       #181716;
+      --color-surface-2:     #1e1d1b;
+      --color-border:        #2e2d2b;
+      --color-divider:       #242322;
       --color-text:          #e3e0d8;
-      --color-text-muted:    #a8a39a;
-      --color-text-inverse:  #171614;
+      --color-text-muted:    #888480;
+      --color-text-inverse:  #111110;
       --color-primary:       #4f98a3;
       --color-primary-hover: #6bb3bd;
-      --color-primary-highlight: #253233;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,.22);
-      --shadow-md: 0 8px 28px rgba(0,0,0,.35);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme]) {
-        --color-bg: #171614; --color-surface: #1c1b19; --color-surface-2: #201f1d;
-        --color-border: #393836; --color-divider: #262523;
-        --color-text: #e3e0d8; --color-text-muted: #a8a39a; --color-text-inverse: #171614;
-        --color-primary: #4f98a3; --color-primary-hover: #6bb3bd; --color-primary-highlight: #253233;
-        --shadow-sm: 0 1px 2px rgba(0,0,0,.22); --shadow-md: 0 8px 28px rgba(0,0,0,.35);
-      }
+      --color-primary-hl:    #1e3134;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.30);
+      --shadow-md: 0 4px 20px rgba(0,0,0,.35);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    html, body { height: 100%; }
 
     body {
-      min-height: 100vh;
-      font-family: var(--font-body);
-      font-size: var(--text-base);
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: 1rem;
       line-height: 1.6;
       color: var(--color-text);
-      background:
-        radial-gradient(circle at top left, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 40%),
-        var(--color-bg);
+      background: var(--color-bg);
+      display: flex;
+      flex-direction: column;
     }
 
     a { color: var(--color-primary); }
-    img, svg, iframe { display: block; max-width: 100%; }
 
-    .skip-link {
-      position: absolute; left: -9999px; top: var(--space-4); z-index: 1000;
-      background: var(--color-primary); color: var(--color-text-inverse);
-      padding: var(--space-3) var(--space-4); border-radius: var(--radius-full);
-    }
-    .skip-link:focus { left: var(--space-4); }
-
-    /* ─── TOPBAR ─────────────────────────────────────────── */
+    /* ── TOPBAR ── */
     .topbar {
+      flex: 0 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-4);
-      padding: var(--space-4) var(--page-px);
-      background: color-mix(in srgb, var(--color-surface) 88%, transparent);
-      border-bottom: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
-      backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      padding: 0.75rem 2rem;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
     }
-
     .brand {
-      display: inline-flex; align-items: center; gap: var(--space-3);
-      text-decoration: none; color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
     }
     .brand-mark {
-      width: 44px; height: 44px; padding: var(--space-2);
-      border-radius: var(--radius-md);
+      width: 40px;
+      height: 40px;
+      padding: 6px;
+      border-radius: 8px;
       background: var(--color-surface-2);
       border: 1px solid var(--color-border);
-      box-shadow: var(--shadow-sm);
       color: var(--color-primary);
     }
-    .brand-copy strong { display: block; font-size: var(--text-sm); letter-spacing: .02em; }
-    .brand-copy span   { display: block; font-size: var(--text-xs); color: var(--color-text-muted); }
+    .brand-copy strong { display: block; font-size: 0.9rem; }
+    .brand-copy span   { display: block; font-size: 0.75rem; color: var(--color-text-muted); }
 
     .theme-toggle {
-      min-width: 44px; min-height: 44px;
-      border-radius: var(--radius-full);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       border: 1px solid var(--color-border);
       background: var(--color-surface-2);
       color: var(--color-text);
-      display: inline-flex; align-items: center; justify-content: center;
-      box-shadow: var(--shadow-sm); cursor: pointer;
-      transition: transform var(--transition-interactive), background var(--transition-interactive);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .15s;
     }
-    .theme-toggle:hover, .theme-toggle:focus-visible { transform: translateY(-1px); }
+    .theme-toggle:hover { background: var(--color-primary-hl); }
 
-    /* ─── MAIN CONTENT ───────────────────────────────────── */
-    .main-content {
-      padding: var(--space-8) var(--page-px) var(--space-16);
+    /* ── INTRO STRIP ── */
+    .intro-strip {
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* 50 / 50 sur grand écran */
+      gap: 1.5rem;
+      padding: 2rem 2rem 1.5rem;
+      background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--color-primary) 8%, var(--color-bg)),
+        var(--color-bg)
+      );
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .intro-left {
       display: flex;
       flex-direction: column;
-      gap: var(--space-6);
-    }
-
-    /* ─── TOP ROW : Hero + Contact ───────────────────────── */
-    .top-row {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: var(--space-6);
-      align-items: stretch;
-    }
-
-    .card {
-      background: color-mix(in srgb, var(--color-surface) 94%, transparent);
-      border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      backdrop-filter: blur(8px);
-    }
-
-    /* Hero card */
-    .hero-card {
-      padding: clamp(var(--space-6), 4vw, var(--space-12));
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      inset: auto -8% -14% auto;
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--color-primary) 16%, transparent);
-      filter: blur(14px);
-      pointer-events: none;
+      gap: 1rem;
     }
 
     .eyebrow {
-      display: inline-flex; align-items: center; gap: var(--space-2);
-      padding: var(--space-2) var(--space-4);
-      margin-bottom: var(--space-4);
-      border-radius: var(--radius-full);
-      background: var(--color-primary-highlight);
-      color: var(--color-primary-hover);
-      font-size: var(--text-xs); font-weight: 700;
-      letter-spacing: .08em; text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.85rem;
+      border-radius: 999px;
+      background: var(--color-primary-hl);
+      color: var(--color-primary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      width: fit-content;
     }
 
     h1 {
-      font-family: var(--font-display);
-      font-size: var(--text-2xl);
-      line-height: 1.05;
-      margin-bottom: var(--space-4);
-      max-width: 18ch;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+      line-height: 1.1;
     }
 
     .lead {
       color: var(--color-text-muted);
-      max-width: 68ch;
-      margin-bottom: var(--space-5);
+      font-size: 0.95rem;
+      max-width: 55ch;
     }
 
-    .bullet-list { list-style: none; display: grid; gap: var(--space-3); }
-    .bullet-list li { display: flex; gap: var(--space-3); align-items: flex-start; }
-    .bullet-dot {
-      width: .8rem; height: .8rem; margin-top: .45rem;
-      border-radius: 50%; background: var(--color-primary); flex: 0 0 auto;
-    }
-
-    /* Contact card */
-    .contact-card {
-      padding: clamp(var(--space-5), 3vw, var(--space-10));
-      display: flex; flex-direction: column; justify-content: center; gap: var(--space-5);
-    }
-    .contact-card h2, .form-card-header h2 {
-      font-size: var(--text-lg); margin: 0;
-    }
-    .contact-card p { color: var(--color-text-muted); max-width: 42ch; }
-
-    .contact-link {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-height: 44px; width: fit-content;
-      padding: var(--space-3) var(--space-6);
-      border-radius: var(--radius-full);
-      background: var(--color-primary);
-      color: var(--color-text-inverse);
-      text-decoration: none; font-weight: 700;
-      box-shadow: var(--shadow-sm);
-      transition: background var(--transition-interactive);
-      font-size: var(--text-sm);
-      word-break: break-all;
-    }
-    .contact-link:hover, .contact-link:focus-visible { background: var(--color-primary-hover); }
-
-    /* ─── FORM SECTION ───────────────────────────────────── */
-    .form-section {
+    .bullet-list {
+      list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0;
+      gap: 0.5rem;
+    }
+    .bullet-list li {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      font-size: 0.92rem;
+    }
+    .bullet-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-top: 0.42rem;
+      border-radius: 50%;
+      background: var(--color-primary);
+      flex: 0 0 auto;
     }
 
-    .form-card-header {
-      padding: var(--space-5) var(--space-6);
-      border-bottom: 1px solid var(--color-divider);
+    .intro-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.85rem;
+      padding: 1.5rem 2rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .intro-right h2 { font-size: 1.1rem; margin: 0; }
+    .intro-right p  { color: var(--color-text-muted); font-size: 0.9rem; margin: 0; }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.25rem;
+      border-radius: 999px;
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.875rem;
+      transition: background .15s;
+      width: fit-content;
+    }
+    .contact-link:hover { background: var(--color-primary-hover); }
+
+    /* ── FORM ZONE ── */
+    .form-zone {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .form-zone-header {
+      flex: 0 0 auto;
       display: flex;
       align-items: baseline;
-      gap: var(--space-4);
+      gap: 1rem;
       flex-wrap: wrap;
+      padding: 0.9rem 2rem;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
     }
-    .form-card-header p {
-      margin: 0; color: var(--color-text-muted); font-size: var(--text-sm);
+    .form-zone-header h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .form-zone-header p  {
+      margin: 0;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
     }
 
+    .form-wrapper {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      background: var(--color-surface-2);
+    }
+
+    /* L'iframe remplit la largeur, le zoom est ajusté via JS
+       pour étirer le contenu Notion. */
     .form-frame {
       width: 100%;
-      min-height: 820px;
-      border: 0;
-      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-      background: var(--color-surface-2);
+      height: 2400px; /* grande hauteur pour limiter la scrollbar interne */
+      border: none;
       display: block;
+      zoom: 1;
     }
 
-    .footer-note {
-      margin-top: var(--space-4);
-      color: var(--color-text-muted);
-      font-size: var(--text-sm);
+    .form-footer {
+      flex: 0 0 auto;
       text-align: center;
+      padding: 0.65rem 2rem;
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+    }
+    .form-footer a { color: var(--color-primary); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .intro-strip { grid-template-columns: 1fr minmax(280px, 1fr); }
+      .form-frame { height: 2400px; }
     }
 
-    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
-
-    /* ─── RESPONSIVE ─────────────────────────────────────── */
-    @media (max-width: 860px) {
-      .top-row { grid-template-columns: 1fr; }
-      h1 { max-width: none; }
+    @media (max-width: 780px) {
+      .intro-strip {
+        grid-template-columns: 1fr;
+        padding: 1.25rem 1rem 1rem;
+        gap: 1rem;
+      }
+      .topbar,
+      .form-zone-header,
+      .form-footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .intro-right { padding: 1.25rem; }
+      .form-frame { height: 2400px; }
+      h1 { font-size: clamp(1.6rem, 5vw, 2.2rem); }
     }
 
-    @media (max-width: 540px) {
-      .main-content { padding: var(--space-6) var(--space-4) var(--space-12); gap: var(--space-4); }
-      .topbar { padding: var(--space-3) var(--space-4); }
-      .form-frame { min-height: 680px; }
-      .brand-copy strong { font-size: var(--text-xs); }
+    @media (max-width: 480px) {
+      .topbar { padding: 0.65rem 0.75rem; }
+      .intro-strip { padding: 1rem 0.75rem; }
+      .form-zone-header {
+        padding: 0.75rem;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .intro-right { padding: 1rem; }
+      .contact-link {
+        width: 100%;
+        text-align: center;
+        word-break: break-all;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -305,12 +320,11 @@
   </style>
 </head>
 <body>
-  <a href="#contenu" class="skip-link">Aller au contenu</a>
 
   <!-- TOPBAR -->
   <header class="topbar">
-    <a href="#" class="brand" aria-label="Ecole de la formation de JCI BWB">
-      <div class="brand-mark" aria-hidden="true">
+    <a href="#" class="brand">
+      <div class="brand-mark">
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
           <rect x="6" y="6" width="36" height="36" rx="10" stroke="currentColor" stroke-width="2.5"/>
           <path d="M16 30.5V17.5H23.5C27.366 17.5 30 19.785 30 23.07C30 26.358 27.366 28.5 23.5 28.5H20.6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -322,45 +336,44 @@
         <span>Ecole de la formation</span>
       </div>
     </a>
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Basculer vers le mode sombre">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Basculer le thème">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
       </svg>
     </button>
   </header>
 
-  <!-- MAIN -->
-  <main id="contenu" class="main-content">
+  <!-- INTRO STRIP -->
+  <section class="intro-strip" aria-label="Présentation">
+    <div class="intro-left">
+      <div class="eyebrow">Votre retour compte</div>
+      <h1>Donne nous ton avis</h1>
+      <p class="lead">
+        Ce formulaire permet de recueillir vos retours, suggestions et commentaires
+        sur les applications que nous développons au sein de l'Ecole de la formation (EDF) de JCI BWB.
+      </p>
+      <ul class="bullet-list">
+        <li><span class="bullet-dot"></span><span>Partagez votre expérience d'utilisation de manière simple et directe.</span></li>
+        <li><span class="bullet-dot"></span><span>Signalez une idée d'amélioration, un point fort ou un problème rencontré.</span></li>
+        <li><span class="bullet-dot"></span><span>Aidez-nous à concevoir des outils plus utiles pour notre communauté.</span></li>
+      </ul>
+    </div>
+    <aside class="intro-right" aria-label="Contact">
+      <h2>Contact</h2>
+      <p>Pour toute question ou retour direct, écrivez-nous par email.</p>
+      <a class="contact-link" href="mailto:ecoledeformationjci@gmail.com">ecoledeformationjci@gmail.com</a>
+      <p>Merci pour votre temps et votre contribution à l'amélioration de nos applications.</p>
+    </aside>
+  </section>
 
-    <!-- TOP ROW -->
-    <div class="top-row">
-      <!-- Hero -->
-      <div class="hero-card card">
-        <div class="eyebrow">Votre retour compte</div>
-        <h1>Donne nous ton avis</h1>
-        <p class="lead">Ce formulaire permet de recueillir vos retours, suggestions et commentaires sur les applications que nous développons au sein de l'Ecole de la formation (EDF) de JCI BWB.</p>
-        <ul class="bullet-list" role="list">
-          <li><span class="bullet-dot" aria-hidden="true"></span><span>Partagez votre expérience d'utilisation de manière simple et directe.</span></li>
-          <li><span class="bullet-dot" aria-hidden="true"></span><span>Signalez une idée d'amélioration, un point fort ou un problème rencontré.</span></li>
-          <li><span class="bullet-dot" aria-hidden="true"></span><span>Aidez-nous à concevoir des outils plus utiles pour notre communauté.</span></li>
-        </ul>
-      </div>
-
-      <!-- Contact -->
-      <aside class="contact-card card" aria-label="Contact">
-        <h2>Contact</h2>
-        <p>Pour toute question complémentaire ou un retour direct, vous pouvez également nous écrire par email.</p>
-        <a class="contact-link" href="mailto:ecoledeformationjci@gmail.com">ecoledeformationjci@gmail.com</a>
-        <p>Merci pour votre temps et votre contribution à l'amélioration de nos applications.</p>
-      </aside>
+  <!-- FORM ZONE -->
+  <div class="form-zone">
+    <div class="form-zone-header">
+      <h2>Formulaire de feedback</h2>
+      <p>Remplissez le formulaire ci-dessous pour nous transmettre votre avis.</p>
     </div>
 
-    <!-- FORM FULL WIDTH -->
-    <section class="form-section card" aria-labelledby="form-title">
-      <div class="form-card-header">
-        <h2 id="form-title">Formulaire de feedback</h2>
-        <p>Remplissez le formulaire ci-dessous pour nous transmettre votre avis.</p>
-      </div>
+    <div class="form-wrapper">
       <iframe
         class="form-frame"
         src="https://twisty-time-d9b.notion.site/ebd//3747e056766380ffa4b1d2b011e39f68"
@@ -368,19 +381,38 @@
         frameborder="0"
         allowfullscreen>
       </iframe>
-      <p class="footer-note">Si le formulaire ne s'affiche pas, écrivez-nous directement à <a href="mailto:ecoledeformationjci@gmail.com">ecoledeformationjci@gmail.com</a>.</p>
-    </section>
+    </div>
 
-  </main>
+    <p class="form-footer">
+      Si le formulaire ne s'affiche pas, écrivez-nous à
+      <a href="mailto:ecoledeformationjci@gmail.com">ecoledeformationjci@gmail.com</a>.
+    </p>
+  </div>
 
   <script>
+    // Zoom dynamique : étire le contenu Notion (max ~680px) à la largeur du conteneur
+    const NOTION_INNER_W = 680;
+    function resizeFormFrame() {
+      const wrapper = document.querySelector('.form-wrapper');
+      const frame = document.querySelector('.form-frame');
+      if (!wrapper || !frame) return;
+      const w = wrapper.offsetWidth;
+      if (w <= NOTION_INNER_W) { frame.style.zoom = '1'; frame.style.height = '2400px'; return; }
+      const z = w / NOTION_INNER_W;
+      frame.style.zoom = z;
+      frame.style.height = Math.ceil(2400 / z) + 'px';
+    }
+    window.addEventListener('load', resizeFormFrame);
+    window.addEventListener('resize', resizeFormFrame);
+
     (function () {
       const root = document.documentElement;
       const btn = document.querySelector('[data-theme-toggle]');
-      let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      let theme = root.getAttribute('data-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       const icons = {
-        dark: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>',
-        light: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+        dark:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>',
+        light: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
       };
       function apply(t) {
         root.setAttribute('data-theme', t);
@@ -388,7 +420,10 @@
         btn.setAttribute('aria-label', t === 'dark' ? 'Basculer vers le mode clair' : 'Basculer vers le mode sombre');
       }
       apply(theme);
-      btn.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; apply(theme); });
+      btn.addEventListener('click', () => {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        apply(theme);
+      });
     })();
   </script>
 </body>
