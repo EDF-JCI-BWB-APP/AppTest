@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organisateur de Formation JCI — v2</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --gray: #6b7280;
+    --gray-light: #f3f4f6;
+    --border: #e5e7eb;
+    --text: #111827;
+    --text-muted: #6b7280;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f8fafc;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  header {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  header .logo {
+    width: 40px; height: 40px;
+    background: var(--primary);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  header h1 { font-size: 18px; font-weight: 700; color: var(--text); }
+  header p { font-size: 13px; color: var(--text-muted); }
+
+  .header-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+
+  .progress-bar-wrapper {
+    background: var(--border);
+    border-radius: 99px;
+    height: 8px;
+    width: 160px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+  .progress-label { font-size: 12px; color: var(--text-muted); }
+
+  .main-container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; }
+
+  /* Date Picker Card */
+  .date-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .date-card .icon-big { font-size: 36px; }
+  .date-card label { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; }
+  .date-card input[type="text"], .date-card input[type="date"] {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 220px;
+  }
+  .date-card input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: #1d4ed8; }
+  .btn-outline { background: white; color: var(--primary); border: 1px solid var(--primary); }
+  .btn-outline:hover { background: var(--primary-light); }
+  .btn-sm { padding: 6px 14px; font-size: 13px; }
+  .btn-success { background: var(--success); color: white; }
+  .btn-success:hover { background: #15803d; }
+  .btn-import { background: white; color: var(--success); border: 1px solid var(--success); }
+  .btn-import:hover { background: var(--success-light); }
+  .btn-danger-outline { background: white; color: var(--danger); border: 1px solid var(--danger); }
+  .btn-danger-outline:hover { background: var(--danger-light); }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 4px; margin-bottom: 20px; background: white; border: 1px solid var(--border); border-radius: 10px; padding: 4px; }
+  .tab {
+    flex: 1; padding: 9px 12px; text-align: center; cursor: pointer;
+    border-radius: 7px; font-size: 13px; font-weight: 500; color: var(--text-muted);
+    transition: all 0.15s; border: none; background: transparent;
+  }
+  .tab.active { background: var(--primary); color: white; }
+  .tab:hover:not(.active) { background: var(--gray-light); color: var(--text); }
+
+  /* Phase blocks */
+  .phase {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .phase-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.1s;
+  }
+  .phase-header:hover { background: var(--gray-light); }
+  .phase-icon { font-size: 22px; flex-shrink: 0; }
+  .phase-title { font-weight: 700; font-size: 15px; }
+  .phase-deadline { font-size: 12px; color: var(--text-muted); margin-left: auto; padding: 4px 10px; background: var(--gray-light); border-radius: 99px; white-space: nowrap; }
+  .phase-deadline.late { background: var(--danger-light); color: var(--danger); }
+  .phase-deadline.upcoming { background: var(--warning-light); color: var(--warning); }
+  .phase-deadline.ok { background: var(--success-light); color: var(--success); }
+  .phase-toggle { font-size: 12px; color: var(--text-muted); transition: transform 0.2s; }
+  .phase-toggle.open { transform: rotate(90deg); }
+  .phase-progress-mini {
+    width: 60px; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden;
+    flex-shrink: 0;
+  }
+  .phase-progress-mini-fill { height: 100%; background: var(--primary); transition: width 0.3s; }
+
+  .phase-body { display: none; padding: 0 18px 16px; }
+  .phase-body.open { display: block; }
+
+  /* Task items */
+  .task-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: background 0.1s;
+    cursor: pointer;
+  }
+  .task-item:hover { background: var(--gray-light); }
+  .task-item.done { opacity: 0.55; }
+  .task-checkbox {
+    width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+    border: 2px solid var(--border); border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    background: white; transition: all 0.15s; cursor: pointer;
+  }
+  .task-item.done .task-checkbox { background: var(--success); border-color: var(--success); }
+  .task-checkbox-tick { color: white; font-size: 11px; display: none; }
+  .task-item.done .task-checkbox-tick { display: block; }
+  .task-label { font-size: 14px; }
+  .task-item.done .task-label { text-decoration: line-through; }
+  .task-note { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .task-tag {
+    margin-left: auto; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .tag-must { background: var(--danger-light); color: var(--danger); }
+  .tag-important { background: var(--warning-light); color: var(--warning); }
+  .tag-nice { background: var(--gray-light); color: var(--gray); }
+
+  /* Retroplanning table */
+  #retro-view { display: none; }
+  .retro-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .retro-table thead { background: var(--primary); color: white; }
+  .retro-table th { padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; }
+  .retro-table td { padding: 10px 16px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  .retro-table tr:last-child td { border-bottom: none; }
+  .retro-table tr:hover td { background: var(--gray-light); }
+  .retro-table td.task-done { text-decoration: line-through; color: var(--text-muted); }
+  .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot-late { background: var(--danger); }
+  .dot-upcoming { background: var(--warning); }
+  .dot-future { background: var(--primary); }
+  .dot-done { background: var(--success); }
+
+  .section-divider {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-muted); padding: 14px 0 6px; border-bottom: 1px solid var(--border); margin-bottom: 8px;
+  }
+
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+  .empty-state .big-icon { font-size: 48px; display: block; margin-bottom: 12px; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 700; }
+  .badge-blue { background: var(--primary-light); color: var(--primary); }
+
+  @media (max-width: 600px) {
+    header { flex-wrap: wrap; }
+    .header-actions { width: 100%; justify-content: flex-end; }
+    .date-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .date-card input { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🎓</div>
+  <div>
+    <h1>Organisateur de Formation JCI <span style="font-size:11px;background:var(--primary);color:white;padding:2px 7px;border-radius:99px;vertical-align:middle;font-weight:700;">v2</span></h1>
+    <p>Checklist & rétro-planning automatique</p>
+  </div>
+  <div class="header-actions">
+    <span class="progress-label" id="global-label">0 / 0 tâches</span>
+    <div class="progress-bar-wrapper">
+      <div class="progress-bar-fill" id="global-bar" style="width:0%"></div>
+    </div>
+    <button class="btn btn-sm btn-import" onclick="document.getElementById('csv-import-input').click()" title="Importer un fichier CSV sauvegardé">⬆️ Importer CSV</button>
+    <button class="btn btn-sm btn-success" onclick="exportCSV()" title="Exporter l'état actuel en CSV">⬇️ Exporter CSV</button>
+    <input type="file" id="csv-import-input" accept=".csv" style="display:none" onchange="importCSV(event)">
+    <button class="btn btn-sm btn-danger-outline" onclick="resetAll()">↺ Réinitialiser</button>
+  </div>
+</header>
+
+<div class="main-container">
+
+  <!-- Date Card -->
+  <div class="date-card">
+    <div class="icon-big">📅</div>
+    <div>
+      <label>Nom de la formation</label>
+      <input type="text" id="formation-name" placeholder="Ex: Formation Prise de parole JCI Tournai" style="width:300px" oninput="updateTitle()">
+    </div>
+    <div>
+      <label>Date de la formation</label>
+      <input type="date" id="formation-date" onchange="onDateChange()">
+    </div>
+    <div id="days-count" style="display:none">
+      <span id="days-badge" class="badge badge-blue">J-?</span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('checklist', this)">☑️ Checklist</button>
+    <button class="tab" onclick="switchTab('retro', this)">📆 Rétro-planning</button>
+  </div>
+
+  <!-- CHECKLIST VIEW -->
+  <div id="checklist-view"></div>
+
+  <!-- RETRO VIEW -->
+  <div id="retro-view">
+    <div id="retro-empty" class="empty-state">
+      <span class="big-icon">📅</span>
+      <strong>Sélectionnez une date de formation</strong> pour générer le rétro-planning automatique
+    </div>
+    <table class="retro-table" id="retro-table" style="display:none">
+      <thead>
+        <tr>
+          <th>Statut</th>
+          <th>Tâche</th>
+          <th>Phase</th>
+          <th>Date cible</th>
+          <th>Délai recommandé</th>
+        </tr>
+      </thead>
+      <tbody id="retro-body"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const PHASES = [
+  {
+    id: "p1",
+    icon: "🔍",
+    title: "1. Cadrage & besoins",
+    offsetDays: -60,
+    tasks: [
+      { id: "t1", label: "Identifier les besoins en formation des membres", note: "Sondage, discussion CA, liste des formations disponibles sur lajeunechambre.be", tag: "must", offset: -60 },
+      { id: "t2", label: "Définir le contexte et les enjeux", note: "Pourquoi cette formation ? Quel problème résoudre ?", tag: "must", offset: -56 },
+      { id: "t3", label: "Définir le profil et nombre de participants", note: "Niveau, rôles, attentes, groupe homogène ou mixte ?", tag: "must", offset: -56 },
+      { id: "t4", label: "Fixer les objectifs généraux et opérationnels", note: "Savoirs, savoir-faire, comportements à développer", tag: "must", offset: -52 },
+      { id: "t5", label: "Choisir le type de formation et les thèmes à couvrir", note: "Contenu essentiel, durée estimée, niveau visé", tag: "important", offset: -50 },
+    ]
+  },
+  {
+    id: "p2",
+    icon: "👤",
+    title: "2. Trouver le formateur",
+    offsetDays: -50,
+    tasks: [
+      { id: "t6", label: "Contacter le responsable formation régional (EDF)", note: "ecoledeformation.jci@gmail.com", tag: "must", offset: -50 },
+      { id: "t7", label: "Confirmer le formateur et co-formateur", note: "Préciser objectifs, profil participants, durée, date", tag: "must", offset: -45 },
+      { id: "t8", label: "Obtenir un devis et valider le budget formateur", note: "Frais de déplacement 0,44€/km + autres frais convenus", tag: "must", offset: -42 },
+      { id: "t9", label: "Demander une description courte de la formation", note: "Pour la communication et la promotion", tag: "must", offset: -40 },
+      { id: "t10", label: "Identifier les prérequis et besoins matériels du formateur", note: "Équipement, disposition salle, logiciels, etc.", tag: "important", offset: -38 },
+    ]
+  },
+  {
+    id: "p3",
+    icon: "📍",
+    title: "3. Logistique & lieu",
+    offsetDays: -45,
+    tasks: [
+      { id: "t11", label: "Choisir et réserver le lieu", note: "Communes, écoles, entreprises, associations — réserver tôt !", tag: "must", offset: -45 },
+      { id: "t12", label: "Vérifier les équipements disponibles", note: "Projecteur, PC, paperboards, WiFi, tables/chaises", tag: "must", offset: -30 },
+      { id: "t13", label: "Vérifier accessibilité (PMR, parking, transports)", tag: "important", offset: -30 },
+      { id: "t14", label: "Vérifier les options catering", note: "Boissons, nourriture — autorisé sur place ?", tag: "important", offset: -21 },
+      { id: "t15", label: "Préparer le matériel pédagogique (avec formateur)", note: "Syllabus, fiches exercices, feuille de route, feuille de présence", tag: "must", offset: -21 },
+      { id: "t16", label: "Prévoir cadeau symbolique pour le formateur", note: "Chocolat, bouteille, tasse personnalisée, trophée...", tag: "nice", offset: -14 },
+    ]
+  },
+  {
+    id: "p4",
+    icon: "💰",
+    title: "4. Budget & inscriptions",
+    offsetDays: -42,
+    tasks: [
+      { id: "t17", label: "Établir le budget prévisionnel", note: "Objectif : équilibre, consommation budget ou revenu pour la section", tag: "must", offset: -42 },
+      { id: "t18", label: "Fixer le prix d'inscription (membre / non-membre)", note: "Prix trop bas = image de mauvaise qualité. Valoriser les membres.", tag: "must", offset: -40 },
+      { id: "t19", label: "Créer le formulaire d'inscription", note: "Lieu, date/heure, prix, modalités de transport, pré-requis", tag: "must", offset: -35 },
+      { id: "t20", label: "Ouvrir les inscriptions et suivre les paiements", note: "En collaboration avec le trésorier, prévoir liste d'attente", tag: "must", offset: -28 },
+      { id: "t21", label: "Fermer les inscriptions si contingent atteint", tag: "must", offset: -7 },
+    ]
+  },
+  {
+    id: "p5",
+    icon: "📣",
+    title: "5. Communication",
+    offsetDays: -35,
+    tasks: [
+      { id: "t22", label: "Post #1 — Annonce de la formation (date connue)", note: "Facebook, LinkedIn, Instagram, WhatsApp, Hoplr...", tag: "must", offset: -35 },
+      { id: "t23", label: "Post #2 — Lieu confirmé + détails pratiques", tag: "must", offset: -21 },
+      { id: "t24", label: "Posts de rappel (x2 minimum avant la date)", note: "Fréquence à augmenter à l'approche de la date", tag: "important", offset: -10 },
+      { id: "t25", label: "Envoyer confirmation d'inscription aux inscrits", note: "Lieu, date, heure, matériel à apporter, pré-requis", tag: "must", offset: -7 },
+      { id: "t26", label: "Dernier rappel aux inscrits (J-3)", tag: "important", offset: -3 },
+      { id: "t27", label: "Contacter le responsable com' de la section pour coordination", note: "Éviter les conflits avec d'autres posts prévus", tag: "nice", offset: -30 },
+    ]
+  },
+  {
+    id: "p6",
+    icon: "🎯",
+    title: "6. Jour de la formation",
+    offsetDays: 0,
+    tasks: [
+      { id: "t28", label: "Préparer la salle (disposition, matériel, catering)", tag: "must", offset: 0 },
+      { id: "t29", label: "Accueillir les participants et gérer les retardataires", tag: "must", offset: 0 },
+      { id: "t30", label: "Présenter le formateur et la JCI", note: "Si non-membres présents : présentation JCI + événements locaux", tag: "must", offset: 0 },
+      { id: "t31", label: "Assurer le timekeeping et la logistique pendant la formation", tag: "must", offset: 0 },
+      { id: "t32", label: "Intégrer une pause pour le formulaire de feedback EDF", note: "Ne pas mettre en toute fin — https://forms.gle/feedback-edf", tag: "must", offset: 0 },
+      { id: "t33", label: "Transmettre la liste des inscrits au formateur", tag: "important", offset: 0 },
+      { id: "t34", label: "Remettre le cadeau au formateur", tag: "important", offset: 0 },
+    ]
+  },
+  {
+    id: "p7",
+    icon: "✅",
+    title: "7. Post-formation",
+    offsetDays: 7,
+    tasks: [
+      { id: "t35", label: "Envoyer email de remerciement aux participants (dans la semaine)", note: "Contact formateur, supports de formation, événements à venir", tag: "must", offset: 3 },
+      { id: "t36", label: "Publier un post récap / photos sur les réseaux sociaux", tag: "important", offset: 5 },
+      { id: "t37", label: "Informer l'EDF (package formation + heures formateur)", note: "ecoledeformation.jci@gmail.com", tag: "must", offset: 7 },
+      { id: "t38", label: "Faire le bilan financier et le transmettre au trésorier", tag: "must", offset: 7 },
+      { id: "t39", label: "Demander le rapport de feedback anonymisé à l'EDF", note: "Points forts et axes d'amélioration organisation/formateur", tag: "important", offset: 10 },
+      { id: "t40", label: "Mettre à jour le listing formations et formateurs (EDF)", note: "Permet de comptabiliser les heures et de pérenniser les contacts", tag: "must", offset: 10 },
+      { id: "t41", label: "Préparer le dossier pour l'Award Formation BWB (si applicable)", note: "Maximiser les feedbacks = meilleure chance pour l'award aux assises", tag: "nice", offset: 14 },
+    ]
+  }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  done: {},
+  formationDate: null,
+  formationName: ""
+};
+
+function loadState() {
+  try {
+    const s = localStorage.getItem("jci-formation-tool");
+    if (s) state = JSON.parse(s);
+    if (state.formationDate) {
+      document.getElementById("formation-date").value = state.formationDate;
+      document.getElementById("formation-name").value = state.formationName || "";
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  localStorage.setItem("jci-formation-tool", JSON.stringify(state));
+}
+
+function resetAll() {
+  if (!confirm("Réinitialiser toutes les cases cochées ?")) return;
+  state.done = {};
+  saveState();
+  renderChecklist();
+  renderRetro();
+  updateGlobalProgress();
+}
+
+// ============================================================
+// DATE
+// ============================================================
+function onDateChange() {
+  state.formationDate = document.getElementById("formation-date").value;
+  saveState();
+  updateDaysCount();
+  renderChecklist();
+  renderRetro();
+}
+
+function updateTitle() {
+  state.formationName = document.getElementById("formation-name").value;
+  saveState();
+}
+
+function updateDaysCount() {
+  const el = document.getElementById("days-count");
+  const badge = document.getElementById("days-badge");
+  if (!state.formationDate) { el.style.display = "none"; return; }
+  const diff = getDaysFromNow(state.formationDate);
+  el.style.display = "block";
+  if (diff > 0) {
+    badge.textContent = "J-" + diff;
+    badge.className = "badge " + (diff < 7 ? "badge-red" : "badge-blue");
+  } else if (diff === 0) {
+    badge.textContent = "Aujourd'hui !";
+    badge.className = "badge badge-green";
+  } else {
+    badge.textContent = "Passé (" + Math.abs(diff) + "j)";
+    badge.className = "badge badge-gray";
+  }
+}
+
+function getDaysFromNow(dateStr) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const d = new Date(dateStr); d.setHours(0,0,0,0);
+  return Math.round((d - today) / 86400000);
+}
+
+function addDaysToDate(dateStr, days) {
+  const d = new Date(dateStr);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString("fr-BE", { weekday: "short", day: "2-digit", month: "short", year: "numeric" });
+}
+
+// ============================================================
+// TOGGLE TASK
+// ============================================================
+function toggleTask(id) {
+  state.done[id] = !state.done[id];
+  saveState();
+  updateGlobalProgress();
+  // Update checklist item
+  const el = document.getElementById("task-" + id);
+  if (el) {
+    el.classList.toggle("done", state.done[id]);
+  }
+  // Update retro row
+  const retEl = document.getElementById("retro-task-" + id);
+  if (retEl) {
+    retEl.classList.toggle("task-done", state.done[id]);
+    const dot = document.getElementById("retro-dot-" + id);
+    if (dot) dot.className = "status-dot " + getRetroStatus(id).dotClass;
+  }
+  // Update phase progress bars
+  PHASES.forEach(p => {
+    const fill = document.getElementById("phase-fill-" + p.id);
+    if (fill) {
+      const pct = getPhaseProgress(p);
+      fill.style.width = pct + "%";
+    }
+  });
+}
+
+function getPhaseProgress(phase) {
+  const done = phase.tasks.filter(t => state.done[t.id]).length;
+  return phase.tasks.length > 0 ? Math.round(done / phase.tasks.length * 100) : 0;
+}
+
+function updateGlobalProgress() {
+  const allTasks = PHASES.flatMap(p => p.tasks);
+  const done = allTasks.filter(t => state.done[t.id]).length;
+  const pct = allTasks.length > 0 ? Math.round(done / allTasks.length * 100) : 0;
+  document.getElementById("global-bar").style.width = pct + "%";
+  document.getElementById("global-label").textContent = done + " / " + allTasks.length + " tâches";
+}
+
+// ============================================================
+// RENDER CHECKLIST
+// ============================================================
+function renderChecklist() {
+  const container = document.getElementById("checklist-view");
+  container.innerHTML = "";
+
+  PHASES.forEach(phase => {
+    const phaseEl = document.createElement("div");
+    phaseEl.className = "phase";
+    phaseEl.id = "phase-" + phase.id;
+
+    // Deadline badge
+    let deadlineHtml = "";
+    if (state.formationDate) {
+      const targetDate = addDaysToDate(state.formationDate, phase.offsetDays);
+      const diff = getDaysFromNow(targetDate.toISOString().split("T")[0]);
+      let cls = diff < 0 ? "late" : diff <= 7 ? "upcoming" : "ok";
+      deadlineHtml = `<span class="phase-deadline ${cls}">${formatDate(targetDate)}</span>`;
+    }
+
+    const pct = getPhaseProgress(phase);
+    phaseEl.innerHTML = `
+      <div class="phase-header" onclick="togglePhase('${phase.id}')">
+        <span class="phase-icon">${phase.icon}</span>
+        <span class="phase-title">${phase.title}</span>
+        ${deadlineHtml}
+        <div class="phase-progress-mini" title="${pct}% complété">
+          <div class="phase-progress-mini-fill" id="phase-fill-${phase.id}" style="width:${pct}%"></div>
+        </div>
+        <span class="phase-toggle" id="toggle-${phase.id}">▶</span>
+      </div>
+      <div class="phase-body" id="body-${phase.id}">
+        ${phase.tasks.map(t => renderTask(t)).join("")}
+      </div>
+    `;
+    container.appendChild(phaseEl);
+  });
+}
+
+function renderTask(task) {
+  const done = state.done[task.id];
+  const tagLabels = { must: "Indispensable", important: "Important", nice: "Optionnel" };
+  const tagClasses = { must: "tag-must", important: "tag-important", nice: "tag-nice" };
+  return `
+    <div class="task-item ${done ? "done" : ""}" id="task-${task.id}" onclick="toggleTask('${task.id}')">
+      <div class="task-checkbox">
+        <span class="task-checkbox-tick">✓</span>
+      </div>
+      <div style="flex:1">
+        <div class="task-label">${task.label}</div>
+        ${task.note ? `<div class="task-note">${task.note}</div>` : ""}
+      </div>
+      <span class="task-tag ${tagClasses[task.tag]}">${tagLabels[task.tag]}</span>
+    </div>
+  `;
+}
+
+function togglePhase(id) {
+  const body = document.getElementById("body-" + id);
+  const toggle = document.getElementById("toggle-" + id);
+  body.classList.toggle("open");
+  toggle.classList.toggle("open");
+}
+
+// ============================================================
+// RENDER RETRO
+// ============================================================
+function getRetroStatus(taskId) {
+  if (state.done[taskId]) return { label: "✅ Fait", dotClass: "dot-done" };
+  if (!state.formationDate) return { label: "—", dotClass: "dot-future" };
+  const task = PHASES.flatMap(p => p.tasks).find(t => t.id === taskId);
+  if (!task) return { label: "—", dotClass: "dot-future" };
+  const target = addDaysToDate(state.formationDate, task.offset);
+  const diff = getDaysFromNow(target.toISOString().split("T")[0]);
+  if (diff < 0) return { label: "⚠️ En retard", dotClass: "dot-late" };
+  if (diff <= 7) return { label: "🔔 Bientôt", dotClass: "dot-upcoming" };
+  return { label: "📌 À venir", dotClass: "dot-future" };
+}
+
+function renderRetro() {
+  const empty = document.getElementById("retro-empty");
+  const table = document.getElementById("retro-table");
+  const body = document.getElementById("retro-body");
+
+  if (!state.formationDate) {
+    empty.style.display = "block";
+    table.style.display = "none";
+    return;
+  }
+  empty.style.display = "none";
+  table.style.display = "table";
+  body.innerHTML = "";
+
+  // Sort all tasks by target date
+  const allTasks = [];
+  PHASES.forEach(phase => {
+    phase.tasks.forEach(t => {
+      const target = addDaysToDate(state.formationDate, t.offset);
+      allTasks.push({ ...t, phase: phase.title, phaseIcon: phase.icon, target });
+    });
+  });
+  allTasks.sort((a, b) => a.target - b.target);
+
+  allTasks.forEach(t => {
+    const status = getRetroStatus(t.id);
+    const diff = t.offset;
+    const delayLabel = diff === 0 ? "Jour J" : diff > 0 ? "J+" + diff + " après la formation" : "J-" + Math.abs(diff) + " avant la formation";
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="status-dot ${status.dotClass}" id="retro-dot-${t.id}"></span>${status.label}</td>
+      <td class="${state.done[t.id] ? "task-done" : ""}" id="retro-task-${t.id}" style="cursor:pointer" onclick="toggleTask('${t.id}')">${t.label}</td>
+      <td>${t.phaseIcon} ${t.phase}</td>
+      <td><strong>${formatDate(t.target)}</strong></td>
+      <td style="color:var(--text-muted)">${delayLabel}</td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(tab, btn) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  btn.classList.add("active");
+  if (tab === "checklist") {
+    document.getElementById("checklist-view").style.display = "block";
+    document.getElementById("retro-view").style.display = "none";
+  } else {
+    document.getElementById("checklist-view").style.display = "none";
+    document.getElementById("retro-view").style.display = "block";
+    renderRetro();
+  }
+}
+
+
+// ============================================================
+// EXPORT CSV
+// ============================================================
+function exportCSV() {
+  const name = state.formationName || "formation";
+  const date = state.formationDate || "";
+  const rows = [
+    ["Formation", name],
+    ["Date de formation", date],
+    ["Exporté le", new Date().toLocaleDateString("fr-BE")],
+    [],
+    ["ID Tâche", "Phase", "Tâche", "Priorité", "Date cible", "Statut"]
+  ];
+
+  PHASES.forEach(phase => {
+    phase.tasks.forEach(t => {
+      const done = state.done[t.id] ? "Fait" : "À faire";
+      const tagLabels = { must: "Indispensable", important: "Important", nice: "Optionnel" };
+      let targetDate = "";
+      if (date) {
+        const d = addDaysToDate(date, t.offset);
+        targetDate = d.toLocaleDateString("fr-BE");
+      }
+      rows.push([
+        t.id,
+        phase.title.replace(/^[^a-zA-Z0-9]+/, "").replace(/"/g, '""'),
+        t.label.replace(/"/g, '""'),
+        tagLabels[t.tag],
+        targetDate,
+        done
+      ]);
+    });
+  });
+
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(";")).join("\n");
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const safeName = name.replace(/[^a-zA-Z0-9\-_\s]/g, "").trim().replace(/\s+/g, "_") || "formation";
+  a.href = url;
+  a.download = `retro_planning_${safeName}_${date || "sans-date"}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ============================================================
+// IMPORT CSV
+// ============================================================
+function importCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const text = e.target.result.replace(/^\uFEFF/, ""); // strip BOM
+      const lines = text.split("\n").map(l => l.trim()).filter(l => l);
+
+      // Extract formation meta from first rows
+      let newName = "", newDate = "";
+      const parseLine = l => l.split(";").map(c => c.replace(/^"|"$/g, "").replace(/""/g, '"'));
+
+      lines.forEach(line => {
+        const cols = parseLine(line);
+        if (cols[0] === "Formation") newName = cols[1];
+        if (cols[0] === "Date de formation") newDate = cols[1];
+      });
+
+      // Find data rows (after header row with "ID Tâche")
+      const headerIdx = lines.findIndex(l => l.includes("ID Tâche"));
+      if (headerIdx === -1) { alert("Format CSV non reconnu. Veuillez utiliser un fichier exporté depuis cet outil."); return; }
+
+      const newDone = {};
+      for (let i = headerIdx + 1; i < lines.length; i++) {
+        const cols = parseLine(lines[i]);
+        if (cols.length >= 6) {
+          const id = cols[0].trim();
+          const statut = cols[5].trim();
+          if (id) newDone[id] = (statut === "Fait");
+        }
+      }
+
+      // Apply imported state
+      state.done = newDone;
+      if (newName) {
+        state.formationName = newName;
+        document.getElementById("formation-name").value = newName;
+      }
+      if (newDate) {
+        // newDate is fr-BE format dd/mm/yyyy → convert to yyyy-mm-dd
+        const parts = newDate.split("/");
+        if (parts.length === 3) {
+          const iso = `${parts[2]}-${parts[1].padStart(2,"0")}-${parts[0].padStart(2,"0")}`;
+          state.formationDate = iso;
+          document.getElementById("formation-date").value = iso;
+        }
+      }
+
+      saveState();
+      updateDaysCount();
+      renderChecklist();
+      renderRetro();
+      updateGlobalProgress();
+
+      // Show toast
+      showToast("✅ Import réussi — " + Object.values(newDone).filter(Boolean).length + " tâches cochées importées");
+    } catch(err) {
+      alert("Erreur lors de l'import : " + err.message);
+    }
+    // Reset input so same file can be re-imported
+    event.target.value = "";
+  };
+  reader.readAsText(file, "UTF-8");
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) {
+  let toast = document.getElementById("toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "toast";
+    toast.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;color:white;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:500;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.25);transition:opacity 0.4s;";
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = "1";
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { toast.style.opacity = "0"; }, 3000);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadState();
+renderChecklist();
+updateDaysCount();
+updateGlobalProgress();
+// Open first phase by default
+togglePhase("p1");
+</script>
+</body>
+</html>
