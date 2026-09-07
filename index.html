@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDF App's</title>
+<style>
+  :root{
+    --bg:#0d0d10;
+    --card:#17171c;
+    --card-hover:#1f1f26;
+    --text:#f2f2f5;
+    --muted:#9a9aa5;
+    --accent:#7c5cff;
+    --border:#2a2a33;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    padding:48px 16px;
+  }
+  .wrap{
+    width:100%;
+    max-width:520px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:32px;
+  }
+  header h1{
+    font-size:1.5rem;
+    margin:0 0 6px;
+  }
+  header p{
+    color:var(--muted);
+    margin:0;
+    font-size:0.95rem;
+  }
+  .app-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    margin-bottom:14px;
+    overflow:hidden;
+    transition:background 0.2s ease;
+  }
+  .app-card:hover{
+    background:var(--card-hover);
+  }
+  .app-button{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:16px 18px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .app-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+    font-size:1.02rem;
+  }
+  .app-icon{
+    font-size:1.2rem;
+  }
+  .app-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .app-link{
+    color:var(--accent);
+    text-decoration:none;
+    font-size:0.85rem;
+    font-weight:600;
+    border:1px solid var(--accent);
+    padding:5px 12px;
+    border-radius:20px;
+    white-space:nowrap;
+  }
+  .app-link:hover{
+    background:var(--accent);
+    color:#fff;
+  }
+  .chevron{
+    color:var(--muted);
+    transition:transform 0.2s ease;
+    font-size:0.8rem;
+  }
+  .app-card.open .chevron{
+    transform:rotate(180deg);
+  }
+  .app-desc{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.25s ease;
+    border-top:1px solid transparent;
+  }
+  .app-card.open .app-desc{
+    max-height:300px;
+    border-top:1px solid var(--border);
+  }
+  .app-desc p{
+    margin:0;
+    padding:14px 18px 18px;
+    color:var(--muted);
+    font-size:0.9rem;
+    line-height:1.5;
+  }
+  section.news{
+    margin-top:40px;
+  }
+  section.news h2{
+    font-size:1.1rem;
+    margin:0 0 16px;
+    text-align:center;
+  }
+  .news-item{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 18px;
+    margin-bottom:10px;
+  }
+  .news-item .news-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:4px;
+  }
+  .news-item .news-app{
+    font-weight:600;
+    font-size:0.9rem;
+    color:var(--accent);
+  }
+  .news-item .news-date{
+    font-size:0.78rem;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .news-item p{
+    margin:0;
+    font-size:0.88rem;
+    color:var(--text);
+    line-height:1.5;
+  }
+  footer{
+    text-align:center;
+    margin-top:40px;
+    color:var(--muted);
+    font-size:0.78rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>EDF App's</h1>
+    <p>Un accès rapide à mes différentes apps</p>
+  </header>
+
+  <div id="apps"></div>
+
+  <section class="news">
+    <h2>📢 Actus dev</h2>
+    <div id="news"></div>
+  </section>
+
+  <footer>Martin Lisen — martinlisen.com</footer>
+
+</div>
+
+<script>
+/* ============================================================
+   POUR METTRE À JOUR LE SITE : modifie uniquement les 2 tableaux
+   ci-dessous (APPS et NEWS), rien d'autre à toucher.
+   ============================================================ */
+
+const APPS = [
+  {
+    icon: "📊",
+    name: "Dashboard",
+    url: "https://edf-jci-bwb-app.github.io/AppTest/dashboard/",
+    description: "Tableau de bord de l'application — vue d'ensemble et suivi des données."
+  },
+  {
+    icon: "📝",
+    name: "Form",
+    url: "https://edf-jci-bwb-app.github.io/AppTest/form/",
+    description: "Formulaire de saisie / de collecte de données de l'application."
+  },
+  {
+    icon: "📖",
+    name: "Vademecum",
+    url: "https://edf-jci-bwb-app.github.io/AppTest/vademecum/",
+    description: "Guide de référence / vademecum consultable en ligne."
+  }
+];
+
+const NEWS = [
+  {
+    app: "Dashboard",
+    date: "2026-09-07",
+    text: "Mise en place initiale de la page de liens."
+  }
+];
+
+/* ============================================================
+   Rendu — ne pas modifier en dessous de cette ligne
+   ============================================================ */
+
+const appsContainer = document.getElementById("apps");
+APPS.forEach((app, i) => {
+  const card = document.createElement("div");
+  card.className = "app-card";
+  card.innerHTML = `
+    <div class="app-button" data-idx="${i}">
+      <div class="app-title"><span class="app-icon">${app.icon || "🔗"}</span>${app.name}</div>
+      <div class="app-actions">
+        <a class="app-link" href="${app.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Ouvrir</a>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="app-desc"><p>${app.description}</p></div>
+  `;
+  card.querySelector(".app-button").addEventListener("click", () => {
+    card.classList.toggle("open");
+  });
+  appsContainer.appendChild(card);
+});
+
+const newsContainer = document.getElementById("news");
+if (NEWS.length === 0) {
+  newsContainer.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:0.88rem;">Aucune mise à jour récente.</p>';
+} else {
+  NEWS
+    .slice()
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .forEach(item => {
+      const el = document.createElement("div");
+      el.className = "news-item";
+      el.innerHTML = `
+        <div class="news-top">
+          <span class="news-app">${item.app}</span>
+          <span class="news-date">${item.date}</span>
+        </div>
+        <p>${item.text}</p>
+      `;
+      newsContainer.appendChild(el);
+    });
+}
+</script>
+</body>
+</html>
