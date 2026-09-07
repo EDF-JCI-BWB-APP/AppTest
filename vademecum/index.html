@@ -159,6 +159,14 @@
   }
   .btn-reset:hover { background: var(--danger-light); }
 
+  /* Retour aux apps — contour neutre */
+  .btn-back {
+    background: var(--bg-card);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+  }
+  .btn-back:hover { background: var(--gray-light); }
+
   /* Mode sombre — contour neutre */
   .btn-theme {
     background: var(--bg-card);
@@ -276,6 +284,7 @@
     <p>Checklist & rétro-planning automatique</p>
   </div>
   <div class="header-actions">
+    <a class="btn btn-back" href="https://edf-jci-bwb-app.github.io/AppTest/" title="Retour à la liste des applications">← Apps</a>
     <span class="progress-label" id="global-label">0 / 0 tâches</span>
     <div class="progress-bar-wrapper">
       <div class="progress-bar-fill" id="global-bar" style="width:0%"></div>
