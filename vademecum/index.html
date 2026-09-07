@@ -432,9 +432,12 @@ function toggleTheme() {
 }
 
 function resetAll() {
-  if (!confirm("Réinitialiser toutes les cases cochées ?")) return;
-  state.done = {};
-  saveState(); renderChecklist(); renderRetro(); updateGlobalProgress();
+  if (!confirm("Réinitialiser l'outil ? Toutes les cases cochées, les zones de texte remplies, ainsi que le nom et la date de la formation seront effacés.")) return;
+  try { localStorage.removeItem("jci-formation-tool"); } catch(e) {}
+  state = { done:{}, notes:{}, formationDate:null, formationName:"" };
+  document.getElementById("formation-name").value = "";
+  document.getElementById("formation-date").value = "";
+  saveState(); updateDaysCount(); renderChecklist(); renderRetro(); updateGlobalProgress();
 }
 
 function onDateChange() {
@@ -541,11 +544,13 @@ function renderTask(task) {
   const tagLabels={must:"Indispensable",important:"Important",nice:"Optionnel"};
   const tagClasses={must:"tag-must",important:"tag-important",nice:"tag-nice"};
   const noteValue = state.notes[task.id] || "";
-  const inputHtml = task.input ? `
+  const inputLabel = task.inputLabel || "Note";
+  const inputPlaceholder = task.inputPlaceholder || "Ajouter une information ou une remarque";
+  const inputHtml = `
       <div class="task-input-wrap" onclick="event.stopPropagation()">
-        <label class="task-input-label" for="input-${task.id}">${task.inputLabel || "Informations"}</label>
-        <textarea class="task-input" id="input-${task.id}" placeholder="${escapeHtml(task.inputPlaceholder||"")} (facultatif)" oninput="saveNote('${task.id}', this.value)">${escapeHtml(noteValue)}</textarea>
-      </div>` : "";
+        <label class="task-input-label" for="input-${task.id}">${inputLabel}</label>
+        <textarea class="task-input" id="input-${task.id}" placeholder="${escapeHtml(inputPlaceholder)} (facultatif)" oninput="saveNote('${task.id}', this.value)">${escapeHtml(noteValue)}</textarea>
+      </div>`;
   return `<div class="task-item ${done?"done":""}" id="task-${task.id}">
     <div class="task-checkbox" onclick="toggleTask('${task.id}')"><span class="task-checkbox-tick">✓</span></div>
     <div style="flex:1">
