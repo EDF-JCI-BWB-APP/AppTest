@@ -19,19 +19,40 @@
     --border: #e5e7eb;
     --text: #111827;
     --text-muted: #6b7280;
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+  }
+
+  html[data-theme="dark"] {
+    --primary: #3b82f6;
+    --primary-light: #1e3a5f;
+    --success: #22c55e;
+    --success-light: #14311e;
+    --warning: #f59e0b;
+    --warning-light: #3f2d0d;
+    --danger: #ef4444;
+    --danger-light: #3f1d1d;
+    --gray: #9ca3af;
+    --gray-light: #1f2937;
+    --border: #2d3748;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --bg-page: #0f172a;
+    --bg-card: #1e293b;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #f8fafc;
+    background: var(--bg-page);
     color: var(--text);
     line-height: 1.5;
+    transition: background 0.2s ease, color 0.2s ease;
   }
 
   header {
-    background: white;
+    background: var(--bg-card);
     border-bottom: 1px solid var(--border);
     padding: 16px 24px;
     display: flex;
@@ -75,7 +96,7 @@
   .main-container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; }
 
   .date-card {
-    background: white;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 24px;
@@ -116,7 +137,7 @@
 
   /* Importer — contour bleu comme dans l'image */
   .btn-load {
-    background: white;
+    background: var(--bg-card);
     color: var(--primary);
     border: 1.5px solid var(--primary);
   }
@@ -130,23 +151,25 @@
   }
   .btn-save:hover { background: #15803d; }
 
-  /* Feedback — contour violet */
-  .btn-feedback {
-    background: white;
-    color: #7c3aed;
-    border: 1.5px solid #7c3aed;
-  }
-  .btn-feedback:hover { background: #f5f3ff; }
-
   /* Réinitialiser — contour rouge comme dans l'image */
   .btn-reset {
-    background: white;
+    background: var(--bg-card);
     color: var(--danger);
     border: 1.5px solid var(--danger);
   }
   .btn-reset:hover { background: var(--danger-light); }
 
-  .tabs { display: flex; gap: 4px; margin-bottom: 20px; background: white; border: 1px solid var(--border); border-radius: 10px; padding: 4px; }
+  /* Mode sombre — contour neutre */
+  .btn-theme {
+    background: var(--bg-card);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    font-size: 16px;
+    padding: 8px 10px;
+  }
+  .btn-theme:hover { background: var(--gray-light); }
+
+  .tabs { display: flex; gap: 4px; margin-bottom: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 4px; }
   .tab {
     flex: 1; padding: 9px 12px; text-align: center; cursor: pointer;
     border-radius: 7px; font-size: 13px; font-weight: 500; color: var(--text-muted);
@@ -156,7 +179,7 @@
   .tab:hover:not(.active) { background: var(--gray-light); color: var(--text); }
 
   .phase {
-    background: white;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     margin-bottom: 16px;
@@ -195,7 +218,7 @@
     width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
     border: 2px solid var(--border); border-radius: 5px;
     display: flex; align-items: center; justify-content: center;
-    background: white; transition: all 0.15s; cursor: pointer;
+    background: var(--bg-card); transition: all 0.15s; cursor: pointer;
   }
   .task-item.done .task-checkbox { background: var(--success); border-color: var(--success); }
   .task-checkbox-tick { color: white; font-size: 11px; display: none; }
@@ -203,13 +226,21 @@
   .task-label { font-size: 14px; }
   .task-item.done .task-label { text-decoration: line-through; }
   .task-note { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .task-input-wrap { margin-top: 8px; }
+  .task-input-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; display: block; margin-bottom: 4px; }
+  .task-input {
+    width: 100%; font-family: inherit; font-size: 13px; color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+    resize: vertical; min-height: 40px; outline: none; transition: border-color 0.2s; background: var(--bg-card);
+  }
+  .task-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
   .task-tag { margin-left: auto; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
   .tag-must { background: var(--danger-light); color: var(--danger); }
   .tag-important { background: var(--warning-light); color: var(--warning); }
   .tag-nice { background: var(--gray-light); color: var(--gray); }
 
   #retro-view { display: none; }
-  .retro-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .retro-table { width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
   .retro-table thead { background: var(--primary); color: white; }
   .retro-table th { padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; }
   .retro-table td { padding: 10px 16px; font-size: 13px; border-bottom: 1px solid var(--border); }
@@ -252,8 +283,8 @@
     <button class="btn btn-load" onclick="document.getElementById('csv-import-input').click()" title="Charger ma progression depuis un fichier CSV">⬆️ Charger ma progression</button>
     <button class="btn btn-save" onclick="exportCSV()" title="Sauvegarder ma progression en CSV">⬇️ Sauvegarder ma progression</button>
     <input type="file" id="csv-import-input" accept=".csv" style="display:none" onchange="importCSV(event)">
-    <a class="btn btn-feedback" href="https://edf-jci-bwb-app.github.io/AppTest/form/app_feedback.html" target="_blank" rel="noopener">💬 Faire un feedback</a>
     <button class="btn btn-reset" onclick="resetAll()">↺ Réinitialiser</button>
+    <button class="btn btn-theme" onclick="toggleTheme()" id="theme-toggle-btn" title="Basculer en mode sombre">🌙</button>
   </div>
 </header>
 
@@ -303,7 +334,7 @@ const PHASES = [
   { id:"p1", icon:"🔍", title:"1. Cadrage & besoins", offsetDays:-60, tasks:[
     { id:"t1", label:"Identifier les besoins en formation des membres", note:"Sondage, discussion CA, liste des formations disponibles sur lajeunechambre.be", tag:"must", offset:-60 },
     { id:"t2", label:"Définir le contexte et les enjeux", note:"Pourquoi cette formation ? Quel problème résoudre ?", tag:"must", offset:-56 },
-    { id:"t3", label:"Définir le profil et nombre de participants", note:"Niveau, rôles, attentes, groupe homogène ou mixte ?", tag:"must", offset:-56 },
+    { id:"t3", label:"Définir le profil et nombre de participants", note:"Niveau, rôles, attentes, groupe homogène ou mixte ?", tag:"must", offset:-56, input:true, inputLabel:"Profil & nombre de participants", inputPlaceholder:"Ex : 15 personnes, membres + 3 non-membres, niveau débutant" },
     { id:"t4", label:"Fixer les objectifs généraux et opérationnels", note:"Savoirs, savoir-faire, comportements à développer", tag:"must", offset:-52 },
     { id:"t5", label:"Choisir le type de formation et les thèmes à couvrir", note:"Contenu essentiel, durée estimée, niveau visé", tag:"important", offset:-50 },
   ]},
@@ -357,12 +388,13 @@ const PHASES = [
   ]},
 ];
 
-let state = { done:{}, formationDate:null, formationName:"" };
+let state = { done:{}, notes:{}, formationDate:null, formationName:"" };
 
 function loadState() {
   try {
     const s = localStorage.getItem("jci-formation-tool");
     if (s) state = JSON.parse(s);
+    if (!state.notes) state.notes = {};
     if (state.formationDate) {
       document.getElementById("formation-date").value = state.formationDate;
       document.getElementById("formation-name").value = state.formationName || "";
@@ -371,6 +403,33 @@ function loadState() {
 }
 
 function saveState() { localStorage.setItem("jci-formation-tool", JSON.stringify(state)); }
+
+function saveNote(id, value) {
+  state.notes[id] = value;
+  saveState();
+}
+
+function loadTheme() {
+  let theme = "light";
+  try { theme = localStorage.getItem("jci-formation-theme") || "light"; } catch(e) {}
+  applyTheme(theme);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  const btn = document.getElementById("theme-toggle-btn");
+  if (btn) {
+    btn.textContent = theme === "dark" ? "☀️" : "🌙";
+    btn.title = theme === "dark" ? "Basculer en mode clair" : "Basculer en mode sombre";
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  const next = current === "dark" ? "light" : "dark";
+  applyTheme(next);
+  try { localStorage.setItem("jci-formation-theme", next); } catch(e) {}
+}
 
 function resetAll() {
   if (!confirm("Réinitialiser toutes les cases cochées ?")) return;
@@ -473,17 +532,28 @@ function renderChecklist() {
   });
 }
 
+function escapeHtml(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
 function renderTask(task) {
   const done=state.done[task.id];
   const tagLabels={must:"Indispensable",important:"Important",nice:"Optionnel"};
   const tagClasses={must:"tag-must",important:"tag-important",nice:"tag-nice"};
-  return `<div class="task-item ${done?"done":""}" id="task-${task.id}" onclick="toggleTask('${task.id}')">
-    <div class="task-checkbox"><span class="task-checkbox-tick">✓</span></div>
+  const noteValue = state.notes[task.id] || "";
+  const inputHtml = task.input ? `
+      <div class="task-input-wrap" onclick="event.stopPropagation()">
+        <label class="task-input-label" for="input-${task.id}">${task.inputLabel || "Informations"}</label>
+        <textarea class="task-input" id="input-${task.id}" placeholder="${escapeHtml(task.inputPlaceholder||"")} (facultatif)" oninput="saveNote('${task.id}', this.value)">${escapeHtml(noteValue)}</textarea>
+      </div>` : "";
+  return `<div class="task-item ${done?"done":""}" id="task-${task.id}">
+    <div class="task-checkbox" onclick="toggleTask('${task.id}')"><span class="task-checkbox-tick">✓</span></div>
     <div style="flex:1">
-      <div class="task-label">${task.label}</div>
-      ${task.note?`<div class="task-note">${task.note}</div>`:""}
+      <div class="task-label" onclick="toggleTask('${task.id}')">${task.label}</div>
+      ${task.note?`<div class="task-note" onclick="toggleTask('${task.id}')">${task.note}</div>`:""}
+      ${inputHtml}
     </div>
-    <span class="task-tag ${tagClasses[task.tag]}">${tagLabels[task.tag]}</span>
+    <span class="task-tag ${tagClasses[task.tag]}" onclick="toggleTask('${task.id}')">${tagLabels[task.tag]}</span>
   </div>`;
 }
 
@@ -549,14 +619,15 @@ function switchTab(tab,btn) {
 function exportCSV() {
   const name=state.formationName||"formation";
   const date=state.formationDate||"";
-  const rows=[["Formation",name],["Date de formation",date],["Exporté le",new Date().toLocaleDateString("fr-BE")],[],["ID Tâche","Phase","Tâche","Priorité","Date cible","Statut"]];
+  const rows=[["Formation",name],["Date de formation",date],["Exporté le",new Date().toLocaleDateString("fr-BE")],[],["ID Tâche","Phase","Tâche","Priorité","Date cible","Statut","Notes"]];
   PHASES.forEach(phase=>{
     phase.tasks.forEach(t=>{
       const done=state.done[t.id]?"Fait":"À faire";
       const tagLabels={must:"Indispensable",important:"Important",nice:"Optionnel"};
       let targetDate="";
       if(date){const d=addDaysToDate(date,t.offset);targetDate=d.toLocaleDateString("fr-BE");}
-      rows.push([t.id,phase.title.replace(/^[^a-zA-Z0-9]+/,"").replace(/"/g,'""'),t.label.replace(/"/g,'""'),tagLabels[t.tag],targetDate,done]);
+      const noteValue=(state.notes[t.id]||"").replace(/\r?\n/g," / ").replace(/"/g,'""');
+      rows.push([t.id,phase.title.replace(/^[^a-zA-Z0-9]+/,"").replace(/"/g,'""'),t.label.replace(/"/g,'""'),tagLabels[t.tag],targetDate,done,noteValue]);
     });
   });
   const csv=rows.map(r=>r.map(c=>`"${c}"`).join(";")).join("\n");
@@ -585,11 +656,16 @@ function importCSV(event) {
       const headerIdx=lines.findIndex(l=>l.includes("ID Tâche"));
       if(headerIdx===-1){alert("Format CSV non reconnu.");return;}
       const newDone={};
+      const newNotes={};
       for(let i=headerIdx+1;i<lines.length;i++){
         const cols=parseLine(lines[i]);
-        if(cols.length>=6){const id=cols[0].trim();const statut=cols[5].trim();if(id)newDone[id]=(statut==="Fait");}
+        if(cols.length>=6){
+          const id=cols[0].trim();const statut=cols[5].trim();
+          if(id){newDone[id]=(statut==="Fait");if(cols.length>=7&&cols[6].trim())newNotes[id]=cols[6];}
+        }
       }
       state.done=newDone;
+      state.notes=newNotes;
       if(newName){state.formationName=newName;document.getElementById("formation-name").value=newName;}
       if(newDate){
         const parts=newDate.split("/");
@@ -609,7 +685,7 @@ function showToast(msg){
   toast.textContent=msg;toast.style.opacity="1";clearTimeout(toast._t);toast._t=setTimeout(()=>{toast.style.opacity="0";},3000);
 }
 
-loadState();renderChecklist();updateDaysCount();updateGlobalProgress();togglePhase("p1");
+loadTheme();loadState();renderChecklist();updateDaysCount();updateGlobalProgress();togglePhase("p1");
 </script>
 </body>
 </html>
