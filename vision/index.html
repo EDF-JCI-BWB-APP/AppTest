@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vision Formation BWB 2030</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Arvo&display=swap">
+<style>
+/* Layout: un entonnoir qui sert de sommaire, puis une section par niveau, du plus large (vision) au plus concret (priorités). Système JCI. */
+:root{
+  --surface:#FFFFFF; --tint:#F2FAFD; --ink:#130F2D; --muted:#4E4B62; --accent-text:#1F4789;
+  --blue:#0097D7; --navy:#1F4789; --teal:#57BCBC; --yellow:#EFC40F; --blue25:#BFE5F5;
+  --on-dark:#FFFFFF; --on-light:#130F2D; --line:#C4C3CA; --border:#898796;
+  --sans:"Plus Jakarta Sans","Readex Pro",system-ui,sans-serif; --serif:Arvo,Georgia,serif;
+  --r-md:16px; --r-lg:24px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --surface:#130F2D; --tint:#172049; --ink:#FFFFFF; --muted:#C4C3CA; --accent-text:#80CBEB; --line:#4E4B62; color-scheme:dark}}
+:root[data-theme="dark"]{--surface:#130F2D; --tint:#172049; --ink:#FFFFFF; --muted:#C4C3CA; --accent-text:#80CBEB; --line:#4E4B62; color-scheme:dark}
+
+body{background:var(--surface);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:600;line-height:1.2}
+h1{font-size:clamp(32px,5vw,52px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,36px)}
+h3{font-size:20px}
+p{margin:0;max-width:65ch}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-text)}
+.muted{color:var(--muted)}
+a{color:var(--accent-text)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;background:var(--navy);color:var(--on-dark)}
+.hero .wrap{position:relative;z-index:1;padding-block:64px 56px;display:grid;gap:20px}
+.hero .eyebrow{color:#BFE5F5}
+.hero p{color:#C7D1E2;font-size:19px}
+.ripple{position:absolute;right:-180px;top:50%;transform:translateY(-50%);width:620px;height:620px;opacity:.9;pointer-events:none}
+.tag{display:inline-flex;align-self:start;gap:8px;align-items:center;background:var(--yellow);color:var(--on-light);font-weight:600;font-size:13px;padding:6px 12px;border-radius:999px}
+
+/* Funnel */
+.funnel-band{background:var(--tint)}
+.funnel-band .wrap{padding-block:48px;display:grid;gap:24px}
+.funnel{display:grid;gap:6px;justify-items:center;margin:0;padding:0;list-style:none}
+.funnel a{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px;text-decoration:none;border-radius:12px;padding:14px 20px;min-height:56px;box-sizing:border-box;transition:transform .15s ease}
+.funnel a:hover{transform:translateY(-2px)}
+.funnel .lvl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.funnel .what{font-size:15px;font-weight:500;line-height:1.3}
+.f1{width:100%;background:var(--navy);color:var(--on-dark)}
+.f2{width:88%;background:var(--blue);color:var(--on-light)}
+.f3{width:76%;background:var(--teal);color:var(--on-light)}
+.f4{width:64%;background:var(--blue25);color:var(--on-light)}
+.f5{width:52%;background:var(--yellow);color:var(--on-light)}
+.funnel-note{text-align:center;margin:0 auto}
+
+/* Sections */
+section.lvl-sec{padding-block:64px;border-top:1px solid var(--line)}
+section.lvl-sec .wrap{display:grid;gap:24px}
+.sec-head{display:grid;gap:8px}
+.chip{display:inline-flex;align-self:start;justify-self:start;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.c1{background:var(--navy);color:var(--on-dark)} .c2{background:var(--blue);color:var(--on-light)} .c3{background:var(--teal);color:var(--on-light)} .c4{background:var(--blue25);color:var(--on-light)} .c5{background:var(--yellow);color:var(--on-light)}
+
+.statement{font-family:var(--serif);font-size:clamp(22px,3vw,30px);line-height:1.35;color:var(--accent-text);max-width:34ch;border-left:4px solid var(--blue);padding-left:20px}
+.pending{font-size:13px;font-weight:600;color:var(--muted)}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.panel{background:var(--tint);border-radius:var(--r-md);padding:24px;display:grid;gap:8px;align-content:start;min-width:0}
+.panel h3{font-size:18px}
+.kpi{font-size:32px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent-text);line-height:1.1}
+
+/* Axes */
+.axe{display:grid;gap:20px;padding-block:8px}
+.axe + .axe{border-top:1px dashed var(--line);padding-top:32px}
+.axe-head{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.axe-num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:20px;background:var(--teal);color:var(--on-light)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;counter-reset:s}
+.step{background:var(--tint);border-radius:var(--r-md);padding:18px;display:grid;gap:6px;align-content:start;min-width:0}
+.step .name{font-weight:700}
+.step .lever{font-size:14px;color:var(--accent-text);font-weight:600}
+.step .desc{font-size:14px;color:var(--muted)}
+.arrow{color:var(--muted);font-size:14px}
+
+.tbl-wrap{overflow-x:auto;border-radius:var(--r-md);border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:15px}
+th,td{text-align:left;padding:12px 16px;vertical-align:top;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:none}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--tint);font-weight:600}
+td.target{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.first{font-weight:600}
+
+/* Cycle */
+.cycle{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;list-style:none;margin:0;padding:0;counter-reset:c}
+.cycle li{counter-increment:c;background:var(--tint);border-radius:var(--r-md);padding:18px;display:grid;gap:6px}
+.cycle li::before{content:counter(c);width:28px;height:28px;border-radius:50%;background:var(--navy);color:var(--on-dark);display:grid;place-items:center;font-weight:700;font-size:14px}
+
+ul.plain{margin:0;padding-left:20px;display:grid;gap:6px;max-width:70ch}
+
+footer{background:var(--navy);color:var(--on-dark)}
+footer .wrap{padding-block:40px;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;align-items:center}
+footer .sign{font-family:var(--serif);font-size:22px}
+footer p{color:#C7D1E2;font-size:14px}
+
+@media (max-width:560px){
+  .f1,.f2,.f3,.f4,.f5{width:100%}
+  .funnel a{grid-template-columns:1fr;gap:2px}
+  .ripple{right:-300px;opacity:.45}
+}
+@media (prefers-reduced-motion:reduce){.funnel a{transition:none}}
+
+/* Barre de navigation */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--ink);text-decoration:none}
+.brand-mark{width:28px;height:28px;flex:none}
+.views{display:flex;gap:4px;background:var(--tint);padding:4px;border-radius:999px}
+.views a{padding:8px 16px;border-radius:999px;font-size:14px;font-weight:600;color:var(--muted);text-decoration:none;white-space:nowrap}
+.views a[aria-current="page"]{background:var(--navy);color:var(--on-dark)}
+
+/* Version formateurs : slides */
+.deck-wrap{padding-block:32px 48px;display:grid;gap:20px}
+.deck-intro{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px}
+.slide{background:var(--tint);border-radius:var(--r-lg);padding:clamp(24px,4vw,56px);display:grid;gap:24px;align-content:start;min-height:min(560px,70vh);position:relative;overflow:hidden;box-sizing:border-box}
+.slide.dark{background:var(--navy);color:var(--on-dark)}
+.slide.dark .eyebrow{color:#BFE5F5}
+.slide.dark .muted{color:#C7D1E2}
+.slide h2{font-size:clamp(26px,3.6vw,40px);max-width:24ch}
+.slide .big{font-family:var(--serif);font-size:clamp(22px,3vw,32px);line-height:1.35;max-width:32ch}
+.slide .ripple{width:520px;height:520px;right:-200px;opacity:.85}
+.slide-body{position:relative;z-index:1;display:grid;gap:20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:12px}
+.deck,.slide,.slide-body,.deck-wrap{min-width:0}
+.card{background:var(--surface);color:var(--ink);border-radius:var(--r-md);padding:18px;display:grid;gap:6px;align-content:start;min-width:0}
+[hidden],.slide[hidden]{display:none!important}
+.card strong{font-size:16px}
+.card span{font-size:14px;color:var(--muted)}
+.card .who{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:10px;max-width:70ch}
+.checks li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;background:var(--surface);border-radius:12px;padding:14px 16px}
+.checks li::before{content:"";width:22px;height:22px;border-radius:50%;background:var(--teal);box-shadow:inset 0 0 0 6px var(--teal),inset 0 0 0 11px var(--surface)}
+.reco{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.controls button{font:600 15px var(--sans);padding:10px 18px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer}
+.controls button:disabled{opacity:.4;cursor:default}
+.controls button.primary{background:var(--navy);border-color:var(--navy);color:var(--on-dark)}
+.dots{display:flex;gap:8px;flex-wrap:wrap}
+.dots button{width:12px;height:12px;padding:0;border-radius:50%;border:none;background:var(--line);cursor:pointer}
+.dots button[aria-current="true"]{background:var(--blue);width:28px;border-radius:6px}
+.counter{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+@media (max-width:560px){.slide{min-height:0}.views a{padding:8px 12px}}
+
+/* Schéma : chemin du membre */
+.chemin{position:relative;display:grid;grid-template-columns:1fr 56px 1fr;row-gap:18px;padding:8px 0 8px 28px;max-width:860px}
+.chemin::before{content:"";position:absolute;left:calc(28px + (100% - 28px) / 2);top:24px;bottom:46px;width:2px;transform:translateX(-1px);background:var(--line)}
+.chemin::after{content:"";position:absolute;left:0;top:24px;bottom:46px;width:calc(28px + (100% - 28px) / 2);border:2px dashed var(--blue);border-right:none;border-radius:12px 0 0 12px}
+.chemin .start{grid-column:1 / -1;justify-self:center;position:relative;z-index:1;background:var(--tint);border:1px solid var(--border);border-radius:999px;padding:8px 18px;font-weight:600;font-size:15px}
+.chemin .pas{display:contents}
+.chemin .dot{grid-column:2;align-self:center;justify-self:center;position:relative;z-index:1;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--surface);border:2px solid var(--blue);color:var(--ink)}
+.chemin .c{background:var(--tint);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;display:grid;gap:4px;min-width:0;position:relative;z-index:1}
+.chemin .pas.g .c{grid-column:1}
+.chemin .pas.d .c{grid-column:3}
+.chemin .pas.g .dot{grid-row:auto}
+.chemin .c b{font-size:16px}
+.chemin .c q{font-style:italic;quotes:"« " " »"}
+.chemin .c .gain{font-size:14px;color:var(--muted)}
+.chemin .c .lev{font-size:14px;font-weight:600;color:var(--accent-text)}
+.chemin .boucle{grid-column:1 / -1;position:relative;z-index:1;font-size:14px;color:var(--muted);padding-left:28px;margin:6px 0 0}
+.chemin .boucle::before{content:"↺ ";color:var(--blue);font-weight:700}
+.slide .chemin{max-width:none;row-gap:6px}
+.slide .chemin .c{padding:10px 16px;gap:2px}
+.slide .chemin .c b{font-size:15px}
+@media (max-width:640px){
+  .chemin{grid-template-columns:40px 1fr;column-gap:12px;padding-left:0;grid-auto-flow:row dense}
+  .chemin .pas > span:not(.dot){display:none}
+  .chemin::before{left:20px}
+  .chemin::after{display:none}
+  .chemin .start{grid-column:1 / -1;justify-self:start}
+  .chemin .dot{grid-column:1}
+  .chemin .pas.g .c,.chemin .pas.d .c{grid-column:2}
+  .chemin .boucle{padding-left:0}
+}
+</style>
+<style>html{color-scheme:light}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<nav class="topbar" aria-label="Navigation principale">
+  <div class="wrap">
+    <a class="brand" href="#complete">
+      Vision formation BWB
+    </a>
+    <div class="views" role="tablist" aria-label="Choisir la version">
+      <a href="#complete" data-view="complete">Présentation complète</a>
+      <a href="#formateurs" data-view="formateurs">Version formateurs</a>
+    </div>
+  </div>
+</nav>
+
+<div id="view-complete">
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">École de la Formation · JCI Bruxelles-Wallonie</span>
+    <h1>La formation BWB à l'horizon 2030</h1>
+    <p>Une vision commune, la mission de l'EDF, trois axes et leurs objectifs, puis les priorités de l'année. Du cap le plus large à l'action la plus concrète.</p>
+    <span class="tag">Proposition de l'EDF · à valider</span>
+  </div>
+</header>
+
+<div class="funnel-band">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Lecture en entonnoir</span>
+      <h2>Chaque niveau découle du précédent</h2>
+    </div>
+    <ol class="funnel" aria-label="Les cinq niveaux de la vision">
+      <li style="display:contents"><a class="f1" href="#vision"><span class="lvl">Vision</span><span class="what">Où veut aller la formation BWB · 2030</span></a></li>
+      <li style="display:contents"><a class="f2" href="#mission"><span class="lvl">Mission</span><span class="what">Comment l'EDF s'approprie la vision</span></a></li>
+      <li style="display:contents"><a class="f3" href="#axes"><span class="lvl">3 axes</span><span class="what">Où nous concentrons l'effort</span></a></li>
+      <li style="display:contents"><a class="f4" href="#objectifs"><span class="lvl">10 objectifs</span><span class="what">Le résultat mesurable visé</span></a></li>
+      <li style="display:contents"><a class="f5" href="#priorites"><span class="lvl">Priorités</span><span class="what">Ce que nous faisons cette année</span></a></li>
+    </ol>
+    <p class="funnel-note muted">Le Responsable Formation et l'EDF portent ensemble tous les niveaux. Le Responsable Formation en est le garant.</p>
+  </div>
+</div>
+
+<main>
+
+<section class="lvl-sec" id="constat">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Point de départ</span>
+      <h2>Une formation de qualité, portée par trop peu de personnes</h2>
+      <p class="muted">Données EDF : catalogue, sondage membres Q4 2025, fiches de feedback depuis février 2025, inscriptions TTT 2025-2026.</p>
+    </div>
+    <div class="grid3">
+      <div class="panel"><span class="kpi">4,61 / 5</span><p>Note globale moyenne, sur 296 évaluations de 36 formations.</p></div>
+      <div class="panel"><span class="kpi">7 sur 18</span><p>Sections ayant organisé une formation avec feedback en 2026.</p></div>
+      <div class="panel"><span class="kpi">47 sur 83</span><p>Formations du catalogue sans formateur identifié.</p></div>
+      <div class="panel"><span class="kpi">10 sur 29</span><p>Formateurs recensés qui n'ont encore jamais exercé.</p></div>
+      <div class="panel"><span class="kpi">67 %</span><p>Inscrits TTT1 qui n'ont pas encore co-formé.</p></div>
+      <div class="panel"><span class="kpi">3</span><p>Personnes actives dans l'EDF pour porter le tout.</p></div>
+    </div>
+    <p>La Cellule Vision &amp; Stratégie demande un cap à trois à cinq ans, pour que la formation ne soit pas redéfinie à chaque mandat. Cette page en est la proposition.</p>
+  </div>
+</section>
+
+<section class="lvl-sec" id="vision">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="chip c1">Niveau 1 · Vision</span>
+      <h2>La vision de la formation BWB</h2>
+    </div>
+    <blockquote class="statement" style="margin:0">En 2030, chaque membre de JCI BWB trouve une formation qui le fait grandir et qui le soutient dans ses engagements et ses projets, tout au long de son parcours de membre.</blockquote>
+    <span class="pending">À valider</span>
+    <div class="grid2">
+      <div class="panel"><span class="eyebrow">Pour les membres</span><h3>Un support de développement personnel</h3><p class="muted">La formation accompagne chaque membre, du premier blocage jusqu'à l'envie de transmettre.</p></div>
+      <div class="panel"><span class="eyebrow">Pour le mouvement</span><h3>Un support de pérennité</h3><p class="muted">Des membres qui grandissent viennent, comprennent le mouvement et restent dans les sections.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="lvl-sec" id="mission">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="chip c2">Niveau 2 · Mission</span>
+      <h2>La mission de l'École de la Formation</h2>
+    </div>
+    <blockquote class="statement" style="margin:0">Créer les conditions qui donnent à chaque membre l'envie d'apprendre, de progresser, puis de transmettre.</blockquote>
+    <p>C'est la contribution propre de l'EDF à la vision : elle fait vivre le parcours de formation, développe et accompagne les formateurs, et garde le cap d'un mandat à l'autre.</p>
+  </div>
+</section>
+
+<section class="lvl-sec" id="axes">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="chip c3">Niveaux 3 et 4 · Axes et objectifs</span>
+      <h2>Trois axes, chacun avec ses objectifs mesurables</h2>
+      <p class="muted">Les deux premiers axes découlent des deux finalités de la vision. Le troisième en est la condition : sans formateurs, pas de formation.</p>
+    </div>
+
+    <div class="axe" id="objectifs">
+      <div class="axe-head">
+        <span class="axe-num" aria-hidden="true">1</span>
+        <div class="sec-head"><h3>Les membres : accompagner chaque parcours JCI par la formation</h3><p class="muted">Le chemin d'un nouveau membre. Il traverse quatre états, souvent sans les nommer : ce sont des ressentis, pas des cases. À chaque étape, la formation lui donne des outils pour passer à la suivante.</p></div>
+      </div>
+      <div class="chemin" role="list" aria-label="Le chemin d’un nouveau membre en quatre étapes">
+  <div class="start">Un nouveau membre arrive</div>
+  <div class="pas g" role="listitem"><div class="c"><b>Je bloque</b><q>Je n'y arriverai pas. Pas le temps.</q><span class="gain">Un membre formé est un membre plus confiant pour s'engager dans des projets.</span><span class="lev">Pour avancer : la confiance en soi</span></div><span class="dot" aria-hidden="true">1</span><span></span></div>
+  <div class="pas d" role="listitem"><span></span><span class="dot" aria-hidden="true">2</span><div class="c"><b>J'agis</b><q>Je me forme sur des outils opérationnels pour réussir et aller au bout de mes projets.</q><span class="lev">Pour avancer : des outils opérationnels</span></div></div>
+  <div class="pas g" role="listitem"><div class="c"><b>J'ai appris</b><q>J'ai appris, j'ai grandi. Je comprends davantage le mouvement et ses bénéfices.</q><span class="lev">Pour avancer : comprendre le mouvement</span></div><span class="dot" aria-hidden="true">3</span><span></span></div>
+  <div class="pas d" role="listitem"><span></span><span class="dot" aria-hidden="true">4</span><div class="c"><b>Je transmets</b><q>J'ai trouvé ma place, j'adhère au mouvement, je souhaite contribuer.</q><span class="lev">Pour contribuer : le parcours du formateur</span></div></div>
+  <p class="boucle">En transmettant, il ouvre le chemin aux membres suivants.</p>
+</div>
+      <p class="muted"><strong style="color:var(--ink)">Le lien avec le mouvement.</strong> L'étape 3 rejoint « comprendre » de l'axe 2 : un membre qui connaît le mouvement en voit les bénéfices. L'étape 4 rejoint « rester » : un membre qui a trouvé sa place a envie de contribuer.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Étape</th><th>Objectif</th><th>Mesure</th><th>Cible</th></tr></thead>
+        <tbody>
+          <tr><td class="first">Je bloque</td><td>Des membres franchissent le pas et gagnent en confiance</td><td>Membres ayant suivi au moins une formation dans l'année</td><td class="target">+50 % en 2029 vs 2027</td></tr>
+          <tr><td class="first">J'agis</td><td>Les formations donnent des outils pour réussir ses projets</td><td>Part des participants déclarant une action concrète grâce à la formation</td><td class="target">≥ 60 % en 2028</td></tr>
+          <tr><td class="first">J'ai appris</td><td>Les membres grandissent et comprennent mieux le mouvement</td><td>Note moyenne des fiches de feedback</td><td class="target">≥ 4 / 5 chaque année</td></tr>
+          <tr><td class="first">Je transmets</td><td>Des membres trouvent leur place et contribuent</td><td>Membres en formation de formateur et nouveaux certifiés, par an</td><td class="target">12 en formation, 3 certifiés</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="axe">
+      <div class="axe-head">
+        <span class="axe-num" aria-hidden="true">2</span>
+        <div class="sec-head"><h3>Le mouvement : faire venir, comprendre, rester</h3><p class="muted">Ce que la formation apporte à JCI BWB pour durer.</p></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Effet</th><th>Objectif</th><th>Mesure</th><th>Cible</th></tr></thead>
+        <tbody>
+          <tr><td class="first">Faire venir</td><td>La formation est visible à l'extérieur du mouvement</td><td>Formations ouvertes au public externe et communications sur la formation, par an</td><td class="target">5 formations, 6 communications en 2028</td></tr>
+          <tr><td class="first">Comprendre</td><td>Les formations officielles JCI sont disponibles pour toutes les sections</td><td>Formations officielles avec contenu à jour et formateur, accessibles aux 18 sections</td><td class="target">100 %, 18 sur 18 en 2028</td></tr>
+          <tr><td class="first">Rester</td><td>Les membres se forment régulièrement</td><td>Nombre moyen de formations suivies par membre et par an</td><td class="target">≥ 1 en 2029</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="axe">
+      <div class="axe-head">
+        <span class="axe-num" aria-hidden="true">3</span>
+        <div class="sec-head"><h3>Les formateurs : un vivier qui se renouvelle</h3><p class="muted">Le vivier existe mais reste peu actif. L'enjeu est de faire vivre les formateurs formés et de croiser les profils, plutôt que d'en former davantage.</p></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Objectif</th><th>Mesure</th><th>Cible</th></tr></thead>
+        <tbody>
+          <tr><td>Chaque formateur en formation reçoit des occasions de co-animer</td><td>TTT1 de l'année ayant reçu une proposition de co-animation dans les 12 mois</td><td class="target">100 % dès 2027</td></tr>
+          <tr><td>Diversité dans les binômes formateurs</td><td>Limitation de l'entre-soi</td><td class="target">&gt; 50 % en 2028</td></tr>
+          <tr><td>Le vivier de formateurs actifs grandit</td><td>Formateurs ayant animé ou co-animé dans l'année</td><td class="target">≥ 15 en 2029</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <p class="muted">Le catalogue, le Vadémécum et l'outil de mise en relation ne sont pas des objectifs en soi : ce sont des moyens au service des trois axes.</p>
+  </div>
+</section>
+
+<section class="lvl-sec" id="priorites">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="chip c5">Niveau 5 · Priorités de l'année</span>
+      <h2>Pistes de priorités pour 2027</h2>
+      <p class="muted">Fixées chaque année à partir du bilan. La liste reste ouverte : un sujet nouveau et utile peut s'ajouter s'il sert un des trois axes. À discuter avec le Responsable Formation 2027.</p>
+    </div>
+    <div class="grid3">
+      <div class="panel"><span class="eyebrow">Axe 1 · Les membres</span><ul class="plain"><li>Classer le catalogue avec la grille de scoring et les quatre leviers</li><li>Développer d'abord les formations très demandées sans formateur</li><li>Ouvrir des thèmes attendus : IA, entrepreneuriat, réseaux sociaux, gestion d'une section</li></ul></div>
+      <div class="panel"><span class="eyebrow">Axe 2 · Le mouvement</span><ul class="plain"><li><strong>Un parcours du formateur reconnu et valorisant</strong></li><li>Identifier un contact formation dans chaque section</li><li>Kit d'accueil et échange trimestriel de 30 minutes avec les relais</li><li>Prioriser les sections les moins desservies</li></ul></div>
+      <div class="panel"><span class="eyebrow">Axe 3 · Les formateurs</span><ul class="plain"><li>Lancer la bêta de Trainer Match</li><li>Mettre chaque nouveau TTT1 en relation avec une section</li><li>Associer formateurs expérimentés et novices</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="lvl-sec" id="bilan">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Garder le cap</span>
+      <h2>Un bilan chaque année, sans équipe de plus</h2>
+      <p class="muted">Plutôt que de créer une équipe d'analyse, l'EDF s'appuie sur des structures qui existent déjà, composées de membres expérimentés.</p>
+    </div>
+    <ol class="cycle">
+      <li><strong>Préparer</strong><span class="muted">Le Responsable Formation prépare le bilan avec l'EDF, à partir des objectifs et des chiffres.</span></li>
+      <li><strong>Présenter</strong><span class="muted">Il le présente au comité et à Vision &amp; Stratégie, lors d'une réunion dédiée.</span></li>
+      <li><strong>Ajuster</strong><span class="muted">Ensemble, ils valident les ajustements du plan.</span></li>
+      <li><strong>Prioriser</strong><span class="muted">Le Responsable Formation suivant et l'EDF en tirent les priorités de l'année.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="lvl-sec" id="suite">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Prochaines étapes</span>
+      <h2>De la proposition à la validation</h2>
+    </div>
+    <ol class="cycle">
+      <li><strong>Formateurs</strong><span class="muted">Partager cette vision et recueillir vos réactions.</span></li>
+      <li><strong>Objectifs</strong><span class="muted">Finaliser les cibles chiffrées et les ressources nécessaires.</span></li>
+      <li><strong>Présidence et V&amp;S</strong><span class="muted">Présenter le plan pour un regard sur sa cohérence régionale.</span></li>
+      <li><strong>2027</strong><span class="muted">Fixer les priorités 2027, puis premier bilan en fin d'exercice.</span></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="sign">Become the Change.</span>
+    <p>École de la Formation · JCI Bruxelles-Wallonie · Novembre 2026 · Document de travail</p>
+  </div>
+</footer>
+</div>
+
+<div id="view-formateurs" hidden>
+  <div class="wrap deck-wrap">
+    <div class="deck-intro">
+      <div class="sec-head">
+        <span class="eyebrow">Version formateurs</span>
+        <h1 style="font-size:clamp(26px,3.6vw,36px)">La vision de la formation BWB</h1>
+      </div>
+      <span class="counter" id="counter" aria-live="polite">1 / 9</span>
+    </div>
+
+    <div class="deck" id="deck">
+
+      <section class="slide dark" aria-label="Slide 1 sur 9">
+        <div class="slide-body" style="align-content:center;min-height:100%">
+          <span class="eyebrow">École de la Formation · JCI BWB</span>
+          <h2 style="font-size:clamp(32px,5vw,52px);max-width:18ch">La formation BWB à l’horizon 2030</h2>
+          <p class="muted" style="font-size:18px">Vision, mission et actions de l’année. Présentation aux formateurs, novembre 2026.</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 2 sur 9" hidden>
+        <div class="slide-body">
+          <span class="eyebrow">Pourquoi une vision maintenant</span>
+          <h2>Une formation de qualité, portée par trop peu de monde</h2>
+          <div class="cards">
+            <div class="card"><span class="kpi">4,61 / 5</span><span>de satisfaction moyenne, sur 296 évaluations</span></div>
+            <div class="card"><span class="kpi">7 sur 18</span><span>sections ont organisé une formation suivie en 2026</span></div>
+            <div class="card"><span class="kpi">47 sur 83</span><span>formations du catalogue sans formateur identifié</span></div>
+            <div class="card"><span class="kpi">67 %</span><span>des inscrits TTT1 n’ont pas encore co-formé</span></div>
+          </div>
+          <p>La Cellule Vision &amp; Stratégie nous demande un cap à 3-5 ans, pour que la formation ne soit plus redéfinie à chaque mandat. Ce qui suit est notre proposition.</p>
+        </div>
+      </section>
+
+      <section class="slide dark" aria-label="Slide 3 sur 9" hidden>
+        <div class="slide-body">
+          <span class="eyebrow">La vision de la formation BWB · 2030</span>
+          <p class="big">En 2030, chaque membre de JCI BWB trouve une formation qui le fait grandir et qui le soutient dans ses engagements et ses projets, tout au long de son parcours de membre.</p>
+          <div class="cards" style="max-width:720px">
+            <div class="card"><span class="who">Pour les membres</span><strong>Un support de développement personnel</strong><span>Qui accompagne chaque membre tout au long de son parcours.</span></div>
+            <div class="card"><span class="who">Pour le mouvement</span><strong>Un support de pérennité</strong><span>Des membres qui viennent, comprennent le mouvement et restent.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 4 sur 9" hidden>
+        <div class="slide-body">
+          <span class="eyebrow">La mission de l'École de la Formation</span>
+          <p class="big" style="color:var(--accent-text)">Créer les conditions qui donnent à chaque membre l'envie d'apprendre, de progresser, puis de transmettre.</p>
+          <div class="cards">
+            <div class="card"><strong>Faire vivre le parcours de formation</strong><span>Des formations utiles, avec un contenu à jour et un formateur, disponibles pour toutes les sections.</span></div>
+            <div class="card"><strong>Développer et accompagner les formateurs</strong><span>Plus d'occasions de former, des binômes plus variés, un parcours reconnu.</span></div>
+            <div class="card"><strong>Garder le cap</strong><span>Une continuité d'un mandat à l'autre, avec un bilan présenté chaque année.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 5 sur 9" hidden>
+        <div class="slide-body">
+          <span class="eyebrow">Le chemin d'un nouveau membre</span>
+          <h2>Quatre étapes qu'un membre ressent</h2>
+          <p class="muted">Ce sont des ressentis, pas des cases. À chaque étape, la formation lui donne de quoi passer à la suivante.</p>
+          <div class="chemin" role="list" aria-label="Le chemin d’un nouveau membre en quatre étapes">
+  <div class="start">Un nouveau membre arrive</div>
+  <div class="pas g" role="listitem"><div class="c"><b>Je bloque</b><q>Je n'y arriverai pas. Pas le temps.</q><span class="gain">Un membre formé est un membre plus confiant pour s'engager dans des projets.</span><span class="lev">Pour avancer : la confiance en soi</span></div><span class="dot" aria-hidden="true">1</span><span></span></div>
+  <div class="pas d" role="listitem"><span></span><span class="dot" aria-hidden="true">2</span><div class="c"><b>J'agis</b><q>Je me forme sur des outils opérationnels pour réussir et aller au bout de mes projets.</q><span class="lev">Pour avancer : des outils opérationnels</span></div></div>
+  <div class="pas g" role="listitem"><div class="c"><b>J'ai appris</b><q>J'ai appris, j'ai grandi. Je comprends davantage le mouvement et ses bénéfices.</q><span class="lev">Pour avancer : comprendre le mouvement</span></div><span class="dot" aria-hidden="true">3</span><span></span></div>
+  <div class="pas d" role="listitem"><span></span><span class="dot" aria-hidden="true">4</span><div class="c"><b>Je transmets</b><q>J'ai trouvé ma place, j'adhère au mouvement, je souhaite contribuer.</q><span class="lev">Pour contribuer : le parcours du formateur</span></div></div>
+  <p class="boucle">En transmettant, il ouvre le chemin aux membres suivants.</p>
+</div>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 6 sur 9" hidden>
+        <div class="slide-body">
+          <span class="eyebrow">Et vous, formateurs</span>
+          <h2>Votre rôle à chaque étape</h2>
+          <div class="cards">
+            <div class="card"><span class="who">Je bloque</span><strong>Lever les freins</strong><span>Un premier pas facile : formats courts, accueil sans enjeu, témoignages.</span></div>
+            <div class="card"><span class="who">J'agis</span><strong>Donner des outils</strong><span>Des outils opérationnels et des mises en situation, reliés à un projet réel de la section.</span></div>
+            <div class="card"><span class="who">J'ai appris</span><strong>Donner du sens</strong><span>Relier ce qui est appris au mouvement et à ses opportunités. Une évaluation demande quelle action concrète suivra.</span></div>
+            <div class="card"><span class="who">Je transmets</span><strong>Donner envie de contribuer</strong><span>Repérer les participants prêts à s'engager ou à devenir co-formateurs, et leur proposer.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 7 sur 9" hidden>
+        <div class="slide-body">
+          <span class="eyebrow">Trois axes, des objectifs mesurables</span>
+          <h2>Ce que nous visons d'ici 2029</h2>
+          <div class="cards">
+            <div class="card"><span class="who">Axe 1</span><strong>Les membres</strong><ul class="plain" style="font-size:14px;color:var(--muted)"><li>+50 % de membres formés (2029)</li><li>≥ 60 % des participants passent à l'action</li><li>Qualité ≥ 4 / 5, aussi à distance</li><li>12 formateurs en formation, 3 certifiés par an</li></ul></div>
+            <div class="card"><span class="who">Axe 2</span><strong>Le mouvement</strong><ul class="plain" style="font-size:14px;color:var(--muted)"><li>5 formations ouvertes à l'externe par an</li><li>Formations officielles JCI pour les 18 sections</li><li>Au moins 1 formation par membre et par an</li></ul></div>
+            <div class="card"><span class="who">Axe 3</span><strong>Les formateurs</strong><ul class="plain" style="font-size:14px;color:var(--muted)"><li>Une co-animation proposée à 100 % des TTT1</li><li>Des binômes plus diversifiés</li><li>Au moins 15 formateurs actifs (2029)</li></ul></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide dark" aria-label="Slide 8 sur 9" hidden>
+        <div class="slide-body">
+          <span class="eyebrow">Ce que nous mènerons en 2027</span>
+          <h2>Les actions de l'année</h2>
+          <div class="cards">
+            <div class="card"><span class="who">Les membres</span><strong>Une offre utile et disponible</strong><ul class="plain" style="font-size:14px;color:var(--muted)"><li>Classer le catalogue</li><li>D'abord les formations très demandées sans formateur</li><li>Nouveaux thèmes : IA, entrepreneuriat, gestion d'une section</li></ul></div>
+            <div class="card"><span class="who">Le mouvement</span><strong>Un parcours du formateur reconnu et valorisant</strong><ul class="plain" style="font-size:14px;color:var(--muted)"><li>En priorité : un parcours clair, de membre à formateur</li><li>Un contact formation dans chaque section</li></ul></div>
+            <div class="card"><span class="who">Les formateurs</span><strong>Plus d'occasions de former</strong><ul class="plain" style="font-size:14px;color:var(--muted)"><li>Lancement de Trainer Match</li><li>Une co-animation pour chaque nouveau TTT1</li><li>Binômes expérimentés et nouveaux</li></ul></div>
+          </div>
+          <p class="muted">Pistes à confirmer avec le Responsable Formation 2027. Une équipe EDF de 3 personnes : nous gardons peu de priorités, mais nous les menons au bout.</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-label="Slide 9 sur 9" hidden>
+        <div class="slide-body">
+          <span class="eyebrow">Et maintenant</span>
+          <h2>Vos réactions avant la validation</h2>
+          <div class="cards">
+            <div class="card"><span class="who">Novembre 2026</span><strong>Partage avec les formateurs</strong></div>
+            <div class="card"><span class="who">Ensuite</span><strong>Présentation à la Présidence et à V&amp;S</strong></div>
+            <div class="card"><span class="who">Début 2027</span><strong>Priorités fixées avec le Responsable Formation</strong></div>
+            <div class="card"><span class="who">Fin 2027</span><strong>Premier bilan annuel</strong></div>
+          </div>
+          <div class="card"><strong>Trois questions pour vous</strong><ul class="plain" style="font-size:15px;color:var(--muted)"><li>Cette vision vous parle-t-elle ?</li><li>Quelles actions de 2027 vous semblent les plus utiles ?</li><li>Êtes-vous prêts à accueillir un co-formateur cette année ?</li></ul></div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="controls">
+      <button type="button" id="prev">Précédent</button>
+      <div class="dots" id="dots" aria-label="Aller à une slide"></div>
+      <button type="button" id="next" class="primary">Suivant</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var views={complete:document.getElementById('view-complete'),formateurs:document.getElementById('view-formateurs')};
+  var tabs=document.querySelectorAll('.views a');
+  function route(){
+    var h=location.hash.replace('#','');
+    var v=h==='formateurs'?'formateurs':'complete';
+    views.complete.hidden=v!=='complete';
+    views.formateurs.hidden=v!=='formateurs';
+    tabs.forEach(function(t){ if(t.dataset.view===v){t.setAttribute('aria-current','page');}else{t.removeAttribute('aria-current');} });
+    if(h==='complete'||h==='formateurs'||h===''){window.scrollTo(0,0);}
+  }
+  window.addEventListener('hashchange',route); route();
+
+  var slides=[].slice.call(document.querySelectorAll('#deck .slide'));
+  var dots=document.getElementById('dots'), prev=document.getElementById('prev'), next=document.getElementById('next'), counter=document.getElementById('counter');
+  var i=0;
+  slides.forEach(function(_,k){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Slide '+(k+1));b.addEventListener('click',function(){go(k)});dots.appendChild(b);});
+  function go(k){
+    i=Math.max(0,Math.min(slides.length-1,k));
+    slides.forEach(function(s,n){s.hidden=n!==i});
+    [].forEach.call(dots.children,function(d,n){d.setAttribute('aria-current',n===i?'true':'false')});
+    prev.disabled=i===0; next.disabled=i===slides.length-1;
+    counter.textContent=(i+1)+' / '+slides.length;
+  }
+  prev.addEventListener('click',function(){go(i-1)});
+  next.addEventListener('click',function(){go(i+1)});
+  document.addEventListener('keydown',function(e){
+    if(views.formateurs.hidden) return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){go(i+1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){go(i-1)}
+  });
+  go(0);
+})();
+</script>
+</body>
+</html>
