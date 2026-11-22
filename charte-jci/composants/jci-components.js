@@ -30,15 +30,16 @@
     var x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0), x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
     return 'M' + x0.toFixed(2) + ' ' + y0.toFixed(2) + 'A' + r + ' ' + r + ' 0 0 1 ' + x1.toFixed(2) + ' ' + y1.toFixed(2);
   }
-  // Ripple: rings of width x, spacing x, four quarters per ring separated by x, each ring rotated 15deg vs the next smaller.
+  // Ripple (guide p.32) : largeur d'anneau x, écart entre quarts x, écart entre anneaux x,
+  // chaque anneau tourné de 15° (sens antihoraire) par rapport au plus petit, centre vide ~5x.
   function Ripple(p) {
     var size = p.size || 320, rings = p.rings || 3, fade = p.fadeRings == null ? 2 : p.fadeRings, step = p.rotation == null ? 15 : p.rotation;
+    var k = p.innerRatio == null ? 5 : p.innerRatio;
     var colors = p.colors || ['var(--jci-teal)', 'var(--jci-blue)', 'var(--jci-navy)', 'var(--jci-black)'];
     var fadeColors = p.fadeColors || ['var(--jci-teal-25)', 'var(--jci-blue-25)', 'var(--jci-navy-25)', 'var(--jci-black-25)'];
-    var total = rings + fade, x = size / 2 / (1 + 2 * total + 0.0), inner = x * 1.0, c = size / 2, out = [];
-    x = size / 2 / (2 * total + 1.5); inner = x * 1.5;
+    var total = rings + fade, x = size / 2 / (k + 2 * total - 1), c = size / 2, out = [];
     for (var i = 0; i < total; i++) {
-      var r = inner + (2 * i + 0.5) * x, gap = x / r, base = -Math.PI / 2 + i * step * Math.PI / 180;
+      var r = k * x + (2 * i + 0.5) * x, gap = x / r, base = -Math.PI / 2 - i * step * Math.PI / 180;
       for (var q = 0; q < 4; q++) {
         var a0 = base + q * Math.PI / 2 + gap / 2, a1 = base + (q + 1) * Math.PI / 2 - gap / 2;
         out.push(h('path', { key: i + '-' + q, d: arc(c, c, r, a0, a1), fill: 'none', stroke: (i < rings ? colors : fadeColors)[q], strokeWidth: x }));

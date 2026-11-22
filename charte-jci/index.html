@@ -73,6 +73,10 @@
 
   .rules{columns:2 320px;column-gap:var(--space-5);padding-left:var(--space-4);margin:var(--space-3) 0 0}
   .rules li{margin-bottom:var(--space-2);break-inside:avoid}
+  .dl{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-2)}
+  .dl li{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-3);align-items:baseline;padding:var(--space-3);border:1px solid var(--jci-black-25);border-radius:var(--radius-md)}
+  .dl a{font-weight:600}
+  .dl span{color:var(--ink-muted);font-size:14px}
   footer{padding:var(--space-5) 0 var(--space-6);color:var(--ink-muted);font-size:14px;border-top:1px solid var(--jci-black-25)}
   @media (max-width:640px){
     .hero h1{font-size:40px}
@@ -91,7 +95,7 @@
     <img class="logo" src="assets/logos/jci-logo-default.png" alt="JCI">
     <h1>Charte JCI</h1>
     <p class="lead">Les couleurs, la typographie, le logo, le motif ripple et le ton de JCI, réunis au même endroit pour produire des contenus de l'École de la Formation BWB qui restent cohérents.</p>
-    <p class="muted">Charte officielle : <a href="https://jci.cc/wp-content/uploads/2025/07/251218_JCI_Brand-Guide-v1-4.pdf">JCI Brand Guidelines v1.4 (PDF, 18 décembre 2025)</a>. Le PDF fait foi en cas de doute.</p>
+    <p class="muted">Charte officielle : <a href="guide/JCI_Brand-Guide-v1-4.pdf">JCI Brand Guidelines v1.4 (PDF, 18 décembre 2025)</a>. Le PDF fait foi en cas de doute.</p>
     <p class="sig">Become the Change.</p>
   </div>
 </header>
@@ -112,6 +116,8 @@
         <li><a href="charte.json"><strong>charte.json</strong><span>Règles en données structurées</span></a></li>
         <li><a href="tokens/tokens.css"><strong>tokens.css</strong><span>Variables CSS et polices</span></a></li>
         <li><a href="tokens/tokens.json"><strong>tokens.json</strong><span>Tokens du design system</span></a></li>
+        <li><a href="guide/guide-texte-officiel.txt"><strong>guide-texte-officiel.txt</strong><span>Texte du PDF officiel (anglais)</span></a></li>
+        <li><a href="guide/JCI_Brand-Guide-v1-4.pdf"><strong>Guide PDF</strong><span>Source officielle, fait foi</span></a></li>
         <li><a href="composants/jci-components.js"><strong>jci-components.js</strong><span>Composants Logo, LocalLogo, Ripple</span></a></li>
       </ul>
     </div>
@@ -176,11 +182,30 @@
   <section id="ripple">
     <h2>Ripple</h2>
     <p class="lead">Le motif signature : des anneaux coupés en quatre quarts, chacun tourné de 15°. À utiliser en grand, coupé par le bord du format.</p>
+    <h3 style="margin-top:var(--space-4)">Fichiers officiels JCI</h3>
+    <div class="ripples">
+      <div class="rp" style="background:var(--jci-white);border:1px solid var(--jci-black-25)"><img src="assets/ripple/officiels/jci-ripples-half.png" alt="Demi-ripple officiel bleu, teal et navy" style="width:auto;height:100%;right:0;bottom:0;top:0"><a href="assets/ripple/officiels/jci-ripples-half.png" download style="background:var(--jci-black);color:var(--jci-white)">Demi-ripple · PNG</a></div>
+      <div class="rp" style="background:var(--jci-white);border:1px solid var(--jci-black-25)"><img src="assets/ripple/officiels/jci-ripples-cercle-a01.png" alt="Cercle ripple officiel multicolore" style="width:300px;right:-60px;bottom:-60px"><a href="assets/ripple/officiels/jci-ripples-cercle-a01.png" download style="background:var(--jci-black);color:var(--jci-white)">Cercle complet · PNG</a></div>
+    </div>
+    <h3 style="margin-top:var(--space-5)">Générés selon la construction du guide (p. 32)</h3>
     <div class="ripples">
       <div class="rp" style="background:var(--jci-white);border:1px solid var(--jci-black-25)"><img src="assets/ripple/ripple-fond-clair.svg" alt="Ripple pour fond clair"><a href="assets/ripple/ripple-fond-clair.svg" download style="background:var(--jci-black);color:var(--jci-white)">Fond clair · SVG</a></div>
       <div class="rp" style="background:var(--jci-black)"><img src="assets/ripple/ripple-fond-sombre.svg" alt="Ripple pour fond sombre"><a href="assets/ripple/ripple-fond-sombre.svg" download style="background:var(--jci-white);color:var(--jci-black)">Fond sombre · SVG</a></div>
       <div class="rp" style="background:var(--jci-blue)"><img src="assets/ripple/ripple-blanc.svg" alt="Ripple blanc pour fond bleu"><a href="assets/ripple/ripple-blanc.svg" download style="background:var(--jci-black);color:var(--jci-white)">Fond bleu · SVG</a></div>
     </div>
+  </section>
+
+  <section id="fichiers">
+    <h2>Téléchargements</h2>
+    <p class="lead">Le guide officiel, l'animation du logo et les polices à installer.</p>
+    <video src="assets/video/jci-logo-animation-short.mp4" controls muted playsinline preload="metadata" style="width:100%;max-width:640px;border-radius:var(--radius-md);display:block;margin:var(--space-4) 0;background:var(--jci-black)"></video>
+    <ul class="dl">
+      <li><a href="guide/JCI_Brand-Guide-v1-4.pdf">Guide officiel JCI v1.4</a><span>PDF, 34 pages</span></li>
+      <li><a href="assets/video/jci-logo-animation-short.mp4" download>Animation du logo</a><span>MP4, 5 s, 1920×1080, avec son — pour ouvrir ou fermer une vidéo</span></li>
+      <li><a href="assets/fonts/zip/Plus_Jakarta_Sans.zip" download>Plus Jakarta Sans</a><span>Police principale, toutes graisses</span></li>
+      <li><a href="assets/fonts/zip/Arvo.zip" download>Arvo</a><span>Citations éditoriales</span></li>
+      <li><a href="assets/fonts/zip/Readex_Pro.zip" download>Readex Pro</a><span>Secours, uniquement dans Canva sans Pro</span></li>
+    </ul>
   </section>
 
   <section id="regles">

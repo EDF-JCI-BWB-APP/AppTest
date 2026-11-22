@@ -4,7 +4,10 @@
     "titre": "JCI Brand Guidelines v1.4",
     "date": "2025-12-18",
     "url": "https://jci.cc/wp-content/uploads/2025/07/251218_JCI_Brand-Guide-v1-4.pdf",
-    "priorite": "Le PDF officiel fait foi en cas de doute ou de contradiction."
+    "priorite": "Le PDF officiel fait foi en cas de doute ou de contradiction.",
+    "copie_locale": "guide/JCI_Brand-Guide-v1-4.pdf",
+    "texte_brut": "guide/guide-texte-officiel.txt",
+    "pages_en_images": "guide/pages/page-NN.jpg"
   },
   "plan_du_guide": {
     "01_story": "p.4-6",
@@ -165,7 +168,7 @@
       "grand_texte": 3.0,
       "grand_texte_def": "24px+ ou gras 19px+"
     },
-    "statut": "officiel (palette, RVB, CMJN, Pantone, proportions) ; paires relevées visuellement dans les schémas ; ratios WCAG ajoutés par l'EDF",
+    "statut": "officiel, vérifié sur le PDF (palette p.19-20, proportions p.21, paires p.22) ; ratios WCAG ajoutés par l'EDF",
     "details": {
       "jci-blue": {
         "hex": "#0097D7",
@@ -264,7 +267,7 @@
         "role": "secondaire, accent contrasté, avec parcimonie"
       }
     },
-    "proportions_note": "Le guide donne 20/20/35/5/10/10 sans libellé dans le texte ; correspondance retenue ci-dessus. Repère ajustable au contexte.",
+    "proportions_note": "Schéma p.21 : blanc 20, noir 20, bleu 35, navy 10, teal 10, jaune 5. Repère ajustable au contexte.",
     "regle_absolue": "La lisibilité passe avant le style."
   },
   "typographie": {
@@ -290,8 +293,8 @@
     "non_latin": "Noto Sans",
     "citation": {
       "police": "Arvo Regular",
-      "usage": "grandes citations et accroches éditoriales uniquement (communiqués, magazine)",
-      "couleur_convention_edf": "jci-blue"
+      "usage": "grandes citations et accroches éditoriales uniquement",
+      "couleur": "jci-blue (p.28)"
     },
     "hierarchie": [
       {
@@ -408,11 +411,17 @@
     "secondaire": {
       "description": "logo principal + 'Junior Chamber International'",
       "usage": "documents officiels et administratifs, signatures mail, présentation à un nouveau public",
-      "couleur_nom": "celle de l'acronyme JCI",
+      "couleur_nom": "celle de l'acronyme JCI (p.16)",
       "fichier": null
     },
     "local": {
-      "nom_couleur": "jci-blue (sauf version monochrome)",
+      "nom_couleur": {
+        "default": "jci-blue",
+        "inverted": "jci-blue",
+        "white": "jci-white",
+        "black": "jci-black",
+        "source": "p.16"
+      },
       "taille": "60 pt pour un logo de 570 px",
       "style": "Plus Jakarta Sans Bold, majuscule à chaque mot, interligne 110 %, interlettrage 0",
       "alignement": "aligné à gauche sur le logo, collé sous le bouclier sans espace",
@@ -422,32 +431,36 @@
     }
   },
   "ripple": {
+    "statut": "officiel (construction et couleurs, p.31-32) ; version fond sombre = convention EDF",
     "regles": [
       "anneaux concentriques coupés en 4 quarts égaux",
       "écart entre quarts = largeur d'anneau",
-      "espace entre anneaux = largeur d'anneau",
-      "rotation de 15° par anneau",
+      "écart entre anneaux = largeur d'anneau",
+      "rotation de 15° par anneau, sens antihoraire sur le schéma",
+      "centre vide ≈ 5 largeurs d'anneau (schéma p.32)",
+      "anneaux extérieurs en teintes pâles pour la profondeur",
       "grand et coupé par un bord du format",
-      "jamais arrondi ni déformé"
+      "jamais déformé"
     ],
-    "couleurs_quarts_fond_clair": [
+    "couleurs_quarts_sens_horaire_depuis_haut": [
       "jci-teal",
       "jci-blue",
       "jci-navy",
       "jci-black"
     ],
-    "couleurs_quarts_fond_sombre": [
+    "couleurs_quarts_fond_sombre_convention_edf": [
       "jci-teal",
       "jci-blue",
       "jci-navy-75",
       "jci-white"
     ],
     "fichiers": {
+      "officiel_demi": "assets/ripple/officiels/jci-ripples-half.png",
+      "officiel_cercle": "assets/ripple/officiels/jci-ripples-cercle-a01.png",
       "fond_clair": "assets/ripple/ripple-fond-clair.svg",
       "fond_sombre": "assets/ripple/ripple-fond-sombre.svg",
       "blanc": "assets/ripple/ripple-blanc.svg"
-    },
-    "statut": "officiel (construction) ; couleurs des quarts et version fond sombre = convention EDF"
+    }
   },
   "photo": {
     "statut": "officiel",
@@ -490,5 +503,21 @@
     "mission et vision",
     "modèles réseaux sociaux, présentations, papeterie, merchandising, signalétique, signatures mail",
     "co-branding partenaires"
-  ]
+  ],
+  "fichiers": {
+    "logos": "assets/logos/",
+    "animation_logo": {
+      "fichier": "assets/video/jci-logo-animation-short.mp4",
+      "duree_s": 5,
+      "format": "1920x1080 H.264 + AAC",
+      "usage": "ouverture ou fin de vidéo"
+    },
+    "polices_web": "assets/fonts/*.woff2",
+    "polices_ttf": {
+      "plus-jakarta-sans": "assets/fonts/ttf/plus-jakarta-sans/",
+      "readex-pro": "assets/fonts/ttf/readex-pro/",
+      "arvo": "assets/fonts/ttf/arvo/",
+      "licence": "SIL Open Font License (OFL.txt dans chaque dossier)"
+    }
+  }
 }

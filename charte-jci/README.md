@@ -14,10 +14,13 @@ Il sert à l'École de la Formation JCI Bruxelles-Wallonie (EDF) et à l'app Tra
 4. Selon le livrable :
    - visuel ou page web : [`tokens/tokens.css`](tokens/tokens.css) (variables CSS + polices) ;
    - code React : [`composants/`](composants/) (`Logo`, `LocalLogo`, `Ripple`) ;
-   - fichiers prêts à poser : [`assets/`](assets/) (logos, polices, ripples SVG).
-5. [`source/`](source/) : texte d'origine du design system (anglais), en cas de doute sur une formulation.
+   - fichiers prêts à poser : [`assets/`](assets/) — logos, ripples officiels (`ripple/officiels/`) et SVG, animation du logo (`video/`), polices web et TTF à installer (`fonts/ttf/`).
+5. [`guide/`](guide/) : le **PDF officiel**, son texte brut en anglais (`guide-texte-officiel.txt`) et chaque page en image (`pages/page-NN.jpg`). Un agent qui lit les images peut ouvrir la page citée pour voir un schéma.
+6. [`source/`](source/) : texte d'origine du design system (anglais), historique.
 
 Pour l'interface de l'app Trainer Match, voir aussi `docs/DESIGN-SYSTEM.md` dans le dépôt (privé) `trainermatch` : il décrit comment la charte est appliquée dans l'app.
+
+Vérifié sur le PDF : palette, proportions (p. 21), associations de couleurs (p. 22), couleurs des logos locaux (p. 16), construction du ripple (p. 32).
 
 ## Les 10 règles à ne jamais oublier
 
@@ -28,7 +31,7 @@ Pour l'interface de l'app Trainer Match, voir aussi `docs/DESIGN-SYSTEM.md` dans
 5. **Titres en casse de phrase** (« Devenir formateur ») — convention EDF.
 6. **Logo choisi selon le fond** : `default` sur clair, `inverted` sur noir/sombre, `white` sur bleu ou couleur et photo sombre, `black` en monochrome et photo claire.
 7. **Logo intouchable** : pas de déformation, rotation, recoloration, contour, ombre. Zone de protection = moitié de la largeur du bouclier. Jamais sous 32 px de haut à l'écran (5 mm en print). Placement préféré : en haut à gauche ou à droite.
-8. **Ripple** (anneaux concentriques coupés en quarts, rotation de 15° par anneau) : grand et coupé par le bord du format. Ne pas modifier ses proportions.
+8. **Ripple** (anneaux concentriques coupés en quarts, rotation de 15° par anneau) : grand et coupé par le bord du format. Utiliser en priorité les fichiers officiels de `assets/ripple/officiels/`. Ne pas modifier ses proportions.
 9. **Photos** : vraies personnes, prises sur le vif, diversité, lumière naturelle, énergie positive.
 10. **Pas d'emoji décoratif. Pas d'icônes inventées « style JCI »** : texte simple, ou le bouclier seul (convention EDF : le guide ne traite pas des icônes).
 

@@ -2,6 +2,8 @@
 
 **Source officielle** : *JCI Brand Guidelines v1.4* (18 décembre 2025) — https://jci.cc/wp-content/uploads/2025/07/251218_JCI_Brand-Guide-v1-4.pdf
 
+Copie locale du PDF : [`guide/JCI_Brand-Guide-v1-4.pdf`](guide/JCI_Brand-Guide-v1-4.pdf) · texte brut officiel (anglais) : [`guide/guide-texte-officiel.txt`](guide/guide-texte-officiel.txt) · chaque page en image : [`guide/pages/`](guide/pages/) (`page-22.jpg` = page 22), utile pour un agent qui lit les images (schémas de couleurs, construction du ripple, placements).
+
 Ce fichier reprend le guide officiel dans son ordre (sections 01 à 05, pages indiquées), traduit en français et mis en forme pour qu'un agent IA puisse l'appliquer. Tout ce qui n'est **pas** dans le guide est regroupé à la fin, dans la partie « Compléments non officiels », et marqué comme tel.
 
 En cas de doute ou de contradiction, le PDF officiel fait foi.
@@ -14,7 +16,7 @@ Plan du guide : 01 Story · 02 Logo · 03 Colours · 04 Typography · 05 Brand i
 
 **À quoi sert l'histoire de marque** : elle dit pourquoi JCI existe, et donne le ton, l'émotion et les messages de toute communication.
 
-**L'histoire** : JCI est un réseau mondial de jeunes leaders, porteur de plus d'un siècle d'héritage. Il réunit trois forces : une portée mondiale, la formation et un esprit d'entreprendre.
+**L'histoire** (p. 4, résumée) : le monde a besoin de personnes qui n'attendent pas le changement mais le créent. Les jeunes générations veulent grandir, mener et faire une vraie différence ; pour transformer cette envie en impact, il faut des opportunités, du recul et une communauté qui croit en leur potentiel. JCI est un réseau mondial de jeunes leaders qui **apprennent en faisant, grandissent en partageant et mènent en agissant**, dans l'entreprise, la culture et la vie locale. On n'y rejoint pas « un réseau de plus » mais un mouvement mondial porteur de plus d'un siècle d'héritage, qui combine portée mondiale, formation et esprit d'entreprendre, pour développer le leadership et un vrai sentiment d'appartenance. JCI aide ainsi à former des leaders pour un monde qui change.
 
 **Phrase de conclusion** : *Become the Change.* (toujours en anglais).
 
@@ -53,14 +55,14 @@ C'est le logo principal avec « Junior Chamber International » en dessous.
 
 - **Pour** : les supports officiels et administratifs (papier à en-tête, signatures mail, documents formels) et les premières présentations à un nouveau public.
 - **Ailleurs** : on utilise le logo principal.
-- **Couleur du nom complet** : toujours la même que celle des lettres JCI.
+- **Couleur du nom complet** (p. 16) : toujours la même que celle des lettres JCI (noir sur la version par défaut, blanc sur l'inversée et la blanche, noir sur la noire).
 - Ce logo n'est pas dans le dossier `assets/`, il faut le demander à JCI.
 
 ### Logos nationaux et locaux
 
 Le logo principal, avec le nom officiel du lieu en dessous (par exemple « JCI Tournai »).
 
-- **Couleur** : le nom est toujours en bleu JCI, sauf s'il faut une version d'une seule couleur.
+- **Couleur** (p. 16) : bleu JCI sur les versions par défaut et inversée ; blanc sur la version blanche (fond bleu ou coloré) ; noir sur la version noire.
 - **Taille** : le nom fait 60 pt quand le logo fait 570 px de large, et suit la taille du logo.
 - **Style** : Plus Jakarta Sans Bold, majuscule à chaque mot, interligne 110 %, interlettrage 0.
 - **Position** : aligné à gauche sur le logo, collé sous le bouclier, sans espace.
@@ -147,15 +149,13 @@ Le guide montre des teintes pour chaque couleur. Les valeurs ci-dessous correspo
 
 ### Proportions
 
-Le guide propose cette répartition : 20 %, 20 %, 35 %, 5 %, 10 %, 10 %. C'est un repère, qu'on peut adapter au contexte.
-
-Correspondance retenue (cohérente avec les règles ci-dessus) : **blanc 20 %, noir 20 %, bleu 35 %, jaune 5 %, navy 10 %, teal 10 %**.
+Répartition du schéma de la page 21 : **blanc 20 %, noir 20 %, bleu 35 %, navy 10 %, teal 10 %, jaune 5 %**. Toutes les couleurs n'ont pas le même poids : les secondaires (navy, teal, jaune) s'utilisent plus rarement, pour ajouter de l'intérêt ou souligner un élément clé. C'est un repère, à adapter au contexte.
 
 ### Associations de couleurs
 
 Toutes les associations ne sont pas assez contrastées. **La lisibilité passe avant le style.**
 
-Les associations ci-dessous viennent des schémas du guide, relevés à l'œil :
+Associations autorisées selon le schéma de la page 22 :
 
 | Fond | Premier plan autorisé |
 | --- | --- |
@@ -204,7 +204,7 @@ C'est une police à empattements géométriques, utilisée en Regular. **Uniquem
 | Sous-titre | Plus Jakarta Sans | Regular | 24 pt | 130 % | 0 | `.jci-subtitle` |
 | Intertitre | Plus Jakarta Sans | SemiBold | 20 pt | 140 % | 0 | `.jci-subheading` |
 | Paragraphe | Plus Jakarta Sans | Regular | 16 pt | 140 % | 0 | `.jci-paragraph` |
-| Citation | Arvo | Regular | 24 pt | 130 % | 0 | `.jci-quote` |
+| Citation | Arvo (en bleu JCI, p. 28) | Regular | 24 pt | 130 % | 0 | `.jci-quote` |
 
 On construit la hiérarchie par la graisse, la taille, l'espacement et l'alignement. **La clarté passe en premier.**
 
@@ -224,13 +224,18 @@ On respecte toujours la zone de protection, on évite d'encombrer autour du logo
 
 Les variantes du ripple sont les **principaux éléments graphiques** de la marque. On peut les utiliser discrètement en fond, ou comme élément visuel fort.
 
-**Construction** :
+**Construction** (schéma p. 32) :
 
 - **Structure** : des cercles concentriques, chaque anneau coupé en quatre quarts égaux. L'écart entre deux quarts est égal à la largeur de l'anneau.
 - **Espacement** : l'écart entre deux anneaux est égal à la largeur de l'anneau. Pour agrandir le motif, on ajoute des anneaux vers l'extérieur, avec le même espacement et la même épaisseur.
-- **Rotation** : chaque anneau est tourné de 15° par rapport à l'anneau juste plus petit.
+- **Rotation** : chaque anneau est tourné de 15° par rapport à l'anneau juste plus petit (sur le schéma, dans le sens inverse des aiguilles d'une montre).
+- **Couleurs du schéma** : les quarts sont, dans le sens horaire depuis le haut, teal (haut-droite), bleu (bas-droite), navy (bas-gauche), noir (haut-gauche) ; les anneaux extérieurs sont plus pâles (teintes claires) pour donner de la profondeur. Le centre reste vide (rayon d'environ 5 largeurs d'anneau sur le schéma).
+- **Exemples d'usage** (p. 31) : affiche, papier à en-tête, carte de visite, écran de présentation ; souvent en bleu, navy et teal, en grand et coupé par le bord.
 
-Fichiers prêts : `assets/ripple/` (fond clair, fond sombre, blanc pour fond bleu). Composant React : `Ripple` dans `composants/`.
+Fichiers :
+
+- **Officiels** (fournis par JCI) : `assets/ripple/officiels/jci-ripples-half.png` (demi-ripple bleu, teal et navy, pour un bord de visuel 16:9) et `assets/ripple/officiels/jci-ripples-cercle-a01.png` (cercle complet multicolore, avec jaune).
+- **Générés selon la construction p. 32** : `assets/ripple/ripple-fond-clair.svg`, `ripple-fond-sombre.svg`, `ripple-blanc.svg`. Composant React : `Ripple` dans `composants/`.
 
 ### Photographie
 
@@ -251,9 +256,25 @@ Les règles ci-dessous sont des **conventions de l'EDF**, déduites du guide. On
 - **Titres** : majuscule seulement au premier mot (« Devenir formateur »).
 - **Emoji** : pas d'emoji pour décorer.
 - **Icônes** : le guide n'en propose aucun jeu. On n'invente pas d'icônes « style JCI » ; on utilise du texte ou le bouclier seul.
-- **Couleur des citations** : citations Arvo en bleu JCI.
 - **Ripple sur fond sombre** : remplacer le quart noir par du blanc pour qu'il reste visible ; anneaux extérieurs en teintes 25 %.
 - **Espacements** : `space-1` 4 px · `space-2` 8 px · `space-3` 16 px · `space-4` 24 px · `space-5` 32 px · `space-6` 48 px · `space-7` 64 px.
 - **Arrondis** : `radius-sm` 8 px · `radius-md` 16 px · `radius-lg` 24 px. Le logo, le bouclier et le ripple ne sont jamais arrondis.
 - **Tokens d'interface** (`surface`, `ink`, `accent-text`, thème sombre…) : voir `tokens/tokens.json`. `surface-tint` en thème sombre (`#172049`) est inventé, il n'est pas dans le guide.
 - **Logos blanc et inversé** : recolorés à partir des fichiers d'origine. À remplacer par les fichiers officiels JCI dès qu'on les a.
+
+---
+
+## Fichiers fournis
+
+| Besoin | Fichier |
+| --- | --- |
+| Guide officiel complet | `guide/JCI_Brand-Guide-v1-4.pdf` |
+| Texte officiel en anglais (recherche, citation exacte) | `guide/guide-texte-officiel.txt` |
+| Pages du guide en images | `guide/pages/page-01.jpg` … `page-34.jpg` |
+| Logos (4 versions) | `assets/logos/` |
+| Ripples officiels | `assets/ripple/officiels/` |
+| Ripples SVG générés | `assets/ripple/` |
+| Animation du logo (5 s, 1920×1080, avec son) | `assets/video/jci-logo-animation-short.mp4` — pour ouvrir ou fermer une vidéo |
+| Polices web (woff2) | `assets/fonts/*.woff2` |
+| Polices à installer (TTF, toutes graisses, licence OFL) | `assets/fonts/ttf/plus-jakarta-sans/`, `readex-pro/`, `arvo/` |
+| Variables CSS | `tokens/tokens.css` |
