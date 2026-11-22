@@ -56,7 +56,7 @@ C'est le logo principal avec « Junior Chamber International » en dessous.
 - **Pour** : les supports officiels et administratifs (papier à en-tête, signatures mail, documents formels) et les premières présentations à un nouveau public.
 - **Ailleurs** : on utilise le logo principal.
 - **Couleur du nom complet** (p. 16) : toujours la même que celle des lettres JCI (noir sur la version par défaut, blanc sur l'inversée et la blanche, noir sur la noire).
-- Ce logo n'est pas dans le dossier `assets/`, il faut le demander à JCI.
+- Ce logo (avec le texte « Junior Chamber International ») n'est pas encore dans `assets/` : il faut le demander à JCI. Attention, les fichiers officiels nommés « Secondary » reçus de JCI sont en réalité le logo principal dans d'autres couleurs.
 
 ### Logos nationaux et locaux
 
@@ -86,6 +86,8 @@ Un espace vide, égal à la **moitié de la largeur du bouclier**, est gardé su
 ### Les quatre versions de couleur
 
 On regarde toujours le fond **avant** de choisir la version.
+
+Fichiers officiels JCI (vectoriels SVG et PNG 3615 px, carrés avec marge) dans `assets/logos/officiels/`. Versions recadrées au plus près du logo, prêtes à placer : `assets/logos/svg/jci-logo-*.svg` (vectoriel, à privilégier) et `assets/logos/jci-logo-*.png` (1600 px de large).
 
 | Version | Fichier | Quand l'utiliser |
 | --- | --- | --- |
@@ -260,7 +262,7 @@ Les règles ci-dessous sont des **conventions de l'EDF**, déduites du guide. On
 - **Espacements** : `space-1` 4 px · `space-2` 8 px · `space-3` 16 px · `space-4` 24 px · `space-5` 32 px · `space-6` 48 px · `space-7` 64 px.
 - **Arrondis** : `radius-sm` 8 px · `radius-md` 16 px · `radius-lg` 24 px. Le logo, le bouclier et le ripple ne sont jamais arrondis.
 - **Tokens d'interface** (`surface`, `ink`, `accent-text`, thème sombre…) : voir `tokens/tokens.json`. `surface-tint` en thème sombre (`#172049`) est inventé, il n'est pas dans le guide.
-- **Logos blanc et inversé** : recolorés à partir des fichiers d'origine. À remplacer par les fichiers officiels JCI dès qu'on les a.
+- **Logos recadrés** : les versions de `assets/logos/svg/` et les PNG 1600 px sont les fichiers officiels recadrés au plus près (seule la marge change). La version noire officielle en SVG n'avait pas de couleur définie (affichage en noir pur) : la version recadrée reprend le noir JCI `#130F2D` du PNG officiel. Les SVG officiels utilisent des valeurs très proches mais pas identiques à la palette (`#0c95d3` pour le bleu) : ne pas les retoucher.
 
 ---
 
@@ -271,7 +273,8 @@ Les règles ci-dessous sont des **conventions de l'EDF**, déduites du guide. On
 | Guide officiel complet | `guide/JCI_Brand-Guide-v1-4.pdf` |
 | Texte officiel en anglais (recherche, citation exacte) | `guide/guide-texte-officiel.txt` |
 | Pages du guide en images | `guide/pages/page-01.jpg` … `page-34.jpg` |
-| Logos (4 versions) | `assets/logos/` |
+| Logos officiels (SVG et PNG) | `assets/logos/officiels/` |
+| Logos recadrés prêts à placer (4 versions) | `assets/logos/svg/` (SVG) et `assets/logos/*.png` |
 | Ripples officiels | `assets/ripple/officiels/` |
 | Ripples SVG générés | `assets/ripple/` |
 | Animation du logo (5 s, 1920×1080, avec son) | `assets/video/jci-logo-animation-short.mp4` — pour ouvrir ou fermer une vidéo |

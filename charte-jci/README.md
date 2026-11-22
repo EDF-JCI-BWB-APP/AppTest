@@ -14,7 +14,7 @@ Il sert à l'École de la Formation JCI Bruxelles-Wallonie (EDF) et à l'app Tra
 4. Selon le livrable :
    - visuel ou page web : [`tokens/tokens.css`](tokens/tokens.css) (variables CSS + polices) ;
    - code React : [`composants/`](composants/) (`Logo`, `LocalLogo`, `Ripple`) ;
-   - fichiers prêts à poser : [`assets/`](assets/) — logos, ripples officiels (`ripple/officiels/`) et SVG, animation du logo (`video/`), polices web et TTF à installer (`fonts/ttf/`).
+   - fichiers prêts à poser : [`assets/`](assets/) — logos officiels (SVG à privilégier : `logos/svg/`), ripples officiels (`ripple/officiels/`) et SVG, animation du logo (`video/`), polices web et TTF à installer (`fonts/ttf/`).
 5. [`guide/`](guide/) : le **PDF officiel**, son texte brut en anglais (`guide-texte-officiel.txt`) et chaque page en image (`pages/page-NN.jpg`). Un agent qui lit les images peut ouvrir la page citée pour voir un schéma.
 6. [`source/`](source/) : texte d'origine du design system (anglais), historique.
 
@@ -50,7 +50,7 @@ L'agent vérifie chaque point et corrige tant qu'un point échoue.
 
 ## Ce qui n'est pas dans le guide officiel
 
-Le guide ne couvre pas : règles de ton, icônes, mission/vision, modèles (réseaux sociaux, slides, papeterie, signatures mail), co-branding. Les règles de ton ci-dessus et les éléments suivants sont des conventions EDF : échelles d'espacement (`space-*`) et d'arrondis (`radius-*`), `surface-tint` en thème sombre, et les logos `white` et `inverted` (recolorés à partir des masters). À remplacer par les fichiers officiels JCI quand ils sont disponibles. Le logo secondaire (« Junior Chamber International » sous le logo) n'est pas fourni. Les logos locaux officiels se génèrent sur https://jci.cc/logo-generator/.
+Le guide ne couvre pas : règles de ton, icônes, mission/vision, modèles (réseaux sociaux, slides, papeterie, signatures mail), co-branding. Les règles de ton ci-dessus et les éléments suivants sont des conventions EDF : échelles d'espacement (`space-*`) et d'arrondis (`radius-*`), `surface-tint` en thème sombre, et la couleur de la version noire recadrée (le SVG officiel n'en définissait pas). Les logos sont les fichiers officiels JCI (`assets/logos/officiels/`), recadrés dans `assets/logos/svg/` et `assets/logos/*.png`. Le logo secondaire (« Junior Chamber International » sous le logo) n'est pas fourni. Les logos locaux officiels se génèrent sur https://jci.cc/logo-generator/.
 
 ## Mise à jour
 

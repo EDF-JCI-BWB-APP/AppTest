@@ -354,9 +354,20 @@
       "default": "assets/logos/jci-logo-default.png",
       "inverted": "assets/logos/jci-logo-inverted.png",
       "white": "assets/logos/jci-logo-white.png",
-      "black": "assets/logos/jci-logo-black.png"
+      "black": "assets/logos/jci-logo-black.png",
+      "svg_recadres": {
+        "default": "assets/logos/svg/jci-logo-default.svg",
+        "inverted": "assets/logos/svg/jci-logo-inverted.svg",
+        "white": "assets/logos/svg/jci-logo-white.svg",
+        "black": "assets/logos/svg/jci-logo-black.svg"
+      },
+      "officiels": {
+        "svg": "assets/logos/officiels/svg/",
+        "png": "assets/logos/officiels/png/",
+        "note": "fichiers JCI d'origine, carrés avec marge ; deux ont un fond intégré (Inverted_on_JCI_Black, White_on_JCI_Blue)"
+      }
     },
-    "ratio_hauteur_largeur": 0.41375,
+    "ratio_hauteur_largeur": 0.4012,
     "choix_selon_fond": {
       "blanc_clair_neutre": "default",
       "sombre_ou_charge": "inverted",
@@ -393,12 +404,9 @@
       "changer l'écart entre les éléments",
       "redimensionner un élément séparément"
     ],
-    "derives_a_remplacer": [
-      "white",
-      "inverted"
-    ],
+    "derives_a_remplacer": [],
     "non_fournis": [
-      "logo secondaire 'Junior Chamber International'"
+      "logo secondaire avec 'Junior Chamber International' (les fichiers nommés 'Secondary' reçus sont le logo principal)"
     ],
     "generateur_logo_local": "https://jci.cc/logo-generator/",
     "signification": {

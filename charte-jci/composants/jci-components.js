@@ -9,7 +9,7 @@
     white: BASE + 'jci-logo-white.png',
     black: BASE + 'jci-logo-black.png'
   };
-  var RATIO = 662 / 1600; // image height / width
+  var RATIO = 642 / 1600; // hauteur / largeur des PNG recadrés (logos officiels)
   function Logo(p) {
     var variant = p.variant || 'default';
     var w = p.width || 240;
@@ -24,7 +24,7 @@
     var lines = String(p.name || '').split('\n');
     return h('div', { style: { position: 'relative', width: w, height: w * RATIO + fs * 1.1 * lines.length - 0.0175 * w, lineHeight: 0 } },
       h('img', { src: p.src || FILES[variant], alt: 'JCI ' + lines.join(' '), width: w, style: { display: 'block', height: 'auto' } }),
-      h('div', { style: { position: 'absolute', left: 0.00875 * w, top: 0.4025 * w, fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: fs, lineHeight: 1.1, letterSpacing: 0, color: color, whiteSpace: 'pre' } }, lines.join('\n')));
+      h('div', { style: { position: 'absolute', left: 0.002 * w, top: 0.39 * w, fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: fs, lineHeight: 1.1, letterSpacing: 0, color: color, whiteSpace: 'pre' } }, lines.join('\n')));
   }
   function arc(cx, cy, r, a0, a1) {
     var x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0), x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
