@@ -1,0 +1,316 @@
+{
+  "nom": "Charte JCI",
+  "source": "JCI Brand Guidelines v1.4 (18/12/2025)",
+  "signature": "Become the Change.",
+  "voix": {
+    "ton": "actif, encourageant, s'adresse directement aux jeunes leaders, JCI parle en 'nous'",
+    "titres": "casse de phrase",
+    "emoji_decoratif": false,
+    "messages_cles": [
+      {
+        "id": "real-impact",
+        "en": "Focus on Real Impact",
+        "fr": "Un impact réel sur les membres et leurs communautés"
+      },
+      {
+        "id": "leadership-skills",
+        "en": "Developing Leadership Skills",
+        "fr": "Devenir meilleur en apprenant par la pratique"
+      },
+      {
+        "id": "diversity-opportunities",
+        "en": "Diversity of Opportunities",
+        "fr": "Quatre domaines d'opportunités et un sentiment d'appartenance"
+      }
+    ]
+  },
+  "couleurs": {
+    "palette": {
+      "jci-blue": "#0097D7",
+      "jci-black": "#130F2D",
+      "jci-white": "#FFFFFF",
+      "jci-navy": "#1F4789",
+      "jci-teal": "#57BCBC",
+      "jci-yellow": "#EFC40F"
+    },
+    "teintes": {
+      "jci-blue": {
+        "75": "#40B1E1",
+        "50": "#80CBEB",
+        "25": "#BFE5F5"
+      },
+      "jci-black": {
+        "75": "#4E4B62",
+        "50": "#898796",
+        "25": "#C4C3CA"
+      },
+      "jci-navy": {
+        "75": "#5775A6",
+        "50": "#8FA3C4",
+        "25": "#C7D1E2"
+      },
+      "jci-teal": {
+        "75": "#81CDCD",
+        "50": "#ABDEDE",
+        "25": "#D5EEEE"
+      },
+      "jci-yellow": {
+        "75": "#F3D34B",
+        "50": "#F7E287",
+        "25": "#FBF0C3"
+      }
+    },
+    "proportions_pct": {
+      "jci-white": 20,
+      "jci-black": 20,
+      "jci-blue": 35,
+      "jci-navy": 10,
+      "jci-teal": 10,
+      "jci-yellow": 5
+    },
+    "paires_autorisees": {
+      "jci-black": [
+        "jci-white",
+        "jci-blue",
+        "jci-navy",
+        "jci-teal",
+        "jci-yellow"
+      ],
+      "jci-white": [
+        "jci-black",
+        "jci-blue",
+        "jci-navy",
+        "jci-teal",
+        "jci-yellow"
+      ],
+      "jci-blue": [
+        "jci-black",
+        "jci-white",
+        "jci-navy"
+      ],
+      "jci-navy": [
+        "jci-black",
+        "jci-white",
+        "jci-blue",
+        "jci-teal",
+        "jci-yellow"
+      ],
+      "jci-teal": [
+        "jci-black",
+        "jci-white",
+        "jci-navy"
+      ],
+      "jci-yellow": [
+        "jci-black",
+        "jci-white",
+        "jci-navy"
+      ]
+    },
+    "texte_recommande_par_fond": {
+      "jci-white": "jci-black (petit texte coloré : jci-navy)",
+      "jci-black": "jci-white",
+      "jci-blue": "jci-black",
+      "jci-navy": "jci-white",
+      "jci-teal": "jci-black",
+      "jci-yellow": "jci-black"
+    },
+    "texte_interdit": [
+      {
+        "fond": "jci-teal",
+        "texte": "jci-white",
+        "ratio": 2.3
+      },
+      {
+        "fond": "jci-yellow",
+        "texte": "jci-white",
+        "ratio": 1.7
+      },
+      {
+        "fond": "jci-blue",
+        "texte": "jci-navy",
+        "ratio": 2.8,
+        "note": "logos et graphismes seulement"
+      }
+    ],
+    "texte_grand_seulement": [
+      {
+        "fond": "jci-blue",
+        "texte": "jci-white",
+        "ratio": 3.3
+      },
+      {
+        "fond": "jci-white",
+        "texte": "jci-blue",
+        "ratio": 3.3
+      }
+    ],
+    "seuils_wcag": {
+      "normal": 4.5,
+      "grand_texte": 3.0,
+      "grand_texte_def": "24px+ ou gras 19px+"
+    }
+  },
+  "typographie": {
+    "principale": "Plus Jakarta Sans",
+    "graisses_dispo": [
+      300,
+      400,
+      500,
+      600,
+      700
+    ],
+    "interlettrage": 0,
+    "secours": "Readex Pro (Canva sans Pro uniquement)",
+    "non_latin": "Noto Sans",
+    "citation": {
+      "police": "Arvo Regular",
+      "couleur": "jci-blue",
+      "usage": "grandes citations éditoriales uniquement"
+    },
+    "hierarchie": [
+      {
+        "role": "title",
+        "taille_px": 48,
+        "graisse": 400,
+        "interligne": 1.2
+      },
+      {
+        "role": "subtitle",
+        "taille_px": 24,
+        "graisse": 400,
+        "interligne": 1.3
+      },
+      {
+        "role": "subheading",
+        "taille_px": 20,
+        "graisse": 600,
+        "interligne": 1.4
+      },
+      {
+        "role": "paragraph",
+        "taille_px": 16,
+        "graisse": 400,
+        "interligne": 1.4
+      },
+      {
+        "role": "quote",
+        "police": "Arvo",
+        "taille_px": 24,
+        "graisse": 400,
+        "interligne": 1.3,
+        "couleur": "jci-blue"
+      },
+      {
+        "role": "location-name",
+        "taille_px": 60,
+        "graisse": 700,
+        "interligne": 1.1,
+        "couleur": "jci-blue",
+        "note": "pour un logo de 570 px, proportionnel"
+      }
+    ]
+  },
+  "logo": {
+    "fichiers": {
+      "default": "assets/logos/jci-logo-default.png",
+      "inverted": "assets/logos/jci-logo-inverted.png",
+      "white": "assets/logos/jci-logo-white.png",
+      "black": "assets/logos/jci-logo-black.png"
+    },
+    "ratio_hauteur_largeur": 0.41375,
+    "choix_selon_fond": {
+      "blanc_ou_clair": "default",
+      "noir_ou_sombre": "inverted",
+      "bleu_couleur_ou_photo_sombre": "white",
+      "monochrome_ou_photo_claire": "black"
+    },
+    "zone_protection": "moitié de la largeur du bouclier, sur chaque côté",
+    "taille_min": {
+      "ecran_px_hauteur": 32,
+      "print_mm_hauteur": 5
+    },
+    "placement_par_preference": [
+      [
+        "haut-gauche",
+        "haut-droite"
+      ],
+      [
+        "bas-gauche",
+        "bas-droite"
+      ],
+      [
+        "haut-centre",
+        "bas-centre"
+      ]
+    ],
+    "interdits": [
+      "redimensionner un élément séparément",
+      "étirer",
+      "pivoter",
+      "changer l'écart entre éléments",
+      "retourner le bouclier",
+      "changer la disposition",
+      "recolorer",
+      "contour",
+      "ombre ou effet"
+    ],
+    "derives_a_remplacer": [
+      "white",
+      "inverted"
+    ],
+    "non_fournis": [
+      "logo secondaire 'Junior Chamber International'"
+    ],
+    "generateur_logo_local": "https://jci.cc/logo-generator/"
+  },
+  "ripple": {
+    "regles": [
+      "anneaux concentriques coupés en 4 quarts égaux",
+      "écart entre quarts = largeur d'anneau",
+      "espace entre anneaux = largeur d'anneau",
+      "rotation de 15° par anneau",
+      "grand et coupé par un bord du format",
+      "jamais arrondi ni déformé"
+    ],
+    "couleurs_quarts_fond_clair": [
+      "jci-teal",
+      "jci-blue",
+      "jci-navy",
+      "jci-black"
+    ],
+    "couleurs_quarts_fond_sombre": [
+      "jci-teal",
+      "jci-blue",
+      "jci-navy-75",
+      "jci-white"
+    ],
+    "fichiers": {
+      "fond_clair": "assets/ripple/ripple-fond-clair.svg",
+      "fond_sombre": "assets/ripple/ripple-fond-sombre.svg",
+      "blanc": "assets/ripple/ripple-blanc.svg"
+    }
+  },
+  "photo": [
+    "personnes d'abord : visages, expressions, interactions",
+    "sur le vif, authentique, pas posé",
+    "diversité des membres",
+    "énergie, lumière naturelle, compositions ouvertes"
+  ],
+  "iconographie": "aucun jeu d'icônes ; seul pictogramme = le bouclier ; ne pas inventer d'icônes",
+  "derive_non_officiel": {
+    "espacements_px": {
+      "space-1": 4,
+      "space-2": 8,
+      "space-3": 16,
+      "space-4": 24,
+      "space-5": 32,
+      "space-6": 48,
+      "space-7": 64
+    },
+    "arrondis_px": {
+      "radius-sm": 8,
+      "radius-md": 16,
+      "radius-lg": 24
+    }
+  }
+}

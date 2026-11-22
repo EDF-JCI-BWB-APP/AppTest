@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charte JCI — École de la Formation BWB</title>
+<meta name="description" content="Charte graphique et éditoriale JCI (Brand Guidelines v1.4), lisible par les personnes et par les agents IA.">
+<link rel="alternate" type="text/markdown" href="README.md" title="Point d'entrée pour agents IA">
+<link rel="alternate" type="application/json" href="charte.json" title="Règles structurées">
+<link rel="stylesheet" href="tokens/tokens.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--surface);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.4}
+  a{color:var(--accent-text)}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 var(--space-4)}
+  section{padding:var(--space-6) 0;border-top:1px solid var(--jci-black-25)}
+  h1,h2,h3{font-weight:400;margin:0}
+  h2{font-size:32px;line-height:1.2;margin-bottom:var(--space-2)}
+  h3{font-size:20px;font-weight:600;line-height:1.4;margin-bottom:var(--space-2)}
+  p{margin:0 0 var(--space-3)}
+  .lead{font-size:20px;line-height:1.3;color:var(--ink-muted);max-width:640px}
+  .muted{color:var(--ink-muted)}
+
+  /* En-tête */
+  .hero{position:relative;overflow:hidden;background:var(--surface-tint);padding:var(--space-5) 0 var(--space-7)}
+  .hero .ripple{position:absolute;right:-260px;top:-220px;width:720px;pointer-events:none}
+  .hero .wrap{position:relative}
+  .hero img.logo{width:150px;height:auto;display:block;margin-bottom:var(--space-6)}
+  .hero h1{font-size:56px;line-height:1.1;max-width:560px;margin-bottom:var(--space-3)}
+  .hero .sig{font-weight:600;color:var(--accent-text);margin-top:var(--space-4)}
+
+  /* Encadré agents */
+  .agent{background:var(--jci-black);color:var(--jci-white);border-radius:var(--radius-lg);padding:var(--space-5);position:relative;overflow:hidden}
+  .agent h2{color:var(--jci-white)}
+  .agent p{color:var(--jci-black-25)}
+  .agent a{color:var(--jci-blue-50)}
+  .prompt{display:flex;gap:var(--space-2);align-items:stretch;margin:var(--space-3) 0 var(--space-4)}
+  .prompt code{flex:1;background:#221d45;border-radius:var(--radius-sm);padding:var(--space-3);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;line-height:1.5;color:var(--jci-white);white-space:pre-wrap}
+  button{font:600 15px var(--font-sans);border:0;border-radius:var(--radius-sm);padding:0 var(--space-4);min-height:44px;cursor:pointer;background:var(--jci-blue);color:var(--on-accent)}
+  button:focus-visible,a:focus-visible{outline:3px solid var(--jci-yellow);outline-offset:2px}
+  .files{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--space-3);margin:0;padding:0;list-style:none}
+  .files a{display:block;background:#221d45;border-radius:var(--radius-md);padding:var(--space-3);text-decoration:none;color:var(--jci-white);min-height:44px}
+  .files a strong{display:block;color:var(--jci-blue-50);font-weight:600;margin-bottom:var(--space-1)}
+  .files a span{font-size:14px;color:var(--jci-black-25)}
+
+  /* Couleurs */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--space-3);margin-top:var(--space-4)}
+  .sw{border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--jci-black-25)}
+  .sw .chip{height:110px;padding:var(--space-3);display:flex;align-items:flex-end;font-weight:600}
+  .sw .meta{padding:var(--space-2) var(--space-3) var(--space-3);font-size:14px}
+  .sw .meta b{display:block;font-weight:600}
+  .bar{display:flex;height:28px;border-radius:var(--radius-sm);overflow:hidden;margin-top:var(--space-4)}
+  .bar div{height:100%}
+  .legend{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-2);font-size:14px;color:var(--ink-muted)}
+
+  /* Typo */
+  .type-row{display:grid;grid-template-columns:180px 1fr;gap:var(--space-4);align-items:baseline;padding:var(--space-3) 0;border-bottom:1px solid var(--jci-black-25)}
+  .type-row .lbl{font-size:14px;color:var(--ink-muted)}
+
+  /* Logos */
+  .logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:var(--space-3);margin-top:var(--space-4)}
+  .lg{border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--jci-black-25)}
+  .lg .stage{height:150px;display:flex;align-items:center;justify-content:center;padding:var(--space-4)}
+  .lg .stage img{width:150px;height:auto}
+  .lg .meta{padding:var(--space-3);font-size:14px}
+  .lg .meta b{display:block;font-weight:600}
+
+  /* Ripple */
+  .ripples{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:var(--space-3);margin-top:var(--space-4)}
+  .rp{border-radius:var(--radius-md);overflow:hidden;position:relative;height:220px}
+  .rp img{position:absolute;width:380px;right:-150px;bottom:-150px}
+  .rp a{position:absolute;left:var(--space-3);top:var(--space-3);font-weight:600;font-size:14px;padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);text-decoration:none;min-height:32px;display:inline-flex;align-items:center}
+
+  .rules{columns:2 320px;column-gap:var(--space-5);padding-left:var(--space-4);margin:var(--space-3) 0 0}
+  .rules li{margin-bottom:var(--space-2);break-inside:avoid}
+  footer{padding:var(--space-5) 0 var(--space-6);color:var(--ink-muted);font-size:14px;border-top:1px solid var(--jci-black-25)}
+  @media (max-width:640px){
+    .hero h1{font-size:40px}
+    .hero .ripple{width:340px;right:-190px;top:-190px}
+    .hero img.logo{margin-bottom:var(--space-5)}
+    .type-row{grid-template-columns:1fr;gap:var(--space-1)}
+    .prompt{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="ripple" src="assets/ripple/ripple-fond-clair.svg" alt="">
+  <div class="wrap">
+    <img class="logo" src="assets/logos/jci-logo-default.png" alt="JCI">
+    <h1>Charte JCI</h1>
+    <p class="lead">Les couleurs, la typographie, le logo, le motif ripple et le ton de JCI, réunis au même endroit pour produire des contenus de l'École de la Formation BWB qui restent cohérents.</p>
+    <p class="muted">Basée sur les JCI Brand Guidelines v1.4 (18 décembre 2025).</p>
+    <p class="sig">Become the Change.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section style="border-top:0">
+    <div class="agent">
+      <h2>Pour les agents IA</h2>
+      <p>Donnez cette consigne à votre agent (Claude, ChatGPT, etc.) avant de lui demander un post, un visuel, des slides ou une vidéo. Il lira la charte et vérifiera son travail avec la checklist.</p>
+      <div class="prompt">
+        <code id="prompt">Avant de produire ce contenu, lis la charte JCI : https://edf-jci-bwb-app.github.io/AppTest/charte-jci/README.md puis charte.md et charte.json au même endroit. Applique-la, puis vérifie ton résultat avec la checklist du README et corrige tant qu'un point échoue.</code>
+        <button type="button" id="copy" aria-live="polite">Copier</button>
+      </div>
+      <ul class="files">
+        <li><a href="README.md"><strong>README.md</strong><span>Point d'entrée, 10 règles, checklist</span></a></li>
+        <li><a href="charte.md"><strong>charte.md</strong><span>Charte complète en français</span></a></li>
+        <li><a href="charte.json"><strong>charte.json</strong><span>Règles en données structurées</span></a></li>
+        <li><a href="tokens/tokens.css"><strong>tokens.css</strong><span>Variables CSS et polices</span></a></li>
+        <li><a href="tokens/tokens.json"><strong>tokens.json</strong><span>Tokens du design system</span></a></li>
+        <li><a href="composants/jci-components.js"><strong>jci-components.js</strong><span>Composants Logo, LocalLogo, Ripple</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="ton">
+    <h2>Ton et messages</h2>
+    <p class="lead">Une voix active et encourageante, qui s'adresse directement aux jeunes leaders. JCI parle en « nous ». Titres en casse de phrase, pas d'emoji décoratif.</p>
+    <div class="swatches" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+      <div class="sw"><div class="meta" style="padding:var(--space-4)"><b>Un impact réel</b>Un impact concret sur les membres et leurs communautés.</div></div>
+      <div class="sw"><div class="meta" style="padding:var(--space-4)"><b>Développer ses compétences de leader</b>Devenir meilleur en apprenant par la pratique.</div></div>
+      <div class="sw"><div class="meta" style="padding:var(--space-4)"><b>La diversité des opportunités</b>Quatre domaines d'opportunités et un sentiment d'appartenance.</div></div>
+    </div>
+  </section>
+
+  <section id="couleurs">
+    <h2>Couleurs</h2>
+    <p class="lead">Le bleu JCI doit dominer. Le noir et le blanc apportent du calme, la palette secondaire s'utilise avec parcimonie.</p>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:var(--jci-blue);color:var(--jci-black)">Aa</div><div class="meta"><b>Bleu JCI</b>#0097D7 · texte noir</div></div>
+      <div class="sw"><div class="chip" style="background:var(--jci-black);color:var(--jci-white)">Aa</div><div class="meta"><b>Noir JCI</b>#130F2D · texte blanc</div></div>
+      <div class="sw"><div class="chip" style="background:var(--jci-white);color:var(--jci-black)">Aa</div><div class="meta"><b>Blanc</b>#FFFFFF · texte noir</div></div>
+      <div class="sw"><div class="chip" style="background:var(--jci-navy);color:var(--jci-white)">Aa</div><div class="meta"><b>Navy</b>#1F4789 · texte blanc</div></div>
+      <div class="sw"><div class="chip" style="background:var(--jci-teal);color:var(--jci-black)">Aa</div><div class="meta"><b>Teal</b>#57BCBC · texte noir</div></div>
+      <div class="sw"><div class="chip" style="background:var(--jci-yellow);color:var(--jci-black)">Aa</div><div class="meta"><b>Jaune</b>#EFC40F · texte noir</div></div>
+    </div>
+    <div class="bar" role="img" aria-label="Proportions : blanc 20 %, noir 20 %, bleu 35 %, navy 10 %, teal 10 %, jaune 5 %">
+      <div style="width:20%;background:var(--jci-white);border-right:1px solid var(--jci-black-25)"></div>
+      <div style="width:20%;background:var(--jci-black)"></div>
+      <div style="width:35%;background:var(--jci-blue)"></div>
+      <div style="width:10%;background:var(--jci-navy)"></div>
+      <div style="width:10%;background:var(--jci-teal)"></div>
+      <div style="width:5%;background:var(--jci-yellow)"></div>
+    </div>
+    <div class="legend"><span>Blanc 20 %</span><span>Noir 20 %</span><span>Bleu 35 %</span><span>Navy 10 %</span><span>Teal 10 %</span><span>Jaune 5 %</span></div>
+    <p class="muted" style="margin-top:var(--space-4)">Jamais de texte blanc sur teal ou jaune. Blanc sur bleu : grand texte uniquement (24 px et plus). Petit texte coloré sur fond clair : navy, pas bleu.</p>
+  </section>
+
+  <section id="typographie">
+    <h2>Typographie</h2>
+    <p class="lead">Plus Jakarta Sans pour tout. Arvo uniquement pour une grande citation éditoriale, en bleu JCI.</p>
+    <div class="type-row"><span class="lbl">Titre · Regular 48</span><span class="jci-title">Devenir formateur</span></div>
+    <div class="type-row"><span class="lbl">Sous-titre · Regular 24</span><span class="jci-subtitle">Apprendre en faisant, grandir en partageant</span></div>
+    <div class="type-row"><span class="lbl">Intertitre · SemiBold 20</span><span class="jci-subheading">Un impact réel</span></div>
+    <div class="type-row"><span class="lbl">Paragraphe · Regular 16</span><span class="jci-paragraph">Nos membres apprennent par la pratique, grandissent en partageant et mènent en agissant.</span></div>
+    <div class="type-row"><span class="lbl">Citation · Arvo 24</span><span class="jci-quote" style="color:var(--jci-blue)">« Développer des leaders pour un monde qui change. »</span></div>
+  </section>
+
+  <section id="logo">
+    <h2>Logo</h2>
+    <p class="lead">Choisir la version selon le fond. Ne jamais déformer, recolorer ni ajouter d'effet. Minimum 32 px de haut, zone libre égale à la moitié du bouclier.</p>
+    <div class="logos">
+      <div class="lg"><div class="stage" style="background:var(--jci-white)"><img src="assets/logos/jci-logo-default.png" alt="Logo JCI couleur"></div><div class="meta"><b>Couleur</b>Fond blanc ou clair · <a href="assets/logos/jci-logo-default.png" download>télécharger</a></div></div>
+      <div class="lg"><div class="stage" style="background:var(--jci-black)"><img src="assets/logos/jci-logo-inverted.png" alt="Logo JCI inversé"></div><div class="meta"><b>Inversé</b>Fond noir ou sombre · <a href="assets/logos/jci-logo-inverted.png" download>télécharger</a></div></div>
+      <div class="lg"><div class="stage" style="background:var(--jci-blue)"><img src="assets/logos/jci-logo-white.png" alt="Logo JCI blanc"></div><div class="meta"><b>Blanc</b>Fond bleu, couleur ou photo sombre · <a href="assets/logos/jci-logo-white.png" download>télécharger</a></div></div>
+      <div class="lg"><div class="stage" style="background:var(--surface-tint)"><img src="assets/logos/jci-logo-black.png" alt="Logo JCI noir"></div><div class="meta"><b>Noir</b>Monochrome ou photo claire · <a href="assets/logos/jci-logo-black.png" download>télécharger</a></div></div>
+    </div>
+    <p class="muted" style="margin-top:var(--space-3)">Les versions blanche et inversée sont recolorées à partir des fichiers d'origine, en attendant les fichiers officiels JCI.</p>
+  </section>
+
+  <section id="ripple">
+    <h2>Ripple</h2>
+    <p class="lead">Le motif signature : des anneaux coupés en quatre quarts, chacun tourné de 15°. À utiliser en grand, coupé par le bord du format.</p>
+    <div class="ripples">
+      <div class="rp" style="background:var(--jci-white);border:1px solid var(--jci-black-25)"><img src="assets/ripple/ripple-fond-clair.svg" alt="Ripple pour fond clair"><a href="assets/ripple/ripple-fond-clair.svg" download style="background:var(--jci-black);color:var(--jci-white)">Fond clair · SVG</a></div>
+      <div class="rp" style="background:var(--jci-black)"><img src="assets/ripple/ripple-fond-sombre.svg" alt="Ripple pour fond sombre"><a href="assets/ripple/ripple-fond-sombre.svg" download style="background:var(--jci-white);color:var(--jci-black)">Fond sombre · SVG</a></div>
+      <div class="rp" style="background:var(--jci-blue)"><img src="assets/ripple/ripple-blanc.svg" alt="Ripple blanc pour fond bleu"><a href="assets/ripple/ripple-blanc.svg" download style="background:var(--jci-black);color:var(--jci-white)">Fond bleu · SVG</a></div>
+    </div>
+  </section>
+
+  <section id="regles">
+    <h2>Les règles à ne jamais oublier</h2>
+    <ol class="rules">
+      <li>Bleu JCI bien visible, environ 35 % de la composition. Jaune en petit accent seulement.</li>
+      <li>Texte noir sur bleu, teal et jaune ; texte blanc sur navy et noir.</li>
+      <li>Petit texte coloré sur fond clair : navy.</li>
+      <li>Une seule police : Plus Jakarta Sans (Arvo pour une grande citation).</li>
+      <li>Titres en casse de phrase.</li>
+      <li>Logo choisi selon le fond, jamais modifié, jamais sous 32 px de haut.</li>
+      <li>Logo de préférence en haut à gauche ou à droite.</li>
+      <li>Ripple grand, coupé par un bord, proportions intactes.</li>
+      <li>Photos de vraies personnes, sur le vif, diverses, en lumière naturelle.</li>
+      <li>Pas d'emoji décoratif, pas d'icônes inventées : texte ou bouclier seul.</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">École de la Formation JCI Bruxelles-Wallonie · <a href="../">Toutes les apps EDF</a> · Polices Plus Jakarta Sans et Arvo (licence SIL Open Font).</div>
+</footer>
+
+<script>
+  document.getElementById('copy').addEventListener('click', function () {
+    var b = this, t = document.getElementById('prompt').textContent;
+    var done = function () { b.textContent = 'Copié'; setTimeout(function () { b.textContent = 'Copier'; }, 2000); };
+    if (navigator.clipboard) { navigator.clipboard.writeText(t).then(done, function () {}); }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+/* Charte JCI (Brand Guidelines v1.4) — généré depuis tokens/tokens.json. Ne pas éditer à la main. */
+@font-face{font-family:'Plus Jakarta Sans';src:url('../assets/fonts/PlusJakartaSans-300.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:'Plus Jakarta Sans';src:url('../assets/fonts/PlusJakartaSans-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Plus Jakarta Sans';src:url('../assets/fonts/PlusJakartaSans-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Plus Jakarta Sans';src:url('../assets/fonts/PlusJakartaSans-600.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Plus Jakarta Sans';src:url('../assets/fonts/PlusJakartaSans-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Arvo';src:url('../assets/fonts/Arvo-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+:root{
+  --jci-blue: #0097D7;
+  --jci-black: #130F2D;
+  --jci-white: #FFFFFF;
+  --jci-navy: #1F4789;
+  --jci-teal: #57BCBC;
+  --jci-yellow: #EFC40F;
+  --jci-blue-75: #40B1E1;
+  --jci-blue-50: #80CBEB;
+  --jci-blue-25: #BFE5F5;
+  --jci-black-75: #4E4B62;
+  --jci-black-50: #898796;
+  --jci-black-25: #C4C3CA;
+  --jci-navy-75: #5775A6;
+  --jci-navy-50: #8FA3C4;
+  --jci-navy-25: #C7D1E2;
+  --jci-teal-75: #81CDCD;
+  --jci-teal-50: #ABDEDE;
+  --jci-teal-25: #D5EEEE;
+  --jci-yellow-75: #F3D34B;
+  --jci-yellow-50: #F7E287;
+  --jci-yellow-25: #FBF0C3;
+  --surface: #FFFFFF;
+  --surface-tint: #F2FAFD;
+  --ink: #130F2D;
+  --ink-muted: #4E4B62;
+  --accent: #0097D7;
+  --accent-text: #1F4789;
+  --on-accent: #130F2D;
+  --highlight: #EFC40F;
+  --on-highlight: #130F2D;
+  --secondary: #1F4789;
+  --on-secondary: #FFFFFF;
+  --support: #57BCBC;
+  --on-support: #130F2D;
+  --border: #898796;
+  --font-sans: "Plus Jakarta Sans", "Readex Pro", system-ui, sans-serif;
+  --font-serif: Arvo, Georgia, serif;
+  --font-nonlatin: "Noto Sans", system-ui, sans-serif;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+[data-theme="dark"]{
+  --surface: #130F2D;
+  --surface-tint: #172049;
+  --ink: #FFFFFF;
+  --ink-muted: #C4C3CA;
+  --accent: #0097D7;
+  --accent-text: #80CBEB;
+  --on-accent: #130F2D;
+  --highlight: #EFC40F;
+  --on-highlight: #130F2D;
+  --secondary: #1F4789;
+  --on-secondary: #FFFFFF;
+  --support: #57BCBC;
+  --on-support: #130F2D;
+  --border: #898796;
+}
+.jci-title{font-family:var(--font-sans);font-size:48px;line-height:1.2;font-weight:400;letter-spacing:0}
+.jci-subtitle{font-family:var(--font-sans);font-size:24px;line-height:1.3;font-weight:400;letter-spacing:0}
+.jci-subheading{font-family:var(--font-sans);font-size:20px;line-height:1.4;font-weight:600;letter-spacing:0}
+.jci-paragraph{font-family:var(--font-sans);font-size:16px;line-height:1.4;font-weight:400;letter-spacing:0}
+.jci-location-name{font-family:var(--font-sans);font-size:60px;line-height:1.1;font-weight:700;letter-spacing:0}
+.jci-quote{font-family:var(--font-serif);font-size:24px;line-height:1.3;font-weight:400;letter-spacing:0}
