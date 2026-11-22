@@ -1,28 +1,44 @@
 {
-  "nom": "Charte JCI",
-  "source": "JCI Brand Guidelines v1.4 (18/12/2025)",
+  "nom": "Charte JCI officielle",
+  "source": {
+    "titre": "JCI Brand Guidelines v1.4",
+    "date": "2025-12-18",
+    "url": "https://jci.cc/wp-content/uploads/2025/07/251218_JCI_Brand-Guide-v1-4.pdf",
+    "priorite": "Le PDF officiel fait foi en cas de doute ou de contradiction."
+  },
+  "plan_du_guide": {
+    "01_story": "p.4-6",
+    "02_logo": "p.7-17",
+    "03_colours": "p.19-22",
+    "04_typography": "p.24-28",
+    "05_brand_in_action": "p.30-33"
+  },
   "signature": "Become the Change.",
   "voix": {
-    "ton": "actif, encourageant, s'adresse directement aux jeunes leaders, JCI parle en 'nous'",
-    "titres": "casse de phrase",
-    "emoji_decoratif": false,
+    "statut": "officiel pour messages_cles et signature ; le reste est une convention EDF (non officielle)",
     "messages_cles": [
       {
         "id": "real-impact",
         "en": "Focus on Real Impact",
-        "fr": "Un impact réel sur les membres et leurs communautés"
+        "fr": "Nous agissons pour un impact qui compte sur les membres et leurs communautés"
       },
       {
         "id": "leadership-skills",
         "en": "Developing Leadership Skills",
-        "fr": "Devenir meilleur en apprenant par la pratique"
+        "fr": "L'engagement fait grandir : on devient meilleur en apprenant par la pratique"
       },
       {
         "id": "diversity-opportunities",
         "en": "Diversity of Opportunities",
-        "fr": "Quatre domaines d'opportunités et un sentiment d'appartenance"
+        "fr": "Quatre domaines d'opportunités offrent des possibilités de progresser et un sentiment d'appartenance"
       }
-    ]
+    ],
+    "signature": "Become the Change.",
+    "conventions_edf": {
+      "ton": "actif, encourageant, s'adresse directement aux jeunes leaders, JCI parle en 'nous'",
+      "titres": "casse de phrase",
+      "emoji_decoratif": false
+    }
   },
   "couleurs": {
     "palette": {
@@ -148,7 +164,108 @@
       "normal": 4.5,
       "grand_texte": 3.0,
       "grand_texte_def": "24px+ ou gras 19px+"
-    }
+    },
+    "statut": "officiel (palette, RVB, CMJN, Pantone, proportions) ; paires relevées visuellement dans les schémas ; ratios WCAG ajoutés par l'EDF",
+    "details": {
+      "jci-blue": {
+        "hex": "#0097D7",
+        "rvb": [
+          0,
+          151,
+          215
+        ],
+        "cmjn": [
+          77,
+          27,
+          0,
+          0
+        ],
+        "pantone": "2925 C",
+        "role": "principale, à utiliser en évidence"
+      },
+      "jci-black": {
+        "hex": "#130F2D",
+        "rvb": [
+          19,
+          15,
+          45
+        ],
+        "cmjn": [
+          100,
+          98,
+          47,
+          66
+        ],
+        "pantone": "5395 C",
+        "role": "principale, contraste et calme"
+      },
+      "jci-white": {
+        "hex": "#FFFFFF",
+        "rvb": [
+          255,
+          255,
+          255
+        ],
+        "cmjn": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "pantone": null,
+        "role": "principale, contraste et calme"
+      },
+      "jci-navy": {
+        "hex": "#1F4789",
+        "rvb": [
+          31,
+          71,
+          137
+        ],
+        "cmjn": [
+          96,
+          76,
+          15,
+          3
+        ],
+        "pantone": "2728 C",
+        "role": "secondaire, analogue au bleu"
+      },
+      "jci-teal": {
+        "hex": "#57BCBC",
+        "rvb": [
+          87,
+          188,
+          188
+        ],
+        "cmjn": [
+          63,
+          0,
+          30,
+          0
+        ],
+        "pantone": "3265 C",
+        "role": "secondaire, analogue au bleu"
+      },
+      "jci-yellow": {
+        "hex": "#EFC40F",
+        "rvb": [
+          239,
+          196,
+          15
+        ],
+        "cmjn": [
+          7,
+          21,
+          93,
+          0
+        ],
+        "pantone": "142 C",
+        "role": "secondaire, accent contrasté, avec parcimonie"
+      }
+    },
+    "proportions_note": "Le guide donne 20/20/35/5/10/10 sans libellé dans le texte ; correspondance retenue ci-dessus. Repère ajustable au contexte.",
+    "regle_absolue": "La lisibilité passe avant le style."
   },
   "typographie": {
     "principale": "Plus Jakarta Sans",
@@ -160,12 +277,21 @@
       700
     ],
     "interlettrage": 0,
-    "secours": "Readex Pro (Canva sans Pro uniquement)",
+    "secours": {
+      "police": "Readex Pro",
+      "uniquement": "Canva sans compte Pro",
+      "graisses": [
+        "ExtraLight",
+        "Light",
+        "Regular",
+        "Medium"
+      ]
+    },
     "non_latin": "Noto Sans",
     "citation": {
       "police": "Arvo Regular",
-      "couleur": "jci-blue",
-      "usage": "grandes citations éditoriales uniquement"
+      "usage": "grandes citations et accroches éditoriales uniquement (communiqués, magazine)",
+      "couleur_convention_edf": "jci-blue"
     },
     "hierarchie": [
       {
@@ -208,7 +334,17 @@
         "couleur": "jci-blue",
         "note": "pour un logo de 570 px, proportionnel"
       }
-    ]
+    ],
+    "graisses_preferees": [
+      "Light",
+      "Regular",
+      "Medium"
+    ],
+    "graisses_emphase": [
+      "SemiBold",
+      "Bold"
+    ],
+    "unite_hierarchie": "pt dans le guide (équivalent px à l'écran)"
   },
   "logo": {
     "fichiers": {
@@ -219,9 +355,9 @@
     },
     "ratio_hauteur_largeur": 0.41375,
     "choix_selon_fond": {
-      "blanc_ou_clair": "default",
-      "noir_ou_sombre": "inverted",
-      "bleu_couleur_ou_photo_sombre": "white",
+      "blanc_clair_neutre": "default",
+      "sombre_ou_charge": "inverted",
+      "photo_sombre_ou_fond_couleur_ou_contrainte_technique": "white",
       "monochrome_ou_photo_claire": "black"
     },
     "zone_protection": "moitié de la largeur du bouclier, sur chaque côté",
@@ -244,15 +380,15 @@
       ]
     ],
     "interdits": [
-      "redimensionner un élément séparément",
-      "étirer",
       "pivoter",
-      "changer l'écart entre éléments",
-      "retourner le bouclier",
       "changer la disposition",
-      "recolorer",
-      "contour",
-      "ombre ou effet"
+      "ajouter un contour",
+      "ajouter un effet",
+      "retourner le bouclier",
+      "étirer",
+      "changer les couleurs",
+      "changer l'écart entre les éléments",
+      "redimensionner un élément séparément"
     ],
     "derives_a_remplacer": [
       "white",
@@ -261,7 +397,29 @@
     "non_fournis": [
       "logo secondaire 'Junior Chamber International'"
     ],
-    "generateur_logo_local": "https://jci.cc/logo-generator/"
+    "generateur_logo_local": "https://jci.cc/logo-generator/",
+    "signification": {
+      "bouclier": "héritage",
+      "lignes_concentriques": "effet ripple : impact et développement personnel",
+      "lettres": "J, C et I intégrées",
+      "quatre_elements": "4 régions du monde et 4 domaines d'opportunités"
+    },
+    "construction": "trois séries de cercles concentriques, symétrique ; jamais modifié ni déformé",
+    "secondaire": {
+      "description": "logo principal + 'Junior Chamber International'",
+      "usage": "documents officiels et administratifs, signatures mail, présentation à un nouveau public",
+      "couleur_nom": "celle de l'acronyme JCI",
+      "fichier": null
+    },
+    "local": {
+      "nom_couleur": "jci-blue (sauf version monochrome)",
+      "taille": "60 pt pour un logo de 570 px",
+      "style": "Plus Jakarta Sans Bold, majuscule à chaque mot, interligne 110 %, interlettrage 0",
+      "alignement": "aligné à gauche sur le logo, collé sous le bouclier sans espace",
+      "longueur": "ligne 1 ≤ première ligne extérieure du bouclier ; ligne 2 ≤ bouclier ; sinon réduire la taille",
+      "non_latin": "Noto Sans",
+      "generateur": "https://jci.cc/logo-generator/"
+    }
   },
   "ripple": {
     "regles": [
@@ -288,15 +446,22 @@
       "fond_clair": "assets/ripple/ripple-fond-clair.svg",
       "fond_sombre": "assets/ripple/ripple-fond-sombre.svg",
       "blanc": "assets/ripple/ripple-blanc.svg"
-    }
+    },
+    "statut": "officiel (construction) ; couleurs des quarts et version fond sombre = convention EDF"
   },
-  "photo": [
-    "personnes d'abord : visages, expressions, interactions",
-    "sur le vif, authentique, pas posé",
-    "diversité des membres",
-    "énergie, lumière naturelle, compositions ouvertes"
-  ],
-  "iconographie": "aucun jeu d'icônes ; seul pictogramme = le bouclier ; ne pas inventer d'icônes",
+  "photo": {
+    "statut": "officiel",
+    "regles": [
+      "personnes d'abord : visages, expressions, interactions",
+      "sur le vif, authentique, pas posé",
+      "diversité des membres",
+      "énergie, lumière naturelle, compositions ouvertes"
+    ]
+  },
+  "iconographie": {
+    "statut": "absent du guide",
+    "convention_edf": "pas d'icônes inventées ; texte ou bouclier seul"
+  },
   "derive_non_officiel": {
     "espacements_px": {
       "space-1": 4,
@@ -311,6 +476,19 @@
       "radius-sm": 8,
       "radius-md": 16,
       "radius-lg": 24
-    }
-  }
+    },
+    "statut": "convention EDF"
+  },
+  "histoire": {
+    "statut": "officiel",
+    "recit": "Réseau mondial de jeunes leaders, plus d'un siècle d'héritage, portée mondiale, formation et esprit entrepreneurial.",
+    "phrase_de_cloture": "Become the Change."
+  },
+  "absent_du_guide": [
+    "règles de ton",
+    "iconographie",
+    "mission et vision",
+    "modèles réseaux sociaux, présentations, papeterie, merchandising, signalétique, signatures mail",
+    "co-branding partenaires"
+  ]
 }
